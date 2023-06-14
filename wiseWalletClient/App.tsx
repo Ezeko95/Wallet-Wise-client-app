@@ -68,30 +68,16 @@ function App(): JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+
+      <View>
+        <Text style={styles.sectionTitle}>Wise Wallet</Text>
+        <View style={styles.content}>
+            <Text style={styles.sectionDescription}>Home</Text>
+            <Text style={styles.sectionDescription}>Shared</Text>
+            <Text style={styles.sectionDescription}>New</Text>
         </View>
-      </ScrollView>
+      </View>
+
     </SafeAreaView>
   );
 }
@@ -102,17 +88,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   sectionTitle: {
-    fontSize: 24,
+    fontSize: 60,
     fontWeight: '600',
   },
   sectionDescription: {
     marginTop: 8,
-    fontSize: 18,
+    fontSize: 30,
     fontWeight: '400',
   },
   highlight: {
     fontWeight: '700',
   },
+  content: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'gray',
+    marginTop: 100
+  }
 });
 
 export default App;
