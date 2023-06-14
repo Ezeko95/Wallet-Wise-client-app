@@ -10,13 +10,12 @@ const HomeScreen = () => {
             initialRouteName="Home"
             screenOptions={{headerShown: false}}
         >
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="Home"
                 component={HomeScreen}
                 options={{
                     tabBarLabel: "Home",
                     tabBarIcon: ({ color, size }) => (
-                      <Icon name="home" size={size} color={color} />
                     ),
                   }}
             />
@@ -26,10 +25,9 @@ const HomeScreen = () => {
                 options={{
                     tabBarLabel: "Profile",
                     tabBarIcon: ({ color, size }) => (
-                      <Icon name="home" size={size} color={color} />
                     ),
-                }}
-            />
+                }} */}
+            {/* /> */}
         </Tab.Navigator>
     )
 }
