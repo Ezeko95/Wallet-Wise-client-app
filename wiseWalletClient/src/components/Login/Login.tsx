@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, ScrollView , TouchableOpacity, ImageBack
 
 
 const Login = ()=>{
-    const image= {uri:"https://w0.peakpx.com/wallpaper/582/539/HD-wallpaper-beautiful-nature-view.jpg"} 
+    const image= {uri:"https://img.freepik.com/premium-vector/abstract-glowing-circle-elegant-illuminated-light-ring-vector-illustration_48799-2066.jpg"} 
     return(
       
         <View style={styles.scrollContainer}>
@@ -14,7 +14,7 @@ const Login = ()=>{
      />
         <ImageBackground source={image} style={styles.foto}>
         <View style={styles.container}>
-        <Image style={styles.img} source={require('./img/logo.png')} />
+        <Image style={styles.img} source={require('../img/logo.png')} />
         <View>
         <TouchableOpacity style={styles.button}>
             <Text style={styles.butonText}>Login</Text>
@@ -34,7 +34,8 @@ export default Login;
 const styles = StyleSheet.create({
     foto:{
         flex: 1,
-        padding:20
+        padding: 20,
+            
     },
     butonText: {
         fontSize: 18,
@@ -69,8 +70,8 @@ const styles = StyleSheet.create({
       paddingBottom: 30
     },
     img: {
-      width: 200,
-      height: 220
+      width: 150,
+      height: 100
     },
     input: {
       height: 40,
@@ -82,6 +83,9 @@ const styles = StyleSheet.create({
       border: "1px solid white",
       borderRadius: 5,
       color: "#cccccc"
+    },
+    loginView: {
+      marginTop: 150
     }
     
   });
