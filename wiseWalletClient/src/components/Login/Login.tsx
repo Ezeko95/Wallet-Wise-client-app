@@ -1,32 +1,32 @@
 import { StyleSheet, Text, View, Image, ScrollView , TouchableOpacity, ImageBackground, StatusBar} from 'react-native';
 
-
-const Login = ()=>{
-    const image= {uri:"https://img.freepik.com/premium-vector/abstract-glowing-circle-elegant-illuminated-light-ring-vector-illustration_48799-2066.jpg"} 
+const Login = ({navigation}:any)=>{
     return(
-      
-        <View style={styles.scrollContainer}>
-              <StatusBar
-         animated={true}
-         backgroundColor="transparent"
-         barStyle={"dark-content"}
-         translucent={true}
-     />
-        <ImageBackground source={image} style={styles.foto}>
-        <View style={styles.container}>
-        <Image style={styles.img} source={require('../img/logo.png')} />
-        <View>
-        <TouchableOpacity style={styles.button}>
-            <Text style={styles.butonText}>Login</Text>
-          </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-            <Text style={styles.butonText}>Register</Text>
+      <View style={styles.scrollContainer}>
+      <StatusBar
+       animated={true}
+       backgroundColor="transparent"
+       barStyle={"dark-content"}
+       translucent={true}
+       />
+      <ImageBackground source={require('../img/fondo2.png')} style={styles.foto}>
+      <View style={styles.container}>
+      <Image style={styles.img} source={require('../img/logo.png')} />
+      <View>
+      <TouchableOpacity style={styles.button} onPress={()=>{
+        navigation.navigate("Home")
+      }}>
+          <Text style={styles.butonText}>Login</Text>
+        
         </TouchableOpacity>
-        </View> 
-          <Text style={styles.h12}>Forgot password?</Text>
-            </View>
-        </ImageBackground>
-      </View>
+      <TouchableOpacity style={styles.button}>
+          <Text style={styles.butonText}>Register</Text>
+      </TouchableOpacity>
+      </View> 
+        <Text style={styles.h12}>Forgot password?</Text>
+          </View>
+      </ImageBackground>
+    </View>
     )
 }
 export default Login;
@@ -34,8 +34,7 @@ export default Login;
 const styles = StyleSheet.create({
     foto:{
         flex: 1,
-        padding: 20,
-            
+
     },
     butonText: {
         fontSize: 18,
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
       display: 'flex',
       justifyContent: "center",
       alignItems: "center",
-      height: 760
+      height: 800
     },
     button: {
       margin: 15,
