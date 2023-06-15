@@ -1,5 +1,8 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { VictoryPie, VictoryTheme } from "victory-native";
+import { View, Text , ScrollView, StyleSheet} from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Login from "../components/Login/Login";
+
+const Tab = createBottomTabNavigator();
 
 const HomeScreen = () => {
 
@@ -22,43 +25,32 @@ const HomeScreen = () => {
     }
 
     return (
-        <ScrollView
-            bounces={true}
-        >
-
-            <View style={styles.homeCard}>
-                <Text style={styles.title} >Wise Wallet</Text>
-                <VictoryPie 
-                    theme={VictoryTheme.material}
-                    data={[
-                        {x: gastos.montoA, y: montos.montoA},
-                        {x: gastos.montoB, y: montos.montoB},
-                        {x: gastos.montoC, y: montos.montoC},
-                        {x: gastos.montoD, y: montos.montoD},
-                        {x: gastos.montoE, y: montos.montoE},
-                        {x: gastos.montoF, y: montos.montoF},
-                        {x: gastos.montoA, y: montos.montoA},
-                        {x: gastos.montoB, y: montos.montoB},
-                        {x: gastos.montoC, y: montos.montoC},
-                        {x: gastos.montoD, y: montos.montoD},
-  
-                    ]}
-                />
-                <Text style={styles.detail}>Gasto a: {montos.montoA}</Text>
-                <Text style={styles.detail}>Gasto b: {montos.montoB}</Text>
-                <Text style={styles.detail}>Gasto c: {montos.montoC}</Text>
-                <Text style={styles.detail}>Gasto d: {montos.montoD}</Text>
-                <Text style={styles.detail}>Gasto e: {montos.montoE}</Text>
-                <Text style={styles.detail}>Gasto f: {montos.montoF}</Text>
-                <Text style={styles.detail}>Gasto a: {montos.montoA}</Text>
-                <Text style={styles.detail}>Gasto b: {montos.montoB}</Text>
-                <Text style={styles.detail}>Gasto c: {montos.montoC}</Text>
-                <Text style={styles.detail}>Gasto d: {montos.montoD}</Text>
-                <Text style={styles.detail}>Gasto e: {montos.montoE}</Text>
-                <Text style={styles.detail}>Gasto f: {montos.montoF}</Text>
-            </View>
-
-        </ScrollView>
+        <>
+        </>
+        // <ScrollView
+        //     bounces={true}
+        // >
+        //     <Tab.Screen
+        //         name="Home"
+        //         component={HomeScreen}
+        //         options={{
+        //             tabBarLabel: "Home",
+        //             tabBarIcon: ({ color, size }) => (
+        //               <Icon name="home" size={size} color={color} />
+        //             ),
+        //           }}
+        //     />
+        //     <Tab.Screen
+        //         name="Profile"
+        //         component={Login}
+        //         options={{
+        //             tabBarLabel: "Profile",
+        //             tabBarIcon: ({ color, size }) => (
+        //               <Icon name="home" size={size} color={color} />
+        //             ),
+        //         }}
+        //     />
+        // </Tab.Navigator>
     )
 }
 
