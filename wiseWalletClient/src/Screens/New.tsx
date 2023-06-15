@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
 
 const NewScreen = () => {
     return (
-        <View style={styles.newCard} >
+        <View>
             <Text>New Screen</Text>
         </View>
     )
