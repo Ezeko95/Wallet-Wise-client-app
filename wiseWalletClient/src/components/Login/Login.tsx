@@ -2,31 +2,29 @@ import { StyleSheet, Text, View, Image, ScrollView , TouchableOpacity, ImageBack
 
 const Login = ({navigation}:any)=>{
     return(
-      <View style={styles.scrollContainer}>
-      <StatusBar
-       animated={true}
-       backgroundColor="transparent"
-       barStyle={"dark-content"}
-       translucent={true}
-       />
-      <ImageBackground source={require('../img/fondo2.png')} style={styles.foto}>
-      <View style={styles.container}>
-      <Image style={styles.img} source={require('../img/logo.png')} />
-      <View>
-      <TouchableOpacity style={styles.button} onPress={()=>{
-        navigation.navigate("Home")
-      }}>
-          <Text style={styles.butonText}>Login</Text>
-        
+      
+        <View style={styles.scrollContainer}>
+              <StatusBar
+         animated={true}
+         backgroundColor="transparent"
+         barStyle={"dark-content"}
+         translucent={true}
+     />
+        <ImageBackground source={require('../img/fondo2.png')} style={styles.foto}>
+        <View style={styles.container}>
+        <Image style={styles.img} source={require('./img/logo.png')} />
+        <View>
+        <TouchableOpacity style={styles.button}>
+            <Text style={styles.butonText}>Login</Text>
+          </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+            <Text style={styles.butonText}>Register</Text>
         </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-          <Text style={styles.butonText}>Register</Text>
-      </TouchableOpacity>
-      </View> 
-        <Text style={styles.h12}>Forgot password?</Text>
-          </View>
-      </ImageBackground>
-    </View>
+        </View> 
+          <Text style={styles.h12}>Forgot password?</Text>
+            </View>
+        </ImageBackground>
+      </View>
     )
 }
 export default Login;
@@ -34,7 +32,7 @@ export default Login;
 const styles = StyleSheet.create({
     foto:{
         flex: 1,
-
+        padding:20
     },
     butonText: {
         fontSize: 18,
@@ -69,8 +67,8 @@ const styles = StyleSheet.create({
       paddingBottom: 30
     },
     img: {
-      width: 150,
-      height: 100
+      width: 200,
+      height: 220
     },
     input: {
       height: 40,
@@ -82,10 +80,5 @@ const styles = StyleSheet.create({
       border: "1px solid white",
       borderRadius: 5,
       color: "#cccccc"
-    },
-    loginView: {
-      marginTop: 150
     }
-    
   });
-  
