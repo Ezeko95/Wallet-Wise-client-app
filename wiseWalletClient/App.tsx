@@ -6,9 +6,10 @@
  */
 
 import React from 'react';
+import Login from './src/components/Login/Login'
+import NewExpense from './src/components/NewExpense/NewExpense';
 import {
   SafeAreaView,
-
   StatusBar,
   StyleSheet,
   Text,
@@ -28,22 +29,9 @@ function App(): JSX.Element {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-
-      <View>
-        <Text style={styles.sectionTitle}>Wise Wallet</Text>
-        <View style={styles.content}>
-            <Text style={styles.sectionDescription}>Home</Text>
-            <Text style={styles.sectionDescription}>Shared</Text>
-            <Text style={styles.sectionDescription}>New</Text>
-        </View>
-      </View>
-
-    </SafeAreaView>
+    <>
+      <NewExpense />
+    </>
   );
 }
 

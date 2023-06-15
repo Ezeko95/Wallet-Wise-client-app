@@ -1,9 +1,10 @@
 import { View, Text } from "react-native";
+import NewExpense from "../components/NewExpense/NewExpense";
 
 const NewScreen = () => {
     return (
         <View>
-            <Text>New Screen</Text>
+            <NewExpense />
         </View>
     )
 }

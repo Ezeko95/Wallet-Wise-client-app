@@ -14,7 +14,7 @@ const Login = ()=>{
      />
         <ImageBackground source={image} style={styles.foto}>
         <View style={styles.container}>
-        <Image style={styles.img} source={require('./img/logo.png')} />
+        <Image style={styles.img} source={require('../img/logo.png')}/>
         <View>
         <TouchableOpacity style={styles.button}>
             <Text style={styles.butonText}>Login</Text>
