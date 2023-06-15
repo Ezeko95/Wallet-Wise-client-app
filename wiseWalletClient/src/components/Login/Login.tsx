@@ -1,8 +1,6 @@
 import { StyleSheet, Text, View, Image, ScrollView , TouchableOpacity, ImageBackground, StatusBar} from 'react-native';
 
-
-const Login = ()=>{
-    const image= {uri:"https://w0.peakpx.com/wallpaper/582/539/HD-wallpaper-beautiful-nature-view.jpg"} 
+const Login = ({navigation}:any)=>{
     return(
       
         <View style={styles.scrollContainer}>
@@ -12,7 +10,7 @@ const Login = ()=>{
          barStyle={"dark-content"}
          translucent={true}
      />
-        <ImageBackground source={image} style={styles.foto}>
+        <ImageBackground source={require('../img/fondo2.png')} style={styles.foto}>
         <View style={styles.container}>
         <Image style={styles.img} source={require('./img/logo.png')} />
         <View>
@@ -48,7 +46,7 @@ const styles = StyleSheet.create({
       display: 'flex',
       justifyContent: "center",
       alignItems: "center",
-      height: 760
+      height: 800
     },
     button: {
       margin: 15,
@@ -83,6 +81,4 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       color: "#cccccc"
     }
-    
   });
-  
