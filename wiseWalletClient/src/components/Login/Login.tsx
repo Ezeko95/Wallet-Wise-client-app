@@ -17,6 +17,7 @@ const Login = ({navigation}:any)=>{
         navigation.navigate("Home")
       }}>
           <Text style={styles.butonText}>Login</Text>
+        
         </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
           <Text style={styles.butonText}>Register</Text>
@@ -33,8 +34,7 @@ export default Login;
 const styles = StyleSheet.create({
     foto:{
         flex: 1,
-        height: 900,
-       
+
     },
     butonText: {
         fontSize: 18,
@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
       paddingBottom: 30
     },
     img: {
-      width: 200,
-      height: 220
+      width: 150,
+      height: 100
     },
     input: {
       height: 40,
@@ -82,6 +82,9 @@ const styles = StyleSheet.create({
       border: "1px solid white",
       borderRadius: 5,
       color: "#cccccc"
+    },
+    loginView: {
+      marginTop: 150
     }
     
   });
