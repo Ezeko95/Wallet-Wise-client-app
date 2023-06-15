@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Login from "../components/Login/Login";
 const Tab = createBottomTabNavigator();
 import Icon from "react-native-ionicons";
-
 const HomeScreen = () => {
     return (
         <Tab.Navigator
