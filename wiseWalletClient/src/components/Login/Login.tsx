@@ -1,6 +1,8 @@
-import { StyleSheet, Text, View, Image, ScrollView , TouchableOpacity, ImageBackground, StatusBar} from 'react-native';
+import { StyleSheet, Text, View, Image , TouchableOpacity, ImageBackground, StatusBar} from 'react-native';
 
-const Login = ({navigation}:any)=>{
+
+const Login = ({ navigation}: any )=>{
+    
     return(
       <View style={styles.scrollContainer}>
       <StatusBar
@@ -17,7 +19,6 @@ const Login = ({navigation}:any)=>{
         navigation.navigate("Home")
       }}>
           <Text style={styles.butonText}>Login</Text>
-        
         </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
           <Text style={styles.butonText}>Register</Text>
@@ -34,7 +35,8 @@ export default Login;
 const styles = StyleSheet.create({
     foto:{
         flex: 1,
-
+        height: 900,
+       
     },
     butonText: {
         fontSize: 18,
