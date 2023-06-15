@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image , TouchableOpacity, ImageBackground, StatusBar} from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView , TouchableOpacity, ImageBackground, StatusBar} from 'react-native';
 
 const Login = ({navigation}:any)=>{
     return(
