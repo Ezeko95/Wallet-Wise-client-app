@@ -50,8 +50,6 @@ const HomeScreen = () => {
                 <Text style={styles.detail}>Gasto f: {montos.montoF}</Text>
             </View>
 
-        </ScrollView>
-    )
 }
 
 const styles = StyleSheet.create({
