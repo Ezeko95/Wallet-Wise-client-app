@@ -1,33 +1,59 @@
-import { StyleSheet, Text, View, Image, ScrollView , TouchableOpacity, ImageBackground, StatusBar} from 'react-native';
 
-const Login = ({navigation}:any)=>{
-    return(
-      
-        <View style={styles.scrollContainer}>
-              <StatusBar
-         animated={true}
-         backgroundColor="transparent"
-         barStyle={"dark-content"}
-         translucent={true}
-     />
-        <ImageBackground source={require('../img/fondo2.png')} style={styles.foto}>
-        <View style={styles.container}>
-        <Image style={styles.img} source={require('../img/logo.png')} />
-        <View>
-        <TouchableOpacity style={styles.button}>
-            <Text style={styles.butonText}>Login</Text>
-          </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-            <Text style={styles.butonText}>Register</Text>
-        </TouchableOpacity>
-        </View> 
-          <Text style={styles.h12}>Forgot password?</Text>
-            </View>
-        </ImageBackground>
+import { StyleSheet, Text, View, Image, ScrollView , TouchableOpacity, ImageBackground, StatusBar, Button, Alert} from 'react-native';
+import {useAuth0, Auth0Provider} from 'react-native-auth0';
+
+const LoginButton = () => {
+  const {authorize, user} = useAuth0();
+  if(user){
+    console.log(user)
+  }
+  const {clearSession} = useAuth0();
+  const onPress = async () => {
+    if(authorize) {
+      try {
+        console.log(authorize)
+        console.log(user);
+        
+        await authorize();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  const logOut = async () => {
+    try {
+        await clearSession();
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+  return(
+    <View style={styles.scrollContainer}>
+    <ImageBackground source={require('../img/fondo2.png')} style={styles.foto}>
+    <StatusBar
+      animated={true}
+      backgroundColor="transparent"
+      barStyle={"dark-content"}
+      translucent={true}
+      />
+      <View style={styles.container}>
+      <Image style={styles.img} source={require('../img/logo.png')} />
+      <TouchableOpacity style={styles.button} onPress={onPress}>
+           <Text style={styles.butonText}>Login</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={logOut}>
+           <Text style={styles.butonText}>Register</Text>
+      </TouchableOpacity>
+      <Text style={styles.h12}>Forgot password?</Text>
       </View>
-    )
+      </ImageBackground>
+    </View>
+  ) 
+  
 }
-export default Login;
+
+export default LoginButton;
 
 const styles = StyleSheet.create({
     foto:{
@@ -46,11 +72,11 @@ const styles = StyleSheet.create({
       display: 'flex',
       justifyContent: "center",
       alignItems: "center",
-      height: 800
+      height: 600,
     },
     button: {
       margin: 15,
-      backgroundColor: "#1b2e50",
+      backgroundColor: "#c29a2b",
       color: "white",
       width: 280,
       height: 50,
@@ -82,3 +108,4 @@ const styles = StyleSheet.create({
       color: "#cccccc"
     }
   });
+
