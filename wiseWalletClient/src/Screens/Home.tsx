@@ -1,91 +1,85 @@
-import { View, Text , ScrollView, StyleSheet} from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Login from "../components/Login/Login";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { VictoryPie, VictoryTheme } from "victory-native";
 
-const Tab = createBottomTabNavigator();
+// const Tab = createBottomTabNavigator();
 
 const HomeScreen = () => {
-
-    const gastos = {
-        montoA: 'comida',
-        montoB: 'gato',
-        montoC: 'perro',
-        montoD: 'luz',
-        montoE: 'agua',
-        montoF: 'gas',
-    }
-
-    const montos = {
-        montoA: 40,
-        montoB: 50,
-        montoC: 20,
-        montoD: 30,
-        montoE: 25,
-        montoF: 55
-    }
+  const montos = {
+    montoA: 40,
+    montoB: 70,
+    montoC: 20,
+    montoD: 30,
+    montoE: 25,
+    montoF: 55,
+  };
 
     return (
-        <>
-        <View style={styles.homeCard}>
-                    <Text style={styles.title}>Home Screen</Text>
-                </View>
-        </>
-        // <ScrollView
-        //     bounces={true}
-        // >
-        //     <Tab.Screen
-        //         name="Home"
-        //         component={HomeScreen}
-        //         options={{
-        //             tabBarLabel: "Home",
-        //             tabBarIcon: ({ color, size }) => (
-        //               <Icon name="home" size={size} color={color} />
-        //             ),
-        //           }}
-        //     />
-        //     <Tab.Screen
-        //         name="Profile"
-        //         component={Login}
-        //         options={{
-        //             tabBarLabel: "Profile",
-        //             tabBarIcon: ({ color, size }) => (
-        //               <Icon name="home" size={size} color={color} />
-        //             ),
-        //         }}
-        //     />
-        // </Tab.Navigator>
-    )
+        <ScrollView
+            bounces={true}
+        >
+
+            <View style={styles.homeCard}>
+                <Text style={styles.title} >Wise Wallet</Text>
+                <VictoryPie 
+                    theme={VictoryTheme.material}
+                    data={[
+                        {x: 'A', y: montos.montoA},
+                        {x: 'A', y: montos.montoB},
+                        {x: 'A', y: montos.montoC},
+                        {x: 'A', y: montos.montoD},
+                        {x: 'A', y: montos.montoE},
+                        {x: 'A', y: montos.montoF},
+                        {x: 'A', y: montos.montoA},
+                        {x: 'A', y: montos.montoB},
+                        {x: 'A', y: montos.montoC},
+                        {x: 'A', y: montos.montoD},
+  
+                    ]}
+                />
+                <Text style={styles.detail}>Gasto a: {montos.montoA}</Text>
+                <Text style={styles.detail}>Gasto b: {montos.montoB}</Text>
+                <Text style={styles.detail}>Gasto c: {montos.montoC}</Text>
+                <Text style={styles.detail}>Gasto d: {montos.montoD}</Text>
+                <Text style={styles.detail}>Gasto e: {montos.montoE}</Text>
+                <Text style={styles.detail}>Gasto f: {montos.montoF}</Text>
+                <Text style={styles.detail}>Gasto a: {montos.montoA}</Text>
+                <Text style={styles.detail}>Gasto b: {montos.montoB}</Text>
+                <Text style={styles.detail}>Gasto c: {montos.montoC}</Text>
+                <Text style={styles.detail}>Gasto d: {montos.montoD}</Text>
+                <Text style={styles.detail}>Gasto e: {montos.montoE}</Text>
+                <Text style={styles.detail}>Gasto f: {montos.montoF}</Text>
+            </View>
+
 }
 
 const styles = StyleSheet.create({
-    homeCard: {
-        alignItems: 'center',
-        backgroundColor: '#171738'
-    },
-    
-    title: {
-        color: '#a0a0a0',
-        fontSize: 30,
-    }, 
+  homeCard: {
+    alignItems: 'center',
+    backgroundColor: '#171738',
+  },
 
-    chart: {
-        marginTop: 40,
-        height: 250,
-        width: 250
-    },
+  title: {
+    color: '#a0a0a0',
+    fontSize: 30,
+  },
 
-    detail: {
-        width: 250,
-        borderColor: 'black',
-        backgroundColor: '#7180b9',
-        margin: 10,
-        borderRadius: 15,
-        color: '#fff',
-        fontSize: 25,
-        justifyContent: 'center',
-        alignSelf: 'center'
-    }
-})
+  chart: {
+    marginTop: 40,
+    height: 250,
+    width: 250,
+  },
 
+  detail: {
+    width: 250,
+    borderColor: 'black',
+    backgroundColor: '#7180b9',
+    margin: 10,
+    borderRadius: 15,
+    color: '#fff',
+    fontSize: 25,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+});
 
-export default HomeScreen
+export default HomeScreen;

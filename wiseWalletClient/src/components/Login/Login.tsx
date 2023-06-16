@@ -1,3 +1,4 @@
+
 import { StyleSheet, Text, View, Image, ScrollView , TouchableOpacity, ImageBackground, StatusBar, Button, Alert} from 'react-native';
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
 
@@ -141,3 +142,4 @@ const styles = StyleSheet.create({
       color: "#cccccc"
     }
   });
+
