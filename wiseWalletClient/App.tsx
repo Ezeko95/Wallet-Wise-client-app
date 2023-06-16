@@ -16,19 +16,21 @@ import {store} from "./src/redux/store";
 function App(): JSX.Element {
   return (
     <View>
-      <FormIncome />
-    </View>
-  )
-    {/* <Provider store={store}>
-   <View style={styles.container}>
-    <Navigate/>
-   </View>
-    </Provider>  */}
-}
+        <View>
+          <FormIncome />
+        </View>
+      <Provider store={store}>
+        <View style={styles.container}>
+          <Navigate/>
+        </View>
+      </Provider> 
+    </View> 
+)}
 const styles = StyleSheet.create({
   container:{
     height: 900,
   }
+  
 });
 
 export default App;
