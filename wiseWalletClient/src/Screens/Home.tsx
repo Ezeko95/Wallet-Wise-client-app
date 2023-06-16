@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { VictoryPie, VictoryTheme } from "victory-native";
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { VictoryPie, VictoryTheme } from 'victory-native';
 
 // const Tab = createBottomTabNavigator();
 
@@ -13,44 +13,41 @@ const HomeScreen = () => {
     montoF: 55,
   };
 
-    return (
-        <ScrollView
-            bounces={true}
-        >
-
-            <View style={styles.homeCard}>
-                <Text style={styles.title} >Wise Wallet</Text>
-                <VictoryPie 
-                    theme={VictoryTheme.material}
-                    data={[
-                        {x: 'A', y: montos.montoA},
-                        {x: 'A', y: montos.montoB},
-                        {x: 'A', y: montos.montoC},
-                        {x: 'A', y: montos.montoD},
-                        {x: 'A', y: montos.montoE},
-                        {x: 'A', y: montos.montoF},
-                        {x: 'A', y: montos.montoA},
-                        {x: 'A', y: montos.montoB},
-                        {x: 'A', y: montos.montoC},
-                        {x: 'A', y: montos.montoD},
-  
-                    ]}
-                />
-                <Text style={styles.detail}>Gasto a: {montos.montoA}</Text>
-                <Text style={styles.detail}>Gasto b: {montos.montoB}</Text>
-                <Text style={styles.detail}>Gasto c: {montos.montoC}</Text>
-                <Text style={styles.detail}>Gasto d: {montos.montoD}</Text>
-                <Text style={styles.detail}>Gasto e: {montos.montoE}</Text>
-                <Text style={styles.detail}>Gasto f: {montos.montoF}</Text>
-                <Text style={styles.detail}>Gasto a: {montos.montoA}</Text>
-                <Text style={styles.detail}>Gasto b: {montos.montoB}</Text>
-                <Text style={styles.detail}>Gasto c: {montos.montoC}</Text>
-                <Text style={styles.detail}>Gasto d: {montos.montoD}</Text>
-                <Text style={styles.detail}>Gasto e: {montos.montoE}</Text>
-                <Text style={styles.detail}>Gasto f: {montos.montoF}</Text>
-            </View>
-
-}
+  return (
+    <ScrollView bounces={true}>
+      <View style={styles.homeCard}>
+        <Text style={styles.title}>Wise Wallet</Text>
+        <VictoryPie
+          theme={VictoryTheme.material}
+          data={[
+            { x: 'A', y: montos.montoA },
+            { x: 'A', y: montos.montoB },
+            { x: 'A', y: montos.montoC },
+            { x: 'A', y: montos.montoD },
+            { x: 'A', y: montos.montoE },
+            { x: 'A', y: montos.montoF },
+            { x: 'A', y: montos.montoA },
+            { x: 'A', y: montos.montoB },
+            { x: 'A', y: montos.montoC },
+            { x: 'A', y: montos.montoD },
+          ]}
+        />
+        <Text style={styles.detail}>Gasto a: {montos.montoA}</Text>
+        <Text style={styles.detail}>Gasto b: {montos.montoB}</Text>
+        <Text style={styles.detail}>Gasto c: {montos.montoC}</Text>
+        <Text style={styles.detail}>Gasto d: {montos.montoD}</Text>
+        <Text style={styles.detail}>Gasto e: {montos.montoE}</Text>
+        <Text style={styles.detail}>Gasto f: {montos.montoF}</Text>
+        <Text style={styles.detail}>Gasto a: {montos.montoA}</Text>
+        <Text style={styles.detail}>Gasto b: {montos.montoB}</Text>
+        <Text style={styles.detail}>Gasto c: {montos.montoC}</Text>
+        <Text style={styles.detail}>Gasto d: {montos.montoD}</Text>
+        <Text style={styles.detail}>Gasto e: {montos.montoE}</Text>
+        <Text style={styles.detail}>Gasto f: {montos.montoF}</Text>
+      </View>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   homeCard: {
