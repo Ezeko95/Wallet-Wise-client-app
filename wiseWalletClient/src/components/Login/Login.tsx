@@ -2,40 +2,6 @@
 import { StyleSheet, Text, View, Image, ScrollView , TouchableOpacity, ImageBackground, StatusBar, Button, Alert} from 'react-native';
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
 
-// const Login = ({navigation}:any)=>{
-//   const { authorize } = useAuth0();
-
-//   const onPress = async () => {
-//     try {
-//       await authorize();
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   };
-//     return(
-      
-      
-        // 
-        // <View style={styles.container}>
-        //
-        // <View>
-    //     
-    //     <TouchableOpacity style={styles.button}>
-    //         <Text style={styles.butonText}>Register</Text>
-    //     </TouchableOpacity>
-    //     </View> 
-    //       
-    //         </View>
-    //     </ImageBackground>
-    //   </View>
-  
-//     <Auth0Provider domain="walletwise.us.auth0.com" clientId="o4nR12XFZsF5SOiAbWxHhi3bBEU0DiKp">
-//     <View style={styles.container}>
-//       <Button onPress={onPress} title="Log in" />
-//     </View>
-//   </Auth0Provider>
-//     )
-// }
 const LoginButton = () => {
   const {authorize, user} = useAuth0();
   if(user){
