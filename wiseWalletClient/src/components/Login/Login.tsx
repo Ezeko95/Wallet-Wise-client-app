@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, Image, ScrollView , TouchableOpacity, ImageBackground, StatusBar, Button, Alert} from 'react-native';
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
-import LogoutButton from './LogOut';
 
 // const Login = ({navigation}:any)=>{
 //   const { authorize } = useAuth0();
@@ -14,28 +13,20 @@ import LogoutButton from './LogOut';
 //   };
 //     return(
       
-//     //     <View style={styles.scrollContainer}>
-//     //           <StatusBar
-//     //      animated={true}
-//     //      backgroundColor="transparent"
-//     //      barStyle={"dark-content"}
-//     //      translucent={true}
-//     //  />
-//     //     <ImageBackground source={require('../img/fondo2.png')} style={styles.foto}>
-//     //     <View style={styles.container}>
-//     //     <Image style={styles.img} source={require('./img/logo.png')} />
-//     //     <View>
-//     //     <TouchableOpacity style={styles.button}>
-//     //         <Text style={styles.butonText}>Login</Text>
-//     //       </TouchableOpacity>
-//     //     <TouchableOpacity style={styles.button}>
-//     //         <Text style={styles.butonText}>Register</Text>
-//     //     </TouchableOpacity>
-//     //     </View> 
-//     //       <Text style={styles.h12}>Forgot password?</Text>
-//     //         </View>
-//     //     </ImageBackground>
-//     //   </View>
+      
+        // 
+        // <View style={styles.container}>
+        //
+        // <View>
+    //     
+    //     <TouchableOpacity style={styles.button}>
+    //         <Text style={styles.butonText}>Register</Text>
+    //     </TouchableOpacity>
+    //     </View> 
+    //       
+    //         </View>
+    //     </ImageBackground>
+    //   </View>
   
 //     <Auth0Provider domain="walletwise.us.auth0.com" clientId="o4nR12XFZsF5SOiAbWxHhi3bBEU0DiKp">
 //     <View style={styles.container}>
@@ -46,6 +37,9 @@ import LogoutButton from './LogOut';
 // }
 const LoginButton = () => {
   const {authorize, user} = useAuth0();
+  if(user){
+    console.log(user)
+  }
   const {clearSession} = useAuth0();
   const onPress = async () => {
     if(authorize) {
@@ -68,10 +62,26 @@ const LoginButton = () => {
 };
 
   return(
-    <>
-    <Button onPress={onPress} title="LOGAIND" />
-    <Button onPress={logOut} title="Log out" />
-    </>
+    <View style={styles.scrollContainer}>
+    <ImageBackground source={require('../img/fondo2.png')} style={styles.foto}>
+    <StatusBar
+      animated={true}
+      backgroundColor="transparent"
+      barStyle={"dark-content"}
+      translucent={true}
+      />
+      <View style={styles.container}>
+      <Image style={styles.img} source={require('../img/logo.png')} />
+      <TouchableOpacity style={styles.button} onPress={onPress}>
+           <Text style={styles.butonText}>Login</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={logOut}>
+           <Text style={styles.butonText}>Register</Text>
+      </TouchableOpacity>
+      <Text style={styles.h12}>Forgot password?</Text>
+      </View>
+      </ImageBackground>
+    </View>
   ) 
   
 }
@@ -95,11 +105,11 @@ const styles = StyleSheet.create({
       display: 'flex',
       justifyContent: "center",
       alignItems: "center",
-      height: 800
+      height: 600,
     },
     button: {
       margin: 15,
-      backgroundColor: "#1b2e50",
+      backgroundColor: "#c29a2b",
       color: "white",
       width: 280,
       height: 50,

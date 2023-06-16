@@ -26,6 +26,9 @@ const HomeScreen = () => {
 
     return (
         <>
+        <View style={styles.homeCard}>
+                    <Text style={styles.title}>Home Screen</Text>
+                </View>
         </>
         // <ScrollView
         //     bounces={true}
