@@ -1,27 +1,20 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import Navigate from './src/navigate/Navigate';
-
+import { NavigationContainer } from '@react-navigation/native';
+import Navigator from './src/Navigation/HomeStack'
 
 function App(): JSX.Element {
   return (
-   <View style={styles.container}>
-    <Navigate/>
-   </View>
+    <NavigationContainer>
+        <Navigator />
+    </NavigationContainer>
   );
 }
 const styles = StyleSheet.create({
-  container:{
+  container: {
     height: 900,
-  }
+  },
 });
 
 export default App;
