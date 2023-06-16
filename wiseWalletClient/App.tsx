@@ -1,30 +1,22 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import Navigate from './src/navigate/Navigate';
+import { NavigationContainer } from '@react-navigation/native';
+import Navigator from './src/Navigation/HomeStack'
 import { Provider } from 'react-redux';
 import {store} from "./src/redux/store";
 
 function App(): JSX.Element {
   return (
-    <Provider store={store}>
-   <View style={styles.container}>
-    <Navigate/>
-   </View>
-    </Provider>
+  <Provider store={store}>
+    <Navigator/>
+  </Provider>
   );
 }
 const styles = StyleSheet.create({
-  container:{
+  container: {
     height: 900,
-  }
+  },
 });
 
 export default App;

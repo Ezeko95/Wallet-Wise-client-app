@@ -1,18 +1,17 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from 'react-native';
 
 const NewScreen = () => {
-    return (
-        <View style={styles.newCard} >
-            <Text>New Screen</Text>
-        </View>
-    )
-}
+  return (
+    <View style={styles.newCard}>
+      <Text>New Screen</Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    newCard: {
-        backgroundColor: '#efefef'
-    }
-})
+  newCard: {
+    backgroundColor: '#efefef',
+  },
+});
 
-
-export default NewScreen
+export default NewScreen;
