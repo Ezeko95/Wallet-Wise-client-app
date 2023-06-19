@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Pager from './Pager';
 
-
-
 const FormIncome = () => {
     return (
             <View style={styles.view}>
