@@ -18,6 +18,9 @@ const slice = createSlice({
         },
         expendsPush:(state, action: PayloadAction<[]>)=>{
             state.expends = action.payload;
+        },
+        postIncome: (state, action: PayloadAction<[]>)=>{
+            state.income = action.payload;
         }
     }
 })
