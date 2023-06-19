@@ -8,13 +8,13 @@ const Tab = createBottomTabNavigator();
 
 const MyTabs = () => {
   return (
-    <NavigationContainer>
+   
       <Tab.Navigator>
         <Tab.Screen name="Home" component={Pager} />
         <Tab.Screen name="Add" component={FormIncome} />
         <Tab.Screen name="Shared" component={SharedScreen} />
       </Tab.Navigator>
-    </NavigationContainer>
+    
   );
 };
 

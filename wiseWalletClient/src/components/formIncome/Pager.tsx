@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet,Text, TextInput, View, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet,Text, TextInput, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { SelectCountry } from 'react-native-element-dropdown';
 import { useDispatch, useSelector } from 'react-redux';
@@ -164,6 +164,10 @@ const Pager = () => {
     };
 
     console.log(dispatch(postMovement(data)));
+    Alert.alert('Successfully created income')
+    setType('');
+    setAccount('');
+    setAmount('');
   };
 
   const handlePostExpense = () => {
@@ -175,6 +179,11 @@ const Pager = () => {
       
     };
     console.log(dispatch(postExpense(data)));
+    Alert.alert('Successfully created expense')
+    setAmount('');
+    setDescription('');
+    setCategory('');
+    setPaymentMethod('');
   };
 
   const onChange = (item: Data) => {
@@ -346,7 +355,6 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
   },
-  
   formContainer: {
     backgroundColor: '#050A30',
     padding: 20,
@@ -363,11 +371,11 @@ const styles = StyleSheet.create({
     height: 40,
     width: 200,
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: 'lightblue',
     margin: 10,
     padding: 10,
-    borderRadius: 15,
-    backgroundColor: '#202254',
+    borderRadius: 25,
+    backgroundColor: 'white',
     marginTop: 20,
   },
   textBtn: {
@@ -415,6 +423,5 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
- 
   
 });
