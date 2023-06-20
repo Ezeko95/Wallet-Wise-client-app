@@ -1,12 +1,15 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ImageBackground } from 'react-native';
 import Pager from './Pager';
+
 
 const FormIncome = () => {
     return (
+    <ImageBackground style={styles.fondo} source={require('./assets/fondo4.png')}>
             <View style={styles.view}>
                 <Pager />
             </View>
+            </ImageBackground>
     )
 }
 
@@ -17,8 +20,11 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         padding: 20,
-        backgroundColor: '#202254',
         justifyContent: 'center',
-    }
-    
+    },
+    fondo:{
+            flex: 1,
+            height: '100%',
+            
+        }
 })

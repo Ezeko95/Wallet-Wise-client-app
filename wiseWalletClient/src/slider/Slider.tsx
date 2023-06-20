@@ -36,7 +36,7 @@ const Slider = () => {
     { id: 5, name: "bitcoin", image: require("../Screens/images/bitcoin.png")},
 
   ]
-  const firstOn = onBoarding.slice(0,2);
+  const firstOn = onBoarding.slice(1,2);
   const secondOn = onBoarding.slice(2,5);
   const select = (event: Buttons)=>{
     setColors([event.id]);
@@ -129,4 +129,6 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   }
 });
+
+
 
