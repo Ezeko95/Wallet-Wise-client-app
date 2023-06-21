@@ -18,6 +18,7 @@ const Navigate = () => {
             {/* <stackNavigator.Screen name='Auth' component={AuthView}/> */}
             <stackNavigator.Screen name='Login' component={AuthView}/>
             <stackNavigator.Screen name='LoginRegister' component={Login}/>
+
             <stackNavigator.Screen name='Slider' component={Slider}/>
             <stackNavigator.Screen name='MyTabs' component={MyTabs}/>
 

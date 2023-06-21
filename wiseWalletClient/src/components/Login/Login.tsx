@@ -38,7 +38,7 @@ const Login: React.FC = () => {
     }
   };
 
-  return (
+   return (
       <ImageBackground source={{uri:"https://w0.peakpx.com/wallpaper/525/971/HD-wallpaper-geometric-fade-bright-colourful-geometric.jpg"}} 
  >
   <KeyboardAvoidingView
@@ -71,7 +71,6 @@ const Login: React.FC = () => {
 </ImageBackground>
   );
 };
-
 const styles = StyleSheet.create({
   image:{
     height:250,
@@ -90,6 +89,7 @@ const styles = StyleSheet.create({
   },
   container: {
     height: 624,
+
     paddingBottom:79,
     width: "100%",
     display: 'flex',

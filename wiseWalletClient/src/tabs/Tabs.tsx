@@ -6,6 +6,7 @@ import Pager from '../components/home/Pager';
 import { Colors } from '../enums/Colors';
 import { View, Image} from 'react-native'
 
+
 const Tab = createBottomTabNavigator();
 
 const MyTabs = () => {

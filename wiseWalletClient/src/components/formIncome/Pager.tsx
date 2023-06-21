@@ -180,6 +180,7 @@ const Pager = () => {
       paymentMethod,
       
     };
+    if(!amount || !category || !description || !paymentMethod ) return Alert.alert('Incomplete fields, please complete them all')
     console.log(dispatch(postExpense(data)));
     Alert.alert('Successfully created expense')
     setAmount('');

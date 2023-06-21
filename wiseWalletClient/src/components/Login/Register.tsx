@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+
 import { View, TextInput, Button, StyleSheet , Image, ImageBackground, KeyboardAvoidingView,Platform} from 'react-native';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
@@ -56,6 +58,7 @@ const Register: React.FC = () => {
 
     <View style={styles.container}>
       <Image source={require("./logo.png")} style={styles.image}/>
+
       <KeyboardAvoidingView>
 
       <TextInput
@@ -64,12 +67,6 @@ const Register: React.FC = () => {
         onChangeText={value => handleInputChange('name', value)}
         style={styles.input}
         />
-      {/* <TextInput
-        placeholder="picture"
-        value={form.picture}
-        onChangeText={value => handleInputChange('picture', value)}
-        style={styles.input}
-        /> */}
       <TextInput
         placeholder="Email"
         value={form.email}
@@ -111,6 +108,7 @@ const styles = StyleSheet.create({
   },
   container: {
     height: 624,
+
     paddingBottom:79,
     width: "100%",
     display: 'flex',
