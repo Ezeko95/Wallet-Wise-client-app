@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StatusBar, View, Text, StyleSheet } from 'react-native';
-import { VictoryPie, VictoryTheme } from 'victory-native';
+import { VictoryPie, VictoryTheme, VictoryLabel } from 'victory-native';
 import { Colors } from '../../enums/Colors';
 
 interface Props {}
@@ -21,6 +21,13 @@ const AllExpenses: React.FC<Props> = () => {
     montoE: 65,
     montoF: 55,
   };
+  const labelStyle = {
+    fontFamily: 'Arial',
+    fontSize: 15,
+    fontWeight: 'bold',
+    fill: 'white',
+    
+  };
   return (
     <View style={styles.homeCard}>
       <ScrollView bounces={true}>
@@ -35,6 +42,11 @@ const AllExpenses: React.FC<Props> = () => {
               { x: types.tipoC, y: montos.montoC },
   
             ]}
+            colorScale={['#35a39e', '#6e3983', '#5c5c8b']}
+            labels={({ datum }) => `${datum.x}`}
+            labelComponent={
+              <VictoryLabel style={labelStyle} />
+            }
           />
           <Text style={styles.detail}>{types.tipoA}: {montos.montoA}</Text>
           <Text style={styles.detail}>{types.tipoB}: {montos.montoB}</Text>
@@ -70,11 +82,13 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     backgroundColor: Colors.DETAIL_COLOR,
     margin: 10,
+    padding : 10,
     borderRadius: 5,
-    color: '#fff',
-    fontSize: 20,
+    color: '#ffffff',
+    fontSize: 25,
     justifyContent: 'center',
     alignSelf: 'center',
+    fontFamily:"Helvetica"
   },
 });
 

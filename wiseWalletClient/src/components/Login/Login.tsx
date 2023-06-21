@@ -1,4 +1,4 @@
-import { Text, View, TextInput, Button, StyleSheet } from 'react-native';
+import { Text, TextInput,View, Button, StyleSheet, ImageBackground , Image ,KeyboardAvoidingView, Platform} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -32,41 +32,69 @@ const Login: React.FC = () => {
       console.log(response.data);
       console.log('Login successful');
       await AsyncStorage.setItem('accessToken', accessToken);
-      navigation.navigate('Home');
+      navigation.navigate('Slider');
     } catch (error) {
       setError('Invalid email or password');
     }
   };
+
   return (
+      <ImageBackground source={{uri:"https://w0.peakpx.com/wallpaper/525/971/HD-wallpaper-geometric-fade-bright-colourful-geometric.jpg"}} 
+ >
+  <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+
     <View style={styles.container}>
-      <Text>Login</Text>
+      <Image source={require("./logo.png")} style={styles.image}/>
+      <Text style={styles.text}>Login</Text>
       {error && <Text>{error}</Text>}
       <TextInput
-        // style={styles.input}
         placeholder="Email"
         value={form.email}
         onChangeText={value => handleInputChange('email', value)}
-      />
+        style={styles.input}
+        />
       <TextInput
-        // style={styles.input}
+        style={styles.input}
         placeholder="Password"
         secureTextEntry
         value={form.password}
         onChangeText={value => handleInputChange('password', value)}
-      />
+        />
       <Button title="Login" onPress={()=>{
         handleSubmit()
-      }} />
+      }} color={"black"}/>
     </View>
+      </KeyboardAvoidingView>
+</ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  image:{
+    height:250,
+    width: 250
+  },
+  input:{
+    backgroundColor:"white",
+    padding:10,
+    margin:10,
+    borderRadius:10,
+    width:300,
+    height:45,
+    color:"black",
+    fontSize:20,
+    fontWeight:"bold",
+  },
   container: {
-    backgroundColor: 'gray',
-    height: '100%',
+    height: 624,
+    paddingBottom:79,
+    width: "100%",
     display: 'flex',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   reg: {
     backgroundColor: 'green',
@@ -75,6 +103,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     textAlign: 'center',
   },
+  text:{
+    color:"white",
+    fontSize:20,
+    fontWeight:"bold",
+  }
 });
 
 export default Login;
