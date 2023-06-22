@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { RootState } from '../store';
+import { AppThunk, RootState } from '../store';
 import { AnyAction } from '@reduxjs/toolkit';
 import { base_URL } from '../utils';
 import axios from 'axios'; 
@@ -35,24 +35,37 @@ const expenseSlice = createSlice({
     postExpenseSuccess: (state) => {
       state.loading = false;
     },
-    postExpenseFailure: (state, action: PayloadAction<string>) => {
+    postExpenseFailure: (state, action: PayloadAction<Error>) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
   },
 });
 
 export const {  postExpenseStart,   postExpenseSuccess,  postExpenseFailure } = expenseSlice.actions;
 
-export const postExpense = (
-    data: ExpenseData
-  ): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch: Dispatch) => {
+//  export const postExpense = (
+//     data: ExpenseData
+//    ): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch: Dispatch) => {
+//     try {
+//        const response = await axios.post(`${base_URL}/movement/1`, data);
+//        console.log(response.data);
+//        return response.data
+//      } catch (error) {
+//        console.log(error);
+//      }
+//    };
+ export const postExpense= (id: number, data: ExpenseData): AppThunk=>{
+  return async (dispatch)=>{
     try {
-      const response = await axios.post(`${base_URL}/movement/1`, data);
+      console.log(id)
+      const response = await axios.post(`${base_URL}/movement/${id}`, data);
       console.log(response.data);
       return response.data
     } catch (error) {
-      console.log(error);
+      dispatch(postExpenseFailure(error as Error))
     }
-  };
+  }
+} 
+
 export default expenseSlice.reducer;

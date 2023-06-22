@@ -1,48 +1,53 @@
 import React from 'react';
-import { ScrollView, StatusBar, View, Text, StyleSheet } from 'react-native';
+import { ScrollView, StatusBar, View, Text, StyleSheet, FlatList } from 'react-native';
 import { VictoryPie, VictoryTheme } from 'victory-native';
 import { Colors } from '../../enums/Colors';
+import { useEffect } from 'react'
+import { getIncome } from '../../redux/slices/allMovementsSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Props {}
 
 const Incomes: React.FC<Props> = () => {
-  const montos = {
-    montoA: 50,
-    montoB: 20,
-    montoC: 15,
-    montoD: 30,
-    montoE: 65,
-    montoF: 55,
-  };
+
+  const dispatch = useAppDispatch()
+  const incomes = useAppSelector(state=> state.allMovements.incomes)
+
+  const incexp: any[] = [...incomes]
+  
+  useEffect(() => {
+    console.log(dispatch(getIncome(1)))
+  }, [])
+
+  // const handleDeleteIncome= (id: number)=>{
+  //   const response= await axios.delete(`${base_URL}/movement/income/${id}`)
+  // }
+
   return (
     <View>
       <ScrollView bounces={true}>
         <StatusBar barStyle="light-content" />
         <View style={styles.homeCard}>
           <Text style={styles.title}>Incomes</Text>
-          <VictoryPie
-            theme={VictoryTheme.material}
-            data={[
-              { x: 'A', y: montos.montoA },
-              { x: 'B', y: montos.montoB },
-              { x: 'C', y: montos.montoC },
-              { x: 'D', y: montos.montoD },
-              { x: 'E', y: montos.montoE },
-              { x: 'F', y: montos.montoF },
-            ]}
-          />
-          <Text style={styles.detail}>Ingreso a: {montos.montoA}</Text>
-          <Text style={styles.detail}>Ingreso b: {montos.montoB}</Text>
-          <Text style={styles.detail}>Ingreso c: {montos.montoC}</Text>
-          <Text style={styles.detail}>Ingreso d: {montos.montoD}</Text>
-          <Text style={styles.detail}>Ingreso e: {montos.montoE}</Text>
-          <Text style={styles.detail}>Ingreso f: {montos.montoF}</Text>
-          <Text style={styles.detail}>Ingreso a: {montos.montoA}</Text>
-          <Text style={styles.detail}>Ingreso b: {montos.montoB}</Text>
-          <Text style={styles.detail}>Ingreso c: {montos.montoC}</Text>
-          <Text style={styles.detail}>Ingreso d: {montos.montoD}</Text>
-          <Text style={styles.detail}>Ingreso e: {montos.montoE}</Text>
-          <Text style={styles.detail}>Ingreso f: {montos.montoF}</Text>
+          <View>
+            <VictoryPie
+              theme={VictoryTheme.material}
+              data={incexp.map(e=>{
+                if (e.type) return {x: e.type, y: e.amount}
+              })}
+            />
+          </View>
+          <FlatList
+            data={incexp}
+            renderItem={({item}) =>{
+              if(item.type){
+                return <Text style={styles.detail}>{item.type}:  {item.amount}</Text> 
+              } else {
+                return <Text style={styles.detail}>No hay Ingresos</Text>
+              }
+            }}
+                />
         </View>
       </ScrollView>
     </View>
@@ -81,3 +86,6 @@ const styles = StyleSheet.create({
 });
 
 export default Incomes;
+function useAPPDispatch() {
+  throw new Error('Function not implemented.');
+}

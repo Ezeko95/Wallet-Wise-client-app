@@ -5,12 +5,13 @@ import SharedScreen from '../Screens/Shared';
 import Pager from '../components/home/Pager';
 import { Colors } from '../enums/Colors';
 import { Image, View } from 'react-native';
+import React from 'react';
 
 const Tab = createBottomTabNavigator();
 
 const MyTabs = () => {
   return (
-   
+
       <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
@@ -22,23 +23,6 @@ const MyTabs = () => {
         }
       }}
       >
-        <Tab.Screen 
-            name="Home" 
-            component={Pager} 
-            options={{
-              tabBarIcon: ({ focused }) => {
-                return (
-                  <View>
-                    <Image 
-                      source={require('./assets/homeIcon.png')}
-                      resizeMode='contain'
-                      style={{height: 60, tintColor:'white'}}
-                    />
-                  </View>
-                )
-              }
-            }}
-          />
         <Tab.Screen 
           name="Add" 
           component={FormIncome} 
@@ -56,6 +40,24 @@ const MyTabs = () => {
             }
           }}  
         />
+        <Tab.Screen 
+            name="Home" 
+            component={Pager} 
+            options={{
+              tabBarIcon: ({ focused }) => {
+                return (
+                  <View>
+                    <Image 
+                      source={require('./assets/homeIcon.png')}
+                      resizeMode='contain'
+                      style={{height: 60, tintColor:'white'}}
+                    />
+                  </View>
+                )
+              }
+            }}
+          />
+        
         <Tab.Screen 
           name="Profile" 
           component={SharedScreen} 

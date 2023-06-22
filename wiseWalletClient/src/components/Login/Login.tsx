@@ -37,8 +37,9 @@ const Login: React.FC = () => {
       setError('Invalid email or password');
     }
   };
+
   return (
-      <ImageBackground source={{uri:"https://us.123rf.com/450wm/virtosmedia/virtosmedia2302/virtosmedia230276138/199275054-silueta-de-un-%C3%A1rbol-sobre-un-fondo-de-puesta-de-sol-ilustraci%C3%B3n-vectorial.jpg?ver=6"}} 
+      <ImageBackground source={{uri:"https://w0.peakpx.com/wallpaper/525/971/HD-wallpaper-geometric-fade-bright-colourful-geometric.jpg"}} 
  >
   <KeyboardAvoidingView
       style={styles.container}
@@ -50,7 +51,6 @@ const Login: React.FC = () => {
       <Text style={styles.text}>Login</Text>
       {error && <Text>{error}</Text>}
       <TextInput
-        // style={styles.input}
         placeholder="Email"
         value={form.email}
         onChangeText={value => handleInputChange('email', value)}

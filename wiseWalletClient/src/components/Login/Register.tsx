@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet , Image, ImageBackground, KeyboardAvoidingView, Platform} from 'react-native';
+import { View, TextInput, Button, StyleSheet , Image, ImageBackground, KeyboardAvoidingView,Platform} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
@@ -17,7 +17,6 @@ const Register: React.FC = () => {
     email: '',
     password: '',
   });
-  console.log(form)
   const [error, setError] = useState<string>('');
 
   const handleInputChange = (name: keyof RegisterForm, value: string) => {
@@ -28,6 +27,8 @@ const Register: React.FC = () => {
   };
 
   const handleSubmit = async () => {
+    console.log(console.log(form));
+    
     try {
       const response = await axios.post<{ accessToken: string }>(
         'http://10.0.2.2:3001/user/register',
@@ -63,6 +64,12 @@ const Register: React.FC = () => {
         onChangeText={value => handleInputChange('name', value)}
         style={styles.input}
         />
+      {/* <TextInput
+        placeholder="picture"
+        value={form.picture}
+        onChangeText={value => handleInputChange('picture', value)}
+        style={styles.input}
+        /> */}
       <TextInput
         placeholder="Email"
         value={form.email}

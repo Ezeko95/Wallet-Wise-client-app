@@ -49,7 +49,7 @@ const ButtonNext = ({percentage, scrollTo}: any) =>{
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={scrollTo} style={styles.button} activeOpacity={0.6}>
+            <TouchableOpacity onPress= {scrollTo} style={styles.button} activeOpacity={0.6}>
                 <Image source={require('./assets/next3.png')}/>
             </TouchableOpacity>
             

@@ -1,19 +1,19 @@
-/* export interface Users{
+export interface Users{
     name: string,
     email: string,
     pictures: string
 }
 
-export interface Expends{
+export interface Expenses{
     id: number,
-    amounth: number,
+    amount: number,
     description: string,
     category: string,
     paymentMethod: string,
 }
 
 export interface Income{
-    amounth: number,
+    amount: number,
     type: string,
     account: string
 }
@@ -21,5 +21,19 @@ export interface Income{
 export interface State{
     users: Users,
     income: Income,
-    expends: Expends
-} */
+    expends: Expenses
+}
+
+export interface AllMovements {
+    incomes: Income[],
+    expenses: Expenses[],
+    loading: boolean,
+    error: string | null,
+}
+
+export interface Account {
+    name: string,
+    total: number,
+    expense: Expenses[],
+    income: Income[]
+}

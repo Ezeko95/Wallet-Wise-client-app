@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { Colors } from '../../enums/Colors';
-import AllExpenses from './AllExpenses';
+import AllExpenses from './AllMovements';
 import Incomes from './Income';
 import Expenses from './Expenses';
 

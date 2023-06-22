@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Pager from './Pager';
 import { Colors } from '../../enums/Colors';
+import React from 'react';
 
 const Home = () => {
   return (
