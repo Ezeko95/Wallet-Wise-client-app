@@ -1,4 +1,4 @@
-export interface Users{
+/* export interface Users{
     name: string,
     email: string,
     pictures: string
@@ -22,4 +22,4 @@ export interface State{
     users: Users,
     income: Income,
     expends: Expends
-}
+} */

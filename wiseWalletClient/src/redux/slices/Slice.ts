@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+/* import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Users } from "../interfaces/Interface";
 const initialState = {
     users: [],
@@ -26,4 +26,6 @@ const slice = createSlice({
 })
 
 export const { userPush, incomePush, expendsPush } = slice.actions;
-export default slice.reducer;
+export default slice.reducer; */
+
+

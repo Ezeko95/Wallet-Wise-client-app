@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import { StyleSheet,Text, TextInput, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { StyleSheet,Text, TextInput, View, TouchableOpacity, Alert } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { SelectCountry } from 'react-native-element-dropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { postMovement, MovementData } from '../../redux/features/movementSlice';
 import { ExpenseData, postExpense } from '../../redux/features/expenseSlice';
 import { RootState, AppDispatch } from '../../redux/store';
+
 
 interface Data {
   value: string;
@@ -157,12 +158,13 @@ const Pager = () => {
   const [paymentMethod, setPaymentMethod] = useState('');
 
   const handlePostMovement = () => {
+    
     const data: MovementData = {
       type,
       account,
       amount: parseFloat(amount),
     };
-
+    if(!type || !account || !amount) return Alert.alert('Incomplete fields, please complete them all')
     console.log(dispatch(postMovement(data)));
     Alert.alert('Successfully created income')
     setType('');
@@ -179,6 +181,7 @@ const Pager = () => {
       
     };
     console.log(dispatch(postExpense(data)));
+    if(!amount || !category || !description || paymentMethod ) return Alert.alert('Incomplete fields, please complete them all')
     Alert.alert('Successfully created expense')
     setAmount('');
     setDescription('');
@@ -203,9 +206,8 @@ const Pager = () => {
 
   return (
     
-
-    
     <View style={styles.container}>
+      
       <View style={styles.btnContainer}>
         <TouchableOpacity style={styles.buttonsPages} onPress={() => ref.current?.setPage(0)}>
           <Text style={styles.textButton}>Add Income</Text>
@@ -217,11 +219,8 @@ const Pager = () => {
       <PagerView style={styles.pager} ref={ref} initialPage={0}>
         <View key="1">
         <View>
-        
             <Text style={styles.textForm}>Add your Incomes here!</Text>
             <View style={styles.formContainer}>
-              <Text style={styles.text}>Add Income</Text>
-              
               <SelectCountry<Data>
                 style={styles.dropdown}
                 selectedTextStyle={styles.selectedTextStyle}
@@ -244,6 +243,7 @@ const Pager = () => {
                 placeholderTextColor="gray"
                 style={styles.input}
               />
+              
               <TextInput
                 value={amount} 
                 onChangeText={setAmount} 
@@ -256,7 +256,6 @@ const Pager = () => {
               <TouchableOpacity onPress={handlePostMovement} disabled={loading}  style={styles.btn}>
                 <Text style={styles.textBtn}>Add</Text>
               </TouchableOpacity>
-              
             </View>
             
           </View>
@@ -266,9 +265,9 @@ const Pager = () => {
         <View key="2">
           <View>
              <Text style={styles.textForm}>Add your Expenses here!</Text>
-             <View style={styles.formContainer}>
-             <Text style={styles.text}>Add Expenses</Text>
              
+             <View style={styles.formContainer}>
+
               <SelectCountry<Expense>
                 style={styles.dropdown}
                 selectedTextStyle={styles.selectedTextStyle}
@@ -318,13 +317,13 @@ const Pager = () => {
               <TouchableOpacity onPress={handlePostExpense} disabled={loading}  style={styles.btn}>
                 <Text style={styles.textBtn}>Add</Text>
               </TouchableOpacity>
+              
              </View>
+             
           </View>
         </View>
       </PagerView>
     </View>
-   
-    
   );
 }
 
@@ -334,7 +333,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '90%',
-    backgroundColor: '#202254',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -346,17 +344,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonsPages: {
-    backgroundColor: 'white',
+    backgroundColor: '#4D2FE4',
     borderRadius: 10,
     padding: 8,
     margin: 10,
+    marginBottom: -20,
+    top: 5,
   },
   textButton: {
-    color: 'black',
+    color: 'white',
     textAlign: 'center',
   },
   formContainer: {
-    backgroundColor: '#050A30',
     padding: 20,
     borderRadius: 15,
     alignItems: 'center',
@@ -397,7 +396,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 20,
-    top: 50,
+    top: 85,
   },
   dropdown: {
     margin: 16,
