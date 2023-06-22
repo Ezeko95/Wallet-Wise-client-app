@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StatusBar, View, Text, StyleSheet } from 'react-native';
-import { VictoryPie, VictoryTheme } from 'victory-native';
+import { VictoryPie, VictoryTheme , VictoryLabel} from 'victory-native';
 import { Colors } from '../../enums/Colors';
 
 interface Props {}
@@ -13,6 +13,13 @@ const Expenses: React.FC<Props> = () => {
     montoD: 30,
     montoE: 65,
     montoF: 55,
+  };
+  const labelStyle = {
+    fontFamily: 'Arial',
+    fontSize: 15,
+    fontWeight: 'bold',
+    fill: 'white',
+    
   };
   return (
     <ScrollView bounces={true}>
@@ -29,6 +36,11 @@ const Expenses: React.FC<Props> = () => {
             { x: 'E', y: montos.montoE },
             { x: 'F', y: montos.montoF },
           ]}
+          colorScale={['#35a39e', '#6e3983', '#5c5c8b']}
+            labels={({ datum }) => `${datum.x}`}
+            labelComponent={
+              <VictoryLabel style={labelStyle} />
+            }
         />
         <Text style={styles.detail}>Gasto c: {montos.montoC}</Text>
         <Text style={styles.detail}>Gasto e: {montos.montoE}</Text>
@@ -70,6 +82,7 @@ const styles = StyleSheet.create({
       fontSize: 20,
       justifyContent: 'center',
       alignSelf: 'center',
+      fontFamily:"Helvetica"
     },
   });
 

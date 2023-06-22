@@ -1,69 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import axios from 'axios';
-import { base_URL } from '../redux/utils';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Buffer } from 'buffer';
-import { Users } from '../redux/interfaces/Interface';
-
-
+import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { useAppSelector } from '../redux/store';
+import { useAppDispatch } from '../redux/store';
+import { gettingUsers } from '../redux/features/getUser';
 
 const SharedScreen = () => {
-  
-  const [userId, setUserId] = useState({});
-
-  const [user, setUser] = useState<any>([])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const accessToken = await AsyncStorage.getItem('accessToken');
-        if (accessToken) {
-          const tokenParts: string[] = accessToken.split('.');
-          const payload = JSON.parse(
-            Buffer.from(tokenParts[1], 'base64').toString('utf-8')
-          );
-          const userId = payload.user.id;
-          setUserId(userId);
-          console.log(userId)
-          let rep = await axios.get(`${base_URL}/user/${userId}`).then(response=> response.data);
-          setUser(rep);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-  console.log(user);
-  
-  return (
+  const dispatch = useAppDispatch()
+  useEffect(()=>{
+    dispatch(gettingUsers())
+  },[])
+  const state = useAppSelector(state=> state.user.user);
+  const tp = state.slice(0,1)
+  return(
     <View style={styles.sharedCard}>
-      <Image source={require('../components/Login/assets/avatar.png')}style={styles.image}/>
-     <Text style={styles.text}>{user.name}</Text>
-     <Text style={styles.text}>{user.email}</Text>
-     {
-      user.premium === false ? <Text style={styles.text}>Usuario No Premium</Text>: <Text style={styles.text}>Premium</Text>
-     }
+      {
+        state.length === 0 ? <Text>CARGANDO PERFIL....</Text>:
+        state.map((item,index)=>{
+          return(
+            <View style={styles.sharedCard} key={index}>
+             <Image source={{uri: `${item.payload.user.picture}`}} style={styles.image}/>
+              <Text style={{color: "white"}}>{item.payload.user.name}</Text>
+              <Text style={{color: "white"}}>{item.payload.user.email}</Text>
+              {item.payload.user.premium  === false ? <Text style={{color: "white"}}>Cuenta Standard</Text>: <Text style={{color: "white"}}>Cuenta premium</Text>}
+            </View>
+          )
+        })
+      }
+
     </View>
-  );
+  )
 };
 
 const styles = StyleSheet.create({
   image:{
     width: 200,
     height: 200,
-    borderRadius: 300
+    borderRadius: 100
   },
   sharedCard: {
     flex: 1,
-    justifyContent:"center",
-    alignItems:"center",
     backgroundColor: '#101c53',
+    
   },
   text: {
-    color:"white"
+    color:"white",
+    padding: 12
   }
 });
 

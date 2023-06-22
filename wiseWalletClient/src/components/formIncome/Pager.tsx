@@ -371,6 +371,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   input: {
+    fontSize:15,
     height: 40,
     width: 200,
     borderWidth: 1,
@@ -379,6 +380,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 25,
     backgroundColor: 'white',
+    color: 'black',
     marginTop: 20,
   },
   textBtn: {
@@ -409,6 +411,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEEEEE',
     borderRadius: 22,
     paddingHorizontal: 8,
+    color: 'black',
+    fontSize: 26,
+    marginBottom: 10,
   },
   imageStyle: {
     width: 25,
@@ -428,3 +433,4 @@ const styles = StyleSheet.create({
   },
   
 });
+
