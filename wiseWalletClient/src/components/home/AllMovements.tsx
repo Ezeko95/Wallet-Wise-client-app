@@ -12,7 +12,7 @@ const AllMovements: React.FC<Props> = () => {
 
   const incomes = useAppSelector(state => state.allMovements.incomes)
   const expenses = useAppSelector(state => state.allMovements.expenses)
-
+  
   const incexp: any[] = [...incomes, ...expenses]
 
   const filterIncome = incomes.filter((element: { amount: any; })=> element.amount)

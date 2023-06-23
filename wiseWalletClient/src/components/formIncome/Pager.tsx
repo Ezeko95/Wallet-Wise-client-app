@@ -160,7 +160,7 @@ const Pager = () => {
 
   const selector = useAppSelector((state) => state.user.user) // esto e user enterito
   
-  const aidi = selector.map(selector => selector.payload.user.id)
+  const aidi = selector.map(selector => selector.payload.user?.id)
   
   console.log(aidi, "AIDIIIII ASHEI8IIIII MUCHAS QUERRAN POCAS PODRAN");
   
@@ -173,7 +173,7 @@ const Pager = () => {
       amount: parseFloat(amount),
     };
     if(!type || !account || !amount) return Alert.alert('Incomplete fields, please complete them all')
-    dispatch(postMovement(data));
+    dispatch(postMovement(aidi[0],data));
     Alert.alert('Successfully created income')
     setType('');
     setAccount('');

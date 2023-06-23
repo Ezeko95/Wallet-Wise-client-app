@@ -4,12 +4,13 @@ export interface Users{
     pictures: string
 }
 
-export interface Expenses{
+export interface IExpenses{
     id: number,
     amount: number,
     description: string,
     category: string,
     paymentMethod: string,
+    deletedExpense: boolean
 }
 
 export interface Income{
@@ -21,12 +22,12 @@ export interface Income{
 export interface State{
     users: Users,
     income: Income,
-    expends: Expenses
+    expends: IExpenses
 }
 
 export interface AllMovements {
     incomes: Income[],
-    expenses: Expenses[],
+    expenses: IExpenses[],
     loading: boolean,
     error: string | null,
 }
@@ -34,6 +35,6 @@ export interface AllMovements {
 export interface Account {
     name: string,
     total: number,
-    expense: Expenses[],
+    expense: IExpenses[],
     income: Income[]
 }

@@ -18,7 +18,6 @@ const Slider = () => {
   const navigation:(any) = useNavigation();
   const [name, setName] = useState('');
   const [total, setTotal] = useState('');
-  const user = useAppSelector((state)=> state.user)
   const [docs, setDocs] = React.useState({});
 
   const [nie, setNie] = React.useState({
@@ -60,12 +59,15 @@ const Slider = () => {
       })
     }
   }
-
-
+  
   const selector = useAppSelector((state) => state.user.user) 
   const ide = selector.map(selector => selector.payload.user.id)
+ 
   
+  if(selector){
 
+    console.log(ide, "AFUERa");
+  }
 
   // post Account 
   const submitAccount = () => {
@@ -73,9 +75,11 @@ const Slider = () => {
       name,
       total: parseFloat(total),
     };
-    if (ide) {
+    if (ide !== undefined) {
+      console.log(ide, "ATRODEn");
+      
       console.log(dispatch(postAccount(ide[0], data)));
-      Alert.alert('Successfully created income');
+      Alert.alert('Successfully created Account');
       setName('');
       setTotal('');
     }
@@ -95,8 +99,11 @@ const Slider = () => {
               <Text style={{color: "white"}}>INPUT</Text>
               <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter your Account"></TextInput>
               <TextInput style={styles.input} value={total} onChangeText={setTotal} placeholder="Enter an Amount"></TextInput>
-          <TouchableOpacity /* onPress={submitAccount} */ onPress={()=> ref.current?.setPage(1)}  style={styles.select}>
+          <TouchableOpacity   onPress={()=>  ref.current?.setPage(1)}  style={styles.select}>
             <Text style={{textAlign: "center", color: "white"}}>Continuar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={submitAccount}>
+          <Text style={{textAlign: "center", color: "white"}}>Crear</Text>
           </TouchableOpacity>
             </View>
          
@@ -214,4 +221,3 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   }
 });
-

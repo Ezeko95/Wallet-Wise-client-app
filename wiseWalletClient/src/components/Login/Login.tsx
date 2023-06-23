@@ -22,8 +22,23 @@ const Login: React.FC = () => {
       [name]: value,
     }));
   };
-  const handleSubmit = async () => {
+  const [storage, setStorage] = useState(false)
+  const [login , setLogin] = useState(false)
+  const local = async()=>{
     try {
+      
+      const accesTokken = await  AsyncStorage.getItem("accessToken");
+      if(accesTokken){
+        setStorage(true)
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
+  } 
+  local()
+  const handleSubmit = async () => {  try {
+    
       const response = await axios.post<{ accessToken: string }>(
         'http://10.0.2.2:3001/user/login',
         form,
@@ -32,12 +47,11 @@ const Login: React.FC = () => {
       console.log(response.data);
       console.log('Login successful');
       await AsyncStorage.setItem('accessToken', accessToken);
-      navigation.navigate('Slider');
+      setLogin(true)
     } catch (error) {
       setError('Invalid email or password');
     }
   };
-
   return (
       <ImageBackground source={{uri:"https://w0.peakpx.com/wallpaper/525/971/HD-wallpaper-geometric-fade-bright-colourful-geometric.jpg"}} 
  >
@@ -65,6 +79,10 @@ const Login: React.FC = () => {
         />
       <Button title="Login" onPress={()=>{
         handleSubmit()
+        {
+         storage === true && login === true ? navigation.navigate('Slider') :  navigation.navigate('MyTabs')
+        }
+        
       }} color={"black"}/>
     </View>
       </KeyboardAvoidingView>

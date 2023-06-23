@@ -1,23 +1,81 @@
-import React, { useEffect } from 'react';
-import { ScrollView, StatusBar, View, Text, StyleSheet, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, StatusBar, View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 import { VictoryPie, VictoryTheme } from 'victory-native';
 import { Colors } from '../../enums/Colors';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import { getExpense } from '../../redux/slices/allMovementsSlice';
+import { ExpenseData } from '../../redux/slices/expenseSlice';
+import { IExpenses } from '../../redux/interfaces/Interface';
+import axios from 'axios';
+import { base_URL } from '../../redux/utils';
+
+// interface Expense {
+//   amount : number,
+//   description: string,
+//   category: string,
+//   paymentMethod: string,
+//   id: number,
+//   deletedExpense: boolean
+// }
 
 interface Props {}
 
 const Expenses: React.FC<Props> = () => {
 
   const dispatch = useAppDispatch()
-  const expenses = useAppSelector(state => state.allMovements.expenses)
 
-  const incexp: any[] = [...expenses]
+
+
+  const expenses = useAppSelector(state => state.allMovements.expenses)
+  const idUser = useAppSelector((state) => state.user.user)
+  const ide = idUser.map((idUser) => idUser.payload.user.id)
+
+  
+
+  //const [localExpense, setExpense] = useState<IExpenses[]>([]) //estado local
+  //console.log(localExpense, 'ACAAAAAA ESSSSS ESTADO LOCAL');
+  //console.log(expenses, 'EXPENSES DEL REDUX');
+  
+  //const incexp: any[] = [...expenses]
+
+  
 
   useEffect(() => {
-    dispatch(getExpense(1))
+    dispatch(getExpense(ide[0]))
+    
   }, [])
 
+   const handleDeleteExpense= async (idexp: number, ide: number)=>{
+     const response= await axios.delete(`${base_URL}/movement/expense/${idexp}`)
+     .then(()=>{  
+       dispatch(getExpense(ide))
+       console.log('dispach');
+       
+      }
+      )
+      }
+      //esto agregarrrr const filterExpenses= expenses.filter((expense)=> expense.deletedExpense)
+      //dispatch(getExpense(ide))
+
+   const handleShowExpense= async(idexp: number, ide: number)=>{
+     const response= await axios.put(`${base_URL}/movement/expense/${idexp}`)
+     .then(()=>{  
+      dispatch(getExpense(ide))
+     })
+     
+      
+     
+  //   dispatch(getExpense(id))
+   }
+
+   const handleUpdateExpense= async (ide: number)=>{
+     const response= await axios.put(`${base_URL}/movement/newExpense/${ide}`)
+  //   dispatch(getExpense(id))
+   }
+
+   const expenseFilterDel= expenses.filter((expense)=> !expense.deletedExpense)
+   console.log(expenses, 'estado local esasasasasasa');
+   
   
   return (
     <View>
@@ -28,16 +86,30 @@ const Expenses: React.FC<Props> = () => {
           <View>
             <VictoryPie
               theme={VictoryTheme.material}
-              data={incexp.map(e=>{
+              data={expenseFilterDel.map(e=>{
                 if (e.category) return {x: e.category, y: e.amount}
               })}
             />
           </View>
           <FlatList
-            data={incexp}
+            data={expenses}
+            nestedScrollEnabled
             renderItem={({item}) =>{
               if(item.category){
-                return <Text style={styles.detail}>{item.category}:  {item.amount}</Text>
+                return <View> 
+                          <Text style={styles.detail}>{item.category}:  {item.amount}  </Text>
+                              {
+                                !item.deletedExpense ?
+                          <TouchableOpacity onPress={() => handleDeleteExpense(item.id, ide[0])}>
+                                <Text style={{color: 'white'}}>X</Text>
+                          </TouchableOpacity>
+                                :
+                                <TouchableOpacity onPress={() => handleShowExpense(item.id, ide[0])}>
+                                    <Text style={{color: 'white'}}>Show</Text>
+                                </TouchableOpacity>
+                              }
+                          
+                      </View>
               } else {
                 return <Text style={styles.detail}>No hay Gastos</Text>
               }

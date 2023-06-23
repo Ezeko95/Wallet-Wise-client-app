@@ -67,12 +67,11 @@ const Intro = () => {
                 })}
                     scrollEventThrottle={32}
                     onViewableItemsChanged={viewableItemsChanged}
-                    
                     ref={slidesRef}
                 />
             </View>
             <Paginattor data={slide} scrollX={scrollX}/>
-            <ButtonNext scrollTo={scrollTo} percentage={(currentIndex + 1) * (100 / slide.length)} />
+            <ButtonNext viewableItemsChanged scrollTo={scrollTo} percentage={(currentIndex + 1) * (100 / slide.length)} />
         </ImageBackground>
     )
 }

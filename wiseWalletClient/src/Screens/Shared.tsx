@@ -1,69 +1,61 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import axios from 'axios';
-import { base_URL } from '../redux/utils';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Buffer } from 'buffer';
-import { Users } from '../redux/interfaces/Interface';
-
-
+import { View, Text, StyleSheet, Image, ScrollView , Button} from 'react-native';
+import { useAppSelector } from '../redux/store';
+import { useAppDispatch } from '../redux/store';
+import { gettingUsers } from '../redux/slices/getUsers';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import LogoutButton from '../components/Login/LogOut';
 
 const SharedScreen = () => {
+  const dispatch = useAppDispatch()
+  useEffect(()=>{
+    dispatch(gettingUsers())
+  },[])
+  const state = useAppSelector(state=> state.user.user);
+  const tp = state[state.length-1]
+  console.log(tp);
   
-  const [userId, setUserId] = useState({});
-
-  const [user, setUser] = useState<any>([])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const accessToken = await AsyncStorage.getItem('accessToken');
-        if (accessToken) {
-          const tokenParts: string[] = accessToken.split('.');
-          const payload = JSON.parse(
-            Buffer.from(tokenParts[1], 'base64').toString('utf-8')
-          );
-          const userId = payload.user.id;
-          setUserId(userId);
-          console.log(userId)
-          let rep = await axios.get(`${base_URL}/user/${userId}`).then(response=> response.data);
-          setUser(rep);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-  console.log(user);
-  
-  return (
+  return(
     <View style={styles.sharedCard}>
-      <Image source={require('../components/Login/assets/avatar.png')}style={styles.image}/>
-     <Text style={styles.text}>{user.name}</Text>
-     <Text style={styles.text}>{user.email}</Text>
-     {
-      user.premium === false ? <Text style={styles.text}>Usuario No Premium</Text>: <Text style={styles.text}>Premium</Text>
-     }
+    <View style={styles.perfiView}>
+      
+
+    <View style={styles.perfiView} key={tp.payload.user.id}>
+             <Image source={{uri: `${tp.payload.user.picture}`}} style={styles.image}/>
+              <Text style={{color: "white"}}>{tp.payload.user.name}</Text>
+              <Text style={{color: "white"}}>{tp.payload.user.email}</Text>
+              {tp.payload.user.premium  === false ? <Text style={{color: "white"}}>Cuenta Standard</Text>: <Text style={{color: "white"}}>Cuenta premium</Text>}
     </View>
-  );
+       
+    </View>
+    <View>
+    <LogoutButton/>
+    </View>
+      </View>
+  )
 };
 
 const styles = StyleSheet.create({
   image:{
     width: 200,
     height: 200,
-    borderRadius: 300
+    borderRadius: 100
   },
   sharedCard: {
     flex: 1,
-    justifyContent:"center",
-    alignItems:"center",
+    justifyContent: "space-around",
     backgroundColor: '#101c53',
   },
   text: {
-    color:"white"
+    color:"white",
+    padding: 12
+  },
+  perfiView:{
+    height: 200,
+    width: 400,
+    display: 'flex',
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 

@@ -12,6 +12,7 @@ export interface ExpenseData {
     description: string,
     category: string,
     paymentMethod: string
+    
 }
 
 interface ExpenseState {

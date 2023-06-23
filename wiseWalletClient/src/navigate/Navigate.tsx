@@ -1,27 +1,37 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
-const stackNavigator = createNativeStackNavigator();
+import { NavigationContainer, RouteProp } from '@react-navigation/native';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import Slider from '../slider/Slider';
 import MyTabs from '../tabs/Tabs';
 import AuthView from '../Screens/Authenticate';
 import Intro from '../components/Intro/Intro';
-import Login from '../components/Login/Login';
+
+type RootStackParamList = {
+  Intro: undefined;
+  Login: undefined;
+  Slider: undefined;
+  MyTabs: undefined;
+};
+
+type SliderScreenRouteProp = RouteProp<RootStackParamList, 'Slider'>;
+
+type Props = {
+  route: SliderScreenRouteProp;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Navigate = () => {
   return (
     <NavigationContainer>
-      <stackNavigator.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}>
-            {/* <stackNavigator.Screen name='Intro' component={Intro}/> 
-            <stackNavigator.Screen name='Login' component={AuthView}/>
-            <stackNavigator.Screen name='Slider' component={Slider}/>  */}
-            <stackNavigator.Screen name='MyTabs' component={MyTabs}/>
-            
-        </stackNavigator.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {/* <Stack.Screen name="Intro" component={Intro} /> */}
+        <Stack.Screen name="Login" component={AuthView} />
+        <Stack.Screen name="Slider" component={Slider} />
+        <Stack.Screen name="MyTabs" component={MyTabs} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
+
 export default Navigate;

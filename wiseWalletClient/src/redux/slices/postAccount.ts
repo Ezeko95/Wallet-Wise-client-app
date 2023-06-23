@@ -9,7 +9,6 @@ import axios from 'axios';
 
 
 export interface AccountData {
-  
   name: string;
   total: number;
 }

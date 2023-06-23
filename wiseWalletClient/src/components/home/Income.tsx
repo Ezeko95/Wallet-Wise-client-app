@@ -39,6 +39,7 @@ const Incomes: React.FC<Props> = () => {
             />
           </View>
           <FlatList
+          nestedScrollEnabled
             data={incexp}
             renderItem={({item}) =>{
               if(item.type){
