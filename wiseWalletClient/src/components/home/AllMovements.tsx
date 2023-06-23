@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { ScrollView, StatusBar, View, Text, StyleSheet, FlatList } from 'react-native';
-import { VictoryPie, VictoryTheme } from 'victory-native';
+import { VictoryPie, VictoryTheme, VictoryLabel} from 'victory-native';
+import Svg,{ Circle } from 'react-native-svg';
 import { Colors } from '../../enums/Colors';
 import { useAppSelector } from '../../redux/hooks/hooks';
 
@@ -34,24 +35,26 @@ const AllMovements: React.FC<Props> = () => {
         <StatusBar barStyle="light-content" />
           <View style={styles.homeCard}>
             <Text style={styles.title}>All</Text>
-              
-              
                     <View>
+                      <Text style={styles.text}>$15634</Text>
                       <VictoryPie
-                        theme={VictoryTheme.material}
-                        data={incexp.map(e=>{
-                          if (e.type){
-                          return {x: e.type, y: e.amount}
-                          } else {
-                            return {x: e.category, y: e.amount}
-                          }
-                        })}
-                      />
+                            padAngle={({ datum }) => datum.y}
+                            innerRadius={100}
+                            theme={VictoryTheme.material}
+                            data={incexp.map(e=>{
+                              if (e.type){
+                              return {x: e.type, y: e.amount}
+                              } else {
+                                return {x: e.category, y: e.amount}
+                              }
+                            })}
+                          />
                     </View>
-                  
-                {/* {incexp && incexp?.map( (movement, index) => {
-                    return( */}
+                          
+                    
+      
                 <FlatList
+                nestedScrollEnabled
                   data={incexp}
                   renderItem={({item}) =>{
                     if(item.type){
@@ -99,6 +102,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
   },
+  text:{
+    top: 230,
+    color: 'white',
+    fontSize: 40,
+    textAlign: 'center'
+  }
 });
 
 export default AllMovements;

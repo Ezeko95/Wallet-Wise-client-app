@@ -15,11 +15,11 @@ const Navigate = () => {
           screenOptions={{
             headerShown: false,
           }}>
-             {/* <stackNavigator.Screen name='Intro' component={Intro}/>  */}
-            {/* <stackNavigator.Screen name='Login' component={AuthView}/> */}
-            <stackNavigator.Screen name='Slider' component={Slider}/> 
+            {/* <stackNavigator.Screen name='Intro' component={Intro}/> 
+            <stackNavigator.Screen name='Login' component={AuthView}/>
+            <stackNavigator.Screen name='Slider' component={Slider}/>  */}
             <stackNavigator.Screen name='MyTabs' component={MyTabs}/>
-
+            
         </stackNavigator.Navigator>
     </NavigationContainer>
   );

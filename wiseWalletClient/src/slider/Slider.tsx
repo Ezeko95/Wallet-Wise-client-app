@@ -8,10 +8,12 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
 import { useDispatch, useSelector } from 'react-redux';
 import { postAccount, AccountData } from "../redux/slices/postAccount";
 import { RootState, AppDispatch } from '../redux/store';
+import { gettingUsers } from "../redux/slices/getUsers";
+
 
 const Slider = () => {
   const ref: any = useRef()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const { loading, error } = useSelector((state: RootState) => state.movement);
   const navigation:(any) = useNavigation();
   const [name, setName] = useState('');
@@ -59,21 +61,29 @@ const Slider = () => {
     }
   }
 
+
+  const selector = useAppSelector((state) => state.user.user) 
+  const ide = selector.map(selector => selector.payload.user.id)
+  
+
+
   // post Account 
   const submitAccount = () => {
     const data: AccountData = {
       name,
       total: parseFloat(total),
     };
-    /* dispatch(postAccount(data)); */
-    Alert.alert('Successfully created income')
-    setName('');
-    setTotal('');
-    
+    if (ide) {
+      console.log(dispatch(postAccount(ide[0], data)));
+      Alert.alert('Successfully created income');
+      setName('');
+      setTotal('');
+    }
   };
- 
 
-   
+  useEffect(()=>{
+    dispatch(gettingUsers())
+  },[])
 
   return (
     <View style={styles.container}>
@@ -85,7 +95,7 @@ const Slider = () => {
               <Text style={{color: "white"}}>INPUT</Text>
               <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter your Account"></TextInput>
               <TextInput style={styles.input} value={total} onChangeText={setTotal} placeholder="Enter an Amount"></TextInput>
-          <TouchableOpacity onPress={()=> ref.current?.setPage(1)} style={styles.select}>
+          <TouchableOpacity /* onPress={submitAccount} */ onPress={()=> ref.current?.setPage(1)}  style={styles.select}>
             <Text style={{textAlign: "center", color: "white"}}>Continuar</Text>
           </TouchableOpacity>
             </View>

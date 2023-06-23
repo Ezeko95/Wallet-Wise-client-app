@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { RootState } from '../store';
-import { AnyAction } from '@reduxjs/toolkit';
+import { AppDispatch, RootState } from '../store';
+import  AppThunk  from '../store';
+import { AnyAction, Action } from '@reduxjs/toolkit';
 import { base_URL } from '../utils';
 import axios from 'axios'; 
 
 
 export interface AccountData {
+  
   name: string;
   total: number;
 }
@@ -42,15 +44,25 @@ const AccountSlice = createSlice({
 
 export const { postAccountStart, postAccountSuccess, postAccountFailure } = AccountSlice.actions;
 
-export const postAccount = (
-    data: AccountData
-  ): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch: Dispatch) => {
+type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;
+
+
+export const postAccount= (id: number, data: AccountData): AppThunk=>{
+  return async (dispatch: AppDispatch)=>{
     try {
-      const response = await axios.post(`${base_URL}/account/1`, data);
+      console.log(id)
+      const response = await axios.post(`${base_URL}/account/${id}`, data);
       console.log(response.data);
       return response.data
     } catch (error) {
-      console.log(error);
+      console.log('error');
+      
     }
-  };
+  }
+} 
 export default AccountSlice.reducer;
