@@ -80,7 +80,7 @@ const Login: React.FC = () => {
       <Button title="Login" onPress={()=>{
         handleSubmit()
         {
-         storage === true && login === true ? navigation.navigate('Slider') :  navigation.navigate('MyTabs')
+         storage === true && login === true ? navigation.navigate('Slider') :  navigation.navigate('MyDrawer')
         }
         
       }} color={"black"}/>
