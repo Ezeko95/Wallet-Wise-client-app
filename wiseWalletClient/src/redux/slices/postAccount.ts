@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { AppDispatch, RootState } from '../store';
-import  AppThunk  from '../store';
+import { AppThunk } from '../store';
 import { AnyAction, Action } from '@reduxjs/toolkit';
 import { base_URL } from '../utils';
 import axios from 'axios'; 
@@ -34,33 +34,26 @@ const AccountSlice = createSlice({
     postAccountSuccess: (state) => {
       state.loading = false;
     },
-    postAccountFailure: (state, action: PayloadAction<string>) => {
+    postAccountFailure: (state, action: PayloadAction<Error>) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
   },
 });
 
 export const { postAccountStart, postAccountSuccess, postAccountFailure } = AccountSlice.actions;
 
-type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+
 
 
 export const postAccount= (id: number, data: AccountData): AppThunk=>{
   return async (dispatch: AppDispatch)=>{
     try {
-      console.log(id)
       const response = await axios.post(`${base_URL}/account/${id}`, data);
       console.log(response.data);
       return response.data
     } catch (error) {
-      console.log('error');
-      
+      dispatch(postAccountFailure(error as Error))
     }
   }
 } 

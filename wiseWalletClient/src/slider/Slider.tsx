@@ -1,6 +1,6 @@
 import React from "react";
 import { useRef , useState, useEffect} from "react";
-import { View, StyleSheet, Text, Image , TouchableOpacity, ImageSourcePropType, Button, TextInput, Alert} from "react-native";
+import { View, StyleSheet, Text, Image , TouchableOpacity, ImageSourcePropType, Button, TextInput, Alert, ImageBackground} from "react-native";
 import PagerView from "react-native-pager-view";
 import {useNavigation} from "@react-navigation/native";
 import { Colors } from "../enums/Colors";
@@ -70,6 +70,9 @@ const Slider = () => {
   }
 
   // post Account 
+
+  
+
   const submitAccount = () => {
     const data: AccountData = {
       name,
@@ -91,22 +94,24 @@ const Slider = () => {
 
   return (
     <View style={styles.container}>
-      <PagerView style={styles.pager} initialPage={0} onPageScroll={(e)=> console.log(e)} onPageSelected={(e)=> console.log(e)} onPageScrollStateChanged={(e)=> console.log(e)} ref={ref}>
+      <ImageBackground style={{flex: 1, width: '100%'}} source={require('./assets/fondoCreateAccount.png')}>
+
+      <PagerView style={styles.pager} initialPage={0} onPageScroll={(e)=>  console.log(e)} onPageSelected={(e)=> console.log(e)} onPageScrollStateChanged={(e)=> console.log(e)} ref={ref}>
       <View key="1" style={styles.inputContain}>
+    
         <Text style={styles.text}>Create an account</Text>
 
             <View style={styles.containerInput}>
-              <Text style={{color: "white"}}>INPUT</Text>
               <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter your Account"></TextInput>
               <TextInput style={styles.input} value={total} onChangeText={setTotal} placeholder="Enter an Amount"></TextInput>
-          <TouchableOpacity   onPress={()=>  ref.current?.setPage(1)}  style={styles.select}>
-            <Text style={{textAlign: "center", color: "white"}}>Continuar</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={submitAccount}>
+          <TouchableOpacity style={styles.select} onPress={submitAccount}>
           <Text style={{textAlign: "center", color: "white"}}>Crear</Text>
           </TouchableOpacity>
             </View>
-         
+          <TouchableOpacity   onPress={()=>  ref.current?.setPage(1)}  style={styles.btnContinue}>
+            <Text style={{textAlign: "center", color: "white"}}>Continuar</Text>
+          </TouchableOpacity>
+            
         </View>
 
         <View key="2" style={styles.map}>
@@ -139,10 +144,13 @@ const Slider = () => {
             })
           }
           {
-            Array.isArray(nie.change) && Array.isArray(nie.grafico)  ?  <Button color={"violet"} onPress={() => navigation.navigate('MyTabs')} title="Continue" />: null
+            Array.isArray(nie.change) && Array.isArray(nie.grafico)  ?  
+            <Button color={"violet"} onPress={() => navigation.navigate('MyDrawer')} title="Continue" />
+            : null
           }     
         </View>
       </PagerView>
+      </ImageBackground>
     </View>
   );
 };
@@ -160,22 +168,24 @@ const styles = StyleSheet.create({
     height: 35,
     alignItems: "center",
     justifyContent: "center",
+    padding: 5,
+    margin: 15,
+    borderRadius: 15,
   },
   input:{
     width: 200,
     height: 50,
     backgroundColor: "white",
     margin: 10,
-    borderRadius: 4,
-
+    borderRadius: 100,
+    
   },
   containerInput:{
-    marginBottom:250 ,
+    marginBottom:100 ,
     height: 200,
     width: 300,
     padding: 40,
-    backgroundColor: "#545470",
-    borderRadius: 20,
+    borderRadius: 50,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -198,7 +208,8 @@ const styles = StyleSheet.create({
   },
   text:{
     color: "white",
-    fontSize: 25
+    fontSize: 22,
+    bottom: -50,
   },
   container: {
     flex: 1,
@@ -219,5 +230,13 @@ const styles = StyleSheet.create({
   pager: {
     flex: 1,
     alignSelf: "stretch",
+  },
+  btnContinue: {
+    backgroundColor: '#5E17EB',
+    padding: 5,
+    top: -50,
+    borderRadius: 15,
+    width: 150,
+    height: 35,
   }
 });

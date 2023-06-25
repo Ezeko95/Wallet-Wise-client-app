@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import { Text, View, StyleSheet, ImageBackground, FlatList, Image, ListRenderItem, Animated, Button} from 'react-native';
+import { Text, View, StyleSheet, ImageBackground, FlatList, Image, ListRenderItem, Animated, Button, TouchableOpacity} from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import Paginattor from './Paginattor';
 import ButtonNext from './ButtonNext';
@@ -72,6 +72,9 @@ const Intro = () => {
             </View>
             <Paginattor data={slide} scrollX={scrollX}/>
             <ButtonNext viewableItemsChanged scrollTo={scrollTo} percentage={(currentIndex + 1) * (100 / slide.length)} />
+            <TouchableOpacity style={styles.btnSkip} onPress={() => navigation.navigate('Login')}>
+                    <Text style={styles.skip}>Skip</Text>
+            </TouchableOpacity>
         </ImageBackground>
     )
 }
@@ -94,4 +97,19 @@ const styles= StyleSheet.create({
         alignItems: 'center',
         top: 50
       },
+    skip: {
+        color: 'white',
+        backgroundColor: '#8C52FF',
+        fontSize: 16,
+        textAlign: 'center',
+    },
+    btnSkip: {
+        padding: 10,
+        backgroundColor: '#8C52FF',
+        borderRadius: 30,
+        top: -90,
+        textAlign: 'center',
+        paddingLeft: 20,
+        paddingRight: 20,
+    }
 })

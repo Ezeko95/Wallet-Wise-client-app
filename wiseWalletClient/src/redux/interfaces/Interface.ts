@@ -13,28 +13,44 @@ export interface IExpenses{
     deletedExpense: boolean
 }
 
-export interface Income{
+export interface IIncome{
+    id: number,
     amount: number,
     type: string,
     account: string
+    deletedIncome: boolean
 }
 
 export interface State{
     users: Users,
-    income: Income,
+    income: IIncome,
     expends: IExpenses
 }
 
 export interface AllMovements {
-    incomes: Income[],
+    incomes: IIncome[],
     expenses: IExpenses[],
     loading: boolean,
     error: string | null,
+    createdAt: Date,
+    type: string,
+    category: string,
+    amount: number
 }
 
 export interface Account {
     name: string,
     total: number,
-    expense: IExpenses[],
-    income: Income[]
+    expense: IExpenses[]
+    income: IIncome[]
+}
+
+export interface Filtered {
+    id:number,
+    amount:number,
+    account: string | null,
+    paymentMethod: string | null,
+    createdAt: Date,
+    type: string,
+    category: string
 }

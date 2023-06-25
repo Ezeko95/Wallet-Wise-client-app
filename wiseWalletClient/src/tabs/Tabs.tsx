@@ -1,3 +1,4 @@
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FormIncome from '../components/formIncome/FormIncome';
 import { NavigationContainer } from '@react-navigation/native';
@@ -5,11 +6,13 @@ import SharedScreen from '../Screens/Shared';
 import Pager from '../components/home/Pager';
 import { Colors } from '../enums/Colors';
 import { Image, View } from 'react-native';
-import React from 'react';
+
+
 
 const Tab = createBottomTabNavigator();
 
 const MyTabs = () => {
+  
   return (
 
       <Tab.Navigator
@@ -40,7 +43,8 @@ const MyTabs = () => {
             }
           }}  
         />
-        <Tab.Screen 
+
+        <Tab.Screen
             name="Home" 
             component={Pager} 
             options={{
