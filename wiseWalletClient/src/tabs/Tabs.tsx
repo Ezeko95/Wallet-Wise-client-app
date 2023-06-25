@@ -5,8 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import SharedScreen from '../Screens/Shared';
 import Pager from '../components/home/Pager';
 import { Colors } from '../enums/Colors';
-import { Image, View } from 'react-native';
-
+import { View, Image} from 'react-native'
 
 
 const Tab = createBottomTabNavigator();

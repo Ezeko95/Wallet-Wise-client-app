@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView , Button} from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { useAppSelector } from '../redux/store';
 import { useAppDispatch } from '../redux/store';
 import { gettingUsers } from '../redux/slices/getUsers';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import LogoutButton from '../components/Login/LogOut';
 
 const SharedScreen = () => {

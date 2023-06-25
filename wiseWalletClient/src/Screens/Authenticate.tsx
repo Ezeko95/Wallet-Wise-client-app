@@ -15,6 +15,7 @@ const AuthView: React.FC = () => {
       <Button
         title={isLoginView ? 'Switch to Login' :  'Switch to Register'}
         onPress={handleToggleView}
+        color={"black"}
       />
     </View>
   );

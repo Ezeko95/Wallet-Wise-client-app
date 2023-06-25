@@ -19,7 +19,7 @@ const store = configureStore({
   devTools: true
 });
 
-/* export type AppDispatch = typeof store.dispatch; */
+//  export type AppDispatch = typeof store.dispatch; 
 export type AppDispatch = ThunkDispatch<RootState, any, AnyAction>;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<ReturnType<typeof store.getState>> = useSelector;
@@ -32,3 +32,4 @@ Action<string>
 >
 
 export default store;
+

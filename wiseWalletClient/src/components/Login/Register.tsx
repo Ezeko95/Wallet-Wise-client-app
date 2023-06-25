@@ -64,12 +64,6 @@ const Register: React.FC = () => {
         onChangeText={value => handleInputChange('name', value)}
         style={styles.input}
         />
-      {/* <TextInput
-        placeholder="picture"
-        value={form.picture}
-        onChangeText={value => handleInputChange('picture', value)}
-        style={styles.input}
-        /> */}
       <TextInput
         placeholder="Email"
         value={form.email}
@@ -94,6 +88,14 @@ const Register: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    height: '96.5%',
+    paddingBottom:79,
+    width: "100%",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   image:{
     height:250,
     width: 250
@@ -108,14 +110,6 @@ const styles = StyleSheet.create({
     color:"black",
     fontSize:20,
     fontWeight:"bold",
-  },
-  container: {
-    height: 624,
-    paddingBottom:79,
-    width: "100%",
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   reg: {
     backgroundColor: 'green',

@@ -164,10 +164,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.DETAIL_COLOR,
     margin: 10,
     borderRadius: 5,
-    color: '#fff',
-    fontSize: 20,
+    padding : 10,
+    color: '#ffffff',
+    fontSize: 25,
     justifyContent: 'center',
     alignSelf: 'center',
+    fontFamily:"Helvetica"
   },
 });
 
