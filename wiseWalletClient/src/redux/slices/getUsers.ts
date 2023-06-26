@@ -1,53 +1,58 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { RootState } from '../store';
 import { AnyAction } from '@reduxjs/toolkit';
-import { base_URL } from '../utils';
-import axios from 'axios'; 
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import jwtDecode, {JwtPayload} from "jwt-decode";
+import { RootState } from '../store';
 
 export interface Users{
-    name: string,
-    email: string,
-    pictures: string
+    payload:{
+      user: {
+        createdAt:string,
+        email:string
+        id: number
+        name: string
+        password: string
+        picture:string
+        premium: boolean
+        updatedAt: string
+      };
+    }
 }
 
 interface UserState {
-    loading: boolean;
-    error: string | null;
+    user: Users[]
+
 }
 
 const initialState: UserState = {
-        loading: false,
-        error: null
+        user:[],
 }
 
 export const usersSlice = createSlice({
     name: 'users',
     initialState,
     reducers: {
-        getUsers: (state, action) => {
-            state.loading = true;
-            state.error = null;
+        getUserTokken: (state, action)=>{
+          state.user.push(action.payload)
         },
-        userSucces: (state) => {
-          state.loading = false;
-        },
-        usersFailure: (state, action: PayloadAction<string>) => {
-          state.loading = false;
-          state.error = action.payload;
-        },
+
     }
 })
 
-export const { getUsers, userSucces, usersFailure } = usersSlice.actions;
+
+
+export const {getUserTokken } = usersSlice.actions;
 
 export const gettingUsers = (): ThunkAction <void, RootState, unknown, AnyAction>=> async (dispatch: Dispatch) => {
     try {
-      const response = await axios.get(`${base_URL}/user/1`)
-      console.log(response.data);
-      return response.data
+      const accesTokken = await  AsyncStorage.getItem("accessToken");
+      if (accesTokken) {
+        const decodedToken = jwtDecode(accesTokken);
+        dispatch(getUserTokken({payload: decodedToken}))
+        console.log("usuario regista2")
+      }
     } catch (error) {
       console.log(error);
     }

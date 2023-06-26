@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet,Text, TextInput, View, TouchableOpacity, Alert } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { SelectCountry } from 'react-native-element-dropdown';
 import { useDispatch, useSelector } from 'react-redux';
-import { postMovement, MovementData } from '../../redux/features/movementSlice';
-import { ExpenseData, postExpense } from '../../redux/features/expenseSlice';
-import { RootState, AppDispatch } from '../../redux/store';
+import { postMovement, MovementData } from '../../redux/slices/movementSlice';
+import { ExpenseData, postExpense } from '../../redux/slices/expenseSlice';
+import { useAppSelector, useAppDispatch } from '../../redux/store';
+import { gettingUsers } from '../../redux/slices/getUsers';
+
 
 
 interface Data {
@@ -148,14 +150,22 @@ const dataExpense: Expense[] = [
 
 const Pager = () => {
   
-  const dispatch = useDispatch<AppDispatch>()
-  const { loading, error } = useSelector((state: RootState) => state.movement);
+  const dispatch = useAppDispatch()
+  const { loading, error } = useAppSelector((state) => state.movement);
   const [type, setType] = useState('');
   const [account, setAccount] = useState('');
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
+
+
+  const selector = useAppSelector((state) => state.user.user) // esto e user enterito
+  
+  const aidi = selector.map(selector => selector.payload.user?.id)
+  
+  console.log(aidi, "AIDIIIII ASHEI8IIIII MUCHAS QUERRAN POCAS PODRAN");
+  
 
   const handlePostMovement = () => {
     
@@ -165,7 +175,7 @@ const Pager = () => {
       amount: parseFloat(amount),
     };
     if(!type || !account || !amount) return Alert.alert('Incomplete fields, please complete them all')
-    console.log(dispatch(postMovement(data)));
+    dispatch(postMovement(aidi[0],data));
     Alert.alert('Successfully created income')
     setType('');
     setAccount('');
@@ -181,7 +191,7 @@ const Pager = () => {
       
     };
     if(!amount || !category || !description || !paymentMethod ) return Alert.alert('Incomplete fields, please complete them all')
-    console.log(dispatch(postExpense(data)));
+    console.log(dispatch(postExpense(aidi[0], data)))
     Alert.alert('Successfully created expense')
     setAmount('');
     setDescription('');
@@ -204,9 +214,14 @@ const Pager = () => {
 
    const ref = React.useRef<PagerView>(null);
 
-  return (
-    
+  useEffect(()=>{
+    dispatch(gettingUsers())
+  },[])
 
+  
+  
+
+  return (
     
     <View style={styles.container}>
       
@@ -221,10 +236,8 @@ const Pager = () => {
       <PagerView style={styles.pager} ref={ref} initialPage={0}>
         <View key="1">
         <View>
-        
             <Text style={styles.textForm}>Add your Incomes here!</Text>
             <View style={styles.formContainer}>
-              
               <SelectCountry<Data>
                 style={styles.dropdown}
                 selectedTextStyle={styles.selectedTextStyle}

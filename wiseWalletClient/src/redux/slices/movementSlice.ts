@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Dispatch } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import { RootState } from '../store';
-import { AnyAction } from '@reduxjs/toolkit';
+import { AppThunk } from '../store';
 import { base_URL } from '../utils';
 import axios from 'axios'; 
 
@@ -34,24 +31,25 @@ const movementSlice = createSlice({
     postMovementSuccess: (state) => {
       state.loading = false;
     },
-    postMovementFailure: (state, action: PayloadAction<string>) => {
+    postMovementFailure: (state, action: PayloadAction<Error>) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
   },
 });
 
 export const { postMovementStart, postMovementSuccess, postMovementFailure } = movementSlice.actions;
 
-export const postMovement = (
-    data: MovementData
-  ): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch: Dispatch) => {
+export const postMovement= (id: number, data: MovementData): AppThunk=>{
+  return async (dispatch)=>{
     try {
-      const response = await axios.post(`${base_URL}/movement/1`, data);
+      console.log(id)
+      const response = await axios.post(`${base_URL}/movement/${id}`, data);
       console.log(response.data);
       return response.data
     } catch (error) {
-      console.log(error);
+      dispatch(postMovementFailure(error as Error))
     }
-  };
+  }
+} 
 export default movementSlice.reducer;

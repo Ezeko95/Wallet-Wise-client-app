@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-
 import { View, TextInput, Button, StyleSheet , Image, ImageBackground, KeyboardAvoidingView,Platform} from 'react-native';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
@@ -57,8 +55,7 @@ const Register: React.FC = () => {
 
 
     <View style={styles.container}>
-      <Image source={require("./logo.png")} style={styles.image}/>
-
+      <Image source={require("./assets/logo.png")} style={styles.image}/>
       <KeyboardAvoidingView>
 
       <TextInput
@@ -91,6 +88,14 @@ const Register: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    height: '96.5%',
+    paddingBottom:79,
+    width: "100%",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   image:{
     height:250,
     width: 250
@@ -105,15 +110,6 @@ const styles = StyleSheet.create({
     color:"black",
     fontSize:20,
     fontWeight:"bold",
-  },
-  container: {
-    height: 624,
-
-    paddingBottom:79,
-    width: "100%",
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   reg: {
     backgroundColor: 'green',

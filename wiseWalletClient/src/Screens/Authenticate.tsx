@@ -11,9 +11,9 @@ const AuthView: React.FC = () => {
 
   return (
     <View style={{backgroundColor:"black"}}>
-      {isLoginView ? <Login /> : <Register />}
+      {isLoginView ? <Register /> :  <Login />}
       <Button
-        title={isLoginView ? 'Switch to Register' : 'Switch to Login'}
+        title={isLoginView ? 'Switch to Login' :  'Switch to Register'}
         onPress={handleToggleView}
         color={"black"}
       />

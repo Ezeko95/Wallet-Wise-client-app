@@ -5,7 +5,7 @@ import Pager from './Pager';
 
 const FormIncome = () => {
     return (
-    <ImageBackground style={styles.fondo} source={require('./assets/fondo4.png')}>
+    <ImageBackground style={styles.fondo} source={require('./assets/bgForm.png')}>
             <View style={styles.view}>
                 <Pager />
             </View>

@@ -50,7 +50,7 @@ export const gettingUsers = (): ThunkAction <void, RootState, unknown, AnyAction
     try {
       const accesTokken = await  AsyncStorage.getItem("accessToken");
       if (accesTokken) {
-        const decodedToken = jwtDecode<JwtPayload>(accesTokken);
+        const decodedToken = jwtDecode(accesTokken);
         dispatch(getUserTokken({payload: decodedToken}))
         console.log("usuario regista2")
       }

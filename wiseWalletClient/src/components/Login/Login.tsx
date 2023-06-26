@@ -22,8 +22,23 @@ const Login: React.FC = () => {
       [name]: value,
     }));
   };
-  const handleSubmit = async () => {
+  const [storage, setStorage] = useState(false)
+  const [login , setLogin] = useState(false)
+  const local = async()=>{
     try {
+      
+      const accesTokken = await  AsyncStorage.getItem("accessToken");
+      if(accesTokken){
+        setStorage(true)
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
+  } 
+  local()
+  const handleSubmit = async () => {  try {
+    
       const response = await axios.post<{ accessToken: string }>(
         'http://10.0.2.2:3001/user/login',
         form,
@@ -32,13 +47,12 @@ const Login: React.FC = () => {
       console.log(response.data);
       console.log('Login successful');
       await AsyncStorage.setItem('accessToken', accessToken);
-      navigation.navigate('Slider');
+      setLogin(true)
     } catch (error) {
       setError('Invalid email or password');
     }
   };
-
-   return (
+  return (
       <ImageBackground source={{uri:"https://w0.peakpx.com/wallpaper/525/971/HD-wallpaper-geometric-fade-bright-colourful-geometric.jpg"}} 
  >
   <KeyboardAvoidingView
@@ -47,7 +61,7 @@ const Login: React.FC = () => {
     >
 
     <View style={styles.container}>
-      <Image source={require("./logo.png")} style={styles.image}/>
+      <Image source={require("./assets/logo.png")} style={styles.image}/>
       <Text style={styles.text}>Login</Text>
       {error && <Text>{error}</Text>}
       <TextInput
@@ -65,6 +79,10 @@ const Login: React.FC = () => {
         />
       <Button title="Login" onPress={()=>{
         handleSubmit()
+        {
+         storage === true && login === true ? navigation.navigate('Slider') :  navigation.navigate('MyDrawer')
+        }
+        
       }} color={"black"}/>
     </View>
       </KeyboardAvoidingView>
@@ -72,6 +90,14 @@ const Login: React.FC = () => {
   );
 };
 const styles = StyleSheet.create({
+  container: {
+    height: '96.5%',
+    paddingBottom:79,
+    width: "100%",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   image:{
     height:250,
     width: 250
@@ -86,15 +112,6 @@ const styles = StyleSheet.create({
     color:"black",
     fontSize:20,
     fontWeight:"bold",
-  },
-  container: {
-    height: 624,
-
-    paddingBottom:79,
-    width: "100%",
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   reg: {
     backgroundColor: 'green',
