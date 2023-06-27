@@ -7,7 +7,8 @@ import { postMovement, MovementData } from '../../redux/slices/movementSlice';
 import { ExpenseData, postExpense } from '../../redux/slices/expenseSlice';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { gettingUsers } from '../../redux/slices/getUsers';
-
+import MyTabs from "../../tabs/Tabs"
+import Drawer from '../drawer/component/Drawer';
 
 
 interface Data {
@@ -148,7 +149,7 @@ const dataExpense: Expense[] = [
   },
 ]; 
 
-const Pager = () => {
+const FormPager = () => {
   
   const dispatch = useAppDispatch()
   const { loading, error } = useAppSelector((state) => state.movement);
@@ -191,7 +192,7 @@ const Pager = () => {
       
     };
     if(!amount || !category || !description || !paymentMethod ) return Alert.alert('Incomplete fields, please complete them all')
-    console.log(dispatch(postExpense(aidi[0], data)))
+    console.log(dispatch(postExpense(aidi[(aidi.length)-1], data)))
     Alert.alert('Successfully created expense')
     setAmount('');
     setDescription('');
@@ -200,7 +201,7 @@ const Pager = () => {
   };
 
   const onChange = (item: Data) => {
-    setAccount(item.value);
+    setAccount(item.label);
     console.log(item.value);
   }
   const onChange1 = (item: Expense) => {
@@ -208,7 +209,7 @@ const Pager = () => {
     console.log(item.value);
   }
   const onChange2 = (item: PaymentMethod) => {
-    setPaymentMethod(item.value);
+    setPaymentMethod(item.label);
     console.log(item.value);
   }
 
@@ -222,7 +223,7 @@ const Pager = () => {
   
 
   return (
-    
+    <Drawer>
     <View style={styles.container}>
       
       <View style={styles.btnContainer}>
@@ -341,10 +342,12 @@ const Pager = () => {
         </View>
       </PagerView>
     </View>
+      <MyTabs/>
+    </Drawer>
   );
 }
 
-export default Pager;
+export default FormPager;
 
 const styles = StyleSheet.create({
   container: {

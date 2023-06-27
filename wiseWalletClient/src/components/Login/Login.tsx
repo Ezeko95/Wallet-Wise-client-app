@@ -53,8 +53,9 @@ const Login: React.FC = () => {
     }
   };
   return (
-      <ImageBackground source={{uri:"https://w0.peakpx.com/wallpaper/525/971/HD-wallpaper-geometric-fade-bright-colourful-geometric.jpg"}} 
+      <ImageBackground source={require('./fondoIntro2.png')} 
  >
+
   <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -79,25 +80,15 @@ const Login: React.FC = () => {
         />
       <Button title="Login" onPress={()=>{
         handleSubmit()
-        {
-         storage === true && login === true ? navigation.navigate('Slider') :  navigation.navigate('MyDrawer')
-        }
-        
+        navigation.navigate("MyDrawer")
       }} color={"black"}/>
     </View>
       </KeyboardAvoidingView>
 </ImageBackground>
   );
 };
+
 const styles = StyleSheet.create({
-  container: {
-    height: '96.5%',
-    paddingBottom:79,
-    width: "100%",
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   image:{
     height:250,
     width: 250
@@ -112,6 +103,14 @@ const styles = StyleSheet.create({
     color:"black",
     fontSize:20,
     fontWeight:"bold",
+  },
+  container: {
+    height: "100%",
+    paddingBottom:79,
+    width: "100%",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   reg: {
     backgroundColor: 'green',

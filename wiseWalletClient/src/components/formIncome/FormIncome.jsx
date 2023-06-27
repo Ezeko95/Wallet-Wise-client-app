@@ -1,15 +1,15 @@
 import React from 'react';
 import { StyleSheet, View, ImageBackground } from 'react-native';
-import Pager from './Pager';
+import FormPager from './Pager';
 
 
 const FormIncome = () => {
     return (
-    <ImageBackground style={styles.fondo} source={require('./assets/bgForm.png')}>
+        <ImageBackground style={styles.fondo} source={require('./assets/bgForm.png')}>
             <View style={styles.view}>
-                <Pager />
+                <FormPager />
             </View>
-            </ImageBackground>
+        </ImageBackground>
     )
 }
 

@@ -1,17 +1,29 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { Colors } from '../../enums/Colors';
 import AllExpenses from './AllMovements';
 import Incomes from './Income';
 import Expenses from './Expenses';
+import MyTabs from '../../tabs/Tabs';
+import Drawer from '../drawer/component/Drawer';
+//import { getAccounts, getAccounts, getExpense, getIncome } from '../../redux/slices/allMovementsSlice';
+import { AppThunk } from '../../redux/store';
 
 interface Props {}
 
 const Pager: React.FC<Props> = () => {
   const ref = useRef<PagerView | null>(null);
 
+  // useEffect(()=>{
+  //   dispatch(getAccounts())
+  //   dispatch(getMovements())
+  //   dispatch(getIncome())
+  //   dispatch(getExpense())
+  // }, [])
+
   return (
+    <Drawer>
     <View style={styles.container}>
       <PagerView
         style={styles.pager}
@@ -36,6 +48,8 @@ const Pager: React.FC<Props> = () => {
         
       </PagerView>
     </View>
+        <MyTabs/>
+    </Drawer>
   );
 };
 
@@ -61,3 +75,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+function dispatch(arg0: AppThunk) {
+  throw new Error('Function not implemented.');
+}
+
+
+function getMovements(): any {
+  throw new Error('Function not implemented.');
+}

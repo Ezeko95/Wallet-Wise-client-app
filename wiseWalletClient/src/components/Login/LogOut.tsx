@@ -23,9 +23,6 @@ const LogoutButton = () => {
         <TouchableOpacity style={styles.buton}>
         <Text style={{color: "white", textAlign: "center", fontSize: 25}}>PREMIUM👑</Text>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.buton}>
-        <Text style={{color: "white", textAlign: "center", fontSize: 25}}>REDIRIGIR A LCDTM🦄</Text>
-    </TouchableOpacity>
         </>
     )
 }
