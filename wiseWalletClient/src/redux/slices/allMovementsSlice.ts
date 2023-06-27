@@ -13,8 +13,8 @@ interface IAllMovements {
     error: string | null,
     accounts: string[],
     filtered: Filtered[],
-    balance: number
-    
+    balance: number,
+    itemId: number | null
 }
 
 const initialState : IAllMovements= {
@@ -25,7 +25,8 @@ const initialState : IAllMovements= {
     error: null,
     accounts:[],
     filtered:[],
-    balance: 0
+    balance: 0,
+    itemId: 0
 }
 
 
@@ -84,6 +85,18 @@ const getMovementsSlicer = createSlice ({
                 allMovements: action.payload,
                 filtered: action.payload,
             }
+        },
+        setItemId:  (state, action: PayloadAction<number>)=>{
+            return{
+                ...state,
+                itemId: action.payload
+            }
+        },
+        cleanItemId:  (state)=>{
+            return{
+                ...state,
+                itemId: null
+            }
         }
     }
 })
@@ -96,7 +109,9 @@ export const {
     getAccountSuccess,
     filterBalanceAccount,
     getMovementsSuccess,
-    chargeBalance
+    chargeBalance,
+    setItemId,
+    cleanItemId
      } = getMovementsSlicer.actions;
 
 export default getMovementsSlicer.reducer;
@@ -177,25 +192,3 @@ export const getAccounts= (id: number): AppThunk=>{
         }
     }
 }
-
-
-
-
-
-// FILTRAR POR CUENTA
-
-//CUANDO APRETE EL BOTON, SE DESPLIEGUEN TODAS LAS CUENTAS
-
-//CUANDO SELECCIONE, ESA SELECCION VAYA AL REDUCER
-
-//Y ESTE REDUCER VA A SETEAR EL ESTADO DE REDUX
-
-
-// http://localhost:3001/balance/accountFilter/1
-// http://localhost:3001/balance/dateFilter/1
-
-
-// ESTADO {
-//    TODOS LOS MOVIMIENTOS
-//    MOVIMIENTOS
-//}

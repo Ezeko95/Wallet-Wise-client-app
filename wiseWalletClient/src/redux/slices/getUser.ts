@@ -24,12 +24,12 @@ export interface Users{
 
 interface UserState {
     user: Users[]
-   
+    picUser: [string]
 }
 
 const initialState: UserState = {
         user:[],
-
+        picUser:[""]
 }
 
 export const usersSlice = createSlice({
@@ -38,13 +38,16 @@ export const usersSlice = createSlice({
     reducers: {
         getUserTokken: (state, action)=>{
           state.user.push(action.payload)
+        },
+        getUriPic: (state,action)=>{
+          state.user.push(action.payload)
         }
     }
 })
 
 
 
-export const {getUserTokken } = usersSlice.actions;
+export const {getUserTokken,getUriPic } = usersSlice.actions;
 
 export const gettingUsers = (): ThunkAction <void, RootState, unknown, AnyAction>=> async (dispatch: Dispatch) => {
     try {
@@ -57,5 +60,5 @@ export const gettingUsers = (): ThunkAction <void, RootState, unknown, AnyAction
     } catch (error) {
       console.log(error);
     }
-  };
+};
 export default usersSlice.reducer;

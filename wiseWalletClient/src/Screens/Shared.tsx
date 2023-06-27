@@ -4,8 +4,11 @@ import { useAppSelector } from '../redux/store';
 import { useAppDispatch } from '../redux/store';
 import { gettingUsers } from '../redux/slices/getUsers';
 import LogoutButton from '../components/Login/LogOut';
+import Drawer from '../components/drawer/component/Drawer';
+import MyTabs from '../tabs/Tabs';
 
 const SharedScreen = () => {
+  
   const dispatch = useAppDispatch()
   useEffect(()=>{
     dispatch(gettingUsers())
@@ -15,35 +18,35 @@ const SharedScreen = () => {
   console.log(tp);
   
   return(
-    <View style={styles.sharedCard}>
-    <View style={styles.perfiView}>
-      
-
-    <View style={styles.perfiView} key={tp.payload.user.id}>
-             <Image source={{uri: `${tp.payload.user.picture}`}} style={styles.image}/>
-              <Text style={{color: "white"}}>{tp.payload.user.name}</Text>
-              <Text style={{color: "white"}}>{tp.payload.user.email}</Text>
-              {tp.payload.user.premium  === false ? <Text style={{color: "white"}}>Cuenta Standard</Text>: <Text style={{color: "white"}}>Cuenta premium</Text>}
-    </View>
-       
-    </View>
-    <View>
-    <LogoutButton/>
-    </View>
-      </View>
+    <Drawer>
+        <View style={styles.sharedCard}>
+          <View style={styles.perfiView}>
+            <View style={styles.perfiView} key={tp.payload.user.id}>
+                <Image source={{uri: `${tp.payload.user.picture}`}} style={styles.image}/>
+                <Text style={{color: "white", fontSize: 39}}>{tp.payload.user.name}</Text>
+                <Text style={{color: "white",  fontSize: 19}}>{tp.payload.user.email}</Text>
+                {tp.payload.user.premium  === false ? <Text style={{color: "white"}}>Cuenta Standard</Text>: <Text style={{color: "black"}}>Cuenta premium</Text>}
+            </View>   
+          </View>
+          <View>
+            <LogoutButton/>
+          </View>
+        </View>
+      <MyTabs/>
+    </Drawer>
   )
 };
 
 const styles = StyleSheet.create({
   image:{
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
     borderRadius: 100
   },
   sharedCard: {
     flex: 1,
     justifyContent: "space-around",
-    backgroundColor: '#101c53',
+    backgroundColor: "#131313"
   },
   text: {
     color:"white",
@@ -54,7 +57,7 @@ const styles = StyleSheet.create({
     width: 400,
     display: 'flex',
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   }
 });
 
