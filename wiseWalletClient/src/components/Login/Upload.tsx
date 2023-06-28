@@ -34,7 +34,7 @@ const Upload: React.FC<Props> = ({handleInputChange}) => {
         const uploadImageUrl = resData.secure_url;
         setPhoto(uploadImageUrl)
         handleInputChange('picture',uploadImageUrl)
-        
+
       })
       //.then(resp=> console.log(resp))
       .catch(err => {
@@ -64,13 +64,13 @@ const Upload: React.FC<Props> = ({handleInputChange}) => {
     });
   };
 
-  
+
   // const getUrL = ()=>{
   //   dispatch(getUri(photo))
   // }
   // console.log(userUri,"CONSOLE.LOGURL")
   return (
-    
+
       <View style={{alignItems: 'center'}}>
         <TouchableOpacity
           onPress={()=>{
@@ -83,7 +83,7 @@ const Upload: React.FC<Props> = ({handleInputChange}) => {
         </TouchableOpacity>
         <Text style={styles.uploadHeaderStyle}>Upload Picture</Text>
       </View>
-    
+
   );
 };
 

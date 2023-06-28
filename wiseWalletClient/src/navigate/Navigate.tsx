@@ -46,5 +46,4 @@ const Navigate = () => {
     </NavigationContainer>
   );
 };
-
 export default Navigate;

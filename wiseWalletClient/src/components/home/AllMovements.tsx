@@ -1,8 +1,6 @@
-
-import React,{useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, StatusBar, View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 import { VictoryPie, VictoryTheme, VictoryLabel, VictoryChart, Border} from 'victory-native';
-import Svg,{ Circle, G } from 'react-native-svg';
 import { Colors } from '../../enums/Colors';
 import { useAppSelector } from '../../redux/hooks/hooks';
 import { useAppDispatch } from '../../redux/store';
@@ -14,7 +12,7 @@ import { filterBalanceAccount, getAccounts, getMovements, getExpense, getIncome,
 interface Props {}
 
 const AllMovements: React.FC<Props> = () => {
-
+ 
   const dispatch = useAppDispatch()
   const account = useAppSelector(state=> state.allMovements.accounts)
   const incomes = useAppSelector(state => state.allMovements.incomes)
@@ -55,34 +53,35 @@ const AllMovements: React.FC<Props> = () => {
     dispatch(getExpense(ide[0]))
   }, [])
 
-
   interface AccountData {
     label: string;
     value: string;
   }
 
-  const data: AccountData[] = []
-      
-  account.forEach((a: string)=>{
-      data.push(
-        { "label": a,
-          "value": a}
-    )
-  })
+  const data: AccountData[] = [];
 
-
+  account.forEach((a: string) => {
+    data.push({
+      label: a,
+      value: a,
+    });
+  });
 
   const colors = ["#5EFC8D","#8EF9F3","#53599A","#ECD444","#FFFFFF","#C42021","#F44708","#CA61C3","#FF958C","#ADFCF9"]
 
   const [value, setValue] = useState(null);
-  
+
+  const charGraficos = useAppSelector((state) => state.onBoarding.Onboarding);
+  const change = charGraficos.change.map((item) => item.name);
+  const chart = charGraficos.grafico.map((item) => item.name);
+
   return (
     <View style={styles.homeCard}>
       <ScrollView bounces={true}>
         <StatusBar barStyle="light-content" />
-          <View style={styles.homeCard}>
-            <Text style={styles.title}>All</Text>
-            <View style={{flex: 1, flexDirection: 'row'}}> 
+        <View style={styles.homeCard}>
+          <Text style={styles.title}>All</Text>
+          <View style={{ flex: 1, flexDirection: 'row' }}>
             <Dropdown<AccountData>
                 style={styles.dropdown}
                 placeholderStyle={styles.placeholderStyle}
@@ -139,7 +138,6 @@ const AllMovements: React.FC<Props> = () => {
                     }
                   }}
                 />
-          
         </View>
       </ScrollView>
     </View>
@@ -152,18 +150,15 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.BACKGROUND_COLOR,
     height: '100%',
   },
-
   title: {
     color: Colors.TITLE_COLOR,
     fontSize: 30,
   },
-
   chart: {
     marginTop: 40,
     height: 220,
     width: 220,
   },
-
   detail: {
     width: 250,
     padding: 10,
@@ -216,8 +211,4 @@ const styles = StyleSheet.create({
 });
 
 export default AllMovements;
-
-function getAllAccounts(ide: number[]): any {
-  throw new Error('Function not implemented.');
-}
 

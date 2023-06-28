@@ -49,6 +49,7 @@ export const { postAccountStart, postAccountSuccess, postAccountFailure } = Acco
 export const postAccount= (id: number, data: AccountData): AppThunk=>{
   return async (dispatch: AppDispatch)=>{
     try {
+      console.log("este es el id de account", id)
       const response = await axios.post(`${base_URL}/account/${id}`, data);
       console.log(response.data);
       return response.data

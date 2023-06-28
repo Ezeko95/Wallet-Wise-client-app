@@ -5,21 +5,20 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { usersSlice } from './slices/getUsers';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-
-
+import { onBoardingSlice } from './slices/onBoarding';
 const store = configureStore({
   reducer: {
     allMovements: allMovementsReducer,
     movement: movementReducer,
     user: usersSlice.reducer,
-
-   
+    onBoarding: onBoardingSlice.reducer,
   },
   middleware: [thunk],
   devTools: true
 });
 
-/* export type AppDispatch = typeof store.dispatch; */
+
+//  export type AppDispatch = typeof store.dispatch; 
 export type AppDispatch = ThunkDispatch<RootState, any, AnyAction>;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<ReturnType<typeof store.getState>> = useSelector;
@@ -32,3 +31,4 @@ Action<string>
 >
 
 export default store;
+

@@ -27,12 +27,12 @@ const Drawer = ({ children }: DrawerProps) => {
         <Image style={styles.burguerBtn} source={require('./closeX.png')}/>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
         <Text style={styles.text}>Home</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Add')}>
-        <Text style={styles.text}>Add</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('FormPager')}>
+        <Text style={styles.text}>Add+</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('Profile')}>

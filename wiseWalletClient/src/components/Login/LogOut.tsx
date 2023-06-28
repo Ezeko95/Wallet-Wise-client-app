@@ -24,12 +24,10 @@ const LogoutButton = () => {
         <Text style={{color: "white", textAlign: "center", fontSize: 25}}>PREMIUM👑</Text>
     </TouchableOpacity>
     
-        </>
+    </>
     )
 }
-
 export default LogoutButton;
-
 const styles = StyleSheet.create({
     buton:{
         backgroundColor: "#31316d",

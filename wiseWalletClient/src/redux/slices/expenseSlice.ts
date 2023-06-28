@@ -5,8 +5,6 @@ import { AppThunk, RootState } from '../store';
 import { AnyAction } from '@reduxjs/toolkit';
 import { base_URL } from '../utils';
 import axios from 'axios'; 
-
-
 export interface ExpenseData {
     amount : number,
     description: string,
@@ -55,12 +53,12 @@ export const {  postExpenseStart,   postExpenseSuccess,  postExpenseFailure } = 
 //        console.log(error);
 //      }
 //    };
- export const postExpense= (id: number, data: ExpenseData): AppThunk=>{
+export const postExpense= (id: number, data: ExpenseData): AppThunk=>{
   return async (dispatch)=>{
     try {
       console.log(id)
       console.log(data);
-      
+
       const response = await axios.post(`${base_URL}/movement/${id}`, data);
       console.log(response.data);
       return response.data
@@ -69,5 +67,4 @@ export const {  postExpenseStart,   postExpenseSuccess,  postExpenseFailure } = 
     }
   }
 } 
-
 export default expenseSlice.reducer;

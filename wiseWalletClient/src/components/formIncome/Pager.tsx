@@ -8,6 +8,7 @@ import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { gettingUsers } from '../../redux/slices/getUsers';
 import { getMovements, getAccounts, getExpense, getIncome } from '../../redux/slices/allMovementsSlice';
 
+
  
 
 interface Data {
@@ -148,10 +149,8 @@ const dataExpense: Expense[] = [
   },
 ]; 
 
-
-
 const Pager = () => {
-  
+
   const dispatch = useAppDispatch()
   const { loading, error } = useAppSelector((state) => state.movement);
   const [type, setType] = useState('');
@@ -160,9 +159,6 @@ const Pager = () => {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
-  
-  
-  
   
   const idUser = useAppSelector((state) => state.user.user)
   const selector = useAppSelector((state) => state.user.user) // esto e user enterito
@@ -173,8 +169,12 @@ const Pager = () => {
  
   
   
+
+
+
+
   const handlePostMovement = () => {
-    
+
     const data: MovementData = {
       type,
       account,
@@ -186,8 +186,8 @@ const Pager = () => {
     dispatch(getMovements(aidi[0]))
     dispatch(getAccounts(aidi[0]))
     dispatch(getAccounts(ide[0]))
-    
-    
+
+
     Alert.alert('Successfully created income')
     setType('');
     setAccount('');
@@ -202,6 +202,7 @@ const Pager = () => {
       paymentMethod,
     };
     if(!amount || !category || !description || !paymentMethod ) return Alert.alert('Incomplete fields, please complete them all')
+
     dispatch(postExpense(aidi[0], data))
     dispatch(getIncome(aidi[0]))
     dispatch(getMovements(aidi[0]))
@@ -294,7 +295,7 @@ const Pager = () => {
                 placeholderTextColor="gray"
                 style={styles.input}
               />
-              
+
               <TouchableOpacity onPress={() => { handlePostMovement(); reload()}} disabled={loading}  style={styles.btn}>
                 <Text style={styles.textBtn}>Add</Text>
               </TouchableOpacity>
@@ -309,7 +310,6 @@ const Pager = () => {
              <Text style={styles.textForm}>Add your Expenses here!</Text>
              
              <View style={styles.formContainer}>
-
               <SelectCountry<Expense>
                 style={styles.dropdown}
                 selectedTextStyle={styles.selectedTextStyle}
@@ -359,7 +359,7 @@ const Pager = () => {
               <TouchableOpacity onPress={() => { handlePostExpense(); reload()}} disabled={loading}  style={styles.btn}>
                 <Text style={styles.textBtn}>Add</Text>
               </TouchableOpacity>
-              
+
              </View>
              
           </View>
@@ -370,7 +370,6 @@ const Pager = () => {
 }
 
 export default Pager;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

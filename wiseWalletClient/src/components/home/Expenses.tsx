@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect }from 'react';
 import { ScrollView, StatusBar, View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, TextInput, Image, ImageBackground } from 'react-native';
 import { VictoryPie, VictoryTheme } from 'victory-native';
@@ -22,6 +23,7 @@ const Expenses: React.FC<Props> = () => {
 
   const dispatch = useAppDispatch()
   const expenses = useAppSelector(state=> state.allMovements.expenses)
+
   const idUser = useAppSelector((state) => state.user.user)
   const ide = idUser.map((idUser) => idUser.payload.user.id)
   const filter = useAppSelector((state) => state.allMovements.filtered)
@@ -29,23 +31,20 @@ const Expenses: React.FC<Props> = () => {
   const selector = useAppSelector((state) => state.user.user)
   const aidi = selector.map(selector => selector.payload.user.id)
   const itemId= useAppSelector((state)=> state.allMovements.itemId)
-
   const show: any[] = filter; 
   const [type, setType]= useState('')
   const [amount, setAmount] = useState('')
- 
-  
   const expenseFilterDel = expenses.filter((expense)=> !expense.deletedExpense)
   const mapExpense = expenseFilterDel.map(amount => amount.amount)
   const reduceExpense = mapExpense.reduce((a, b) => a + b, 0)
 
   //const incexp: any[] = [...incomes]
-  
+
   const navigateToDetail = (selectedExpense: IExpenses) => {
     navigation.navigate('DetailExpense', { income: selectedExpense });
   };
-  
-  
+
+
   // const handleDeleteIncome= (id: number)=>{
     //   const response= await axios.delete(`${base_URL}/movement/income/${id}`)
     // }
@@ -67,55 +66,42 @@ const Expenses: React.FC<Props> = () => {
       )
     }
     
+
     const handleUpdateIncome= async ()=>{
       const infoEdit: IUpdateStateInc = {
         type,
         amount: parseFloat(amount)
       }
-      
+
       console.log(infoEdit,'QUE INFO LE MANDAMOS AL BAAAACCCCKKKK');
       itemId && console.log(itemId,'QUE ID LE MANDAMOS AL BAAAACCCCKKKK');
       itemId && console.log(`${base_URL}/movement/newExpense/${itemId}`);
       itemId &&  await axios.put(`${base_URL}/movement/newExpense/${itemId}`, infoEdit)
       //  .then(response=> console.log(response, 'ESTO ES EL RESPONSE'))
       //   // .then(data=> {
-        //   //   if(data.description){
-          //   //     console.log(data, 'DAAAAATTTTT');
-          
-          //   //     const filter= data.expense.filter((e: any)=> e.id === idExp)
-  //   //     console.log(filter,'TODOOOOOOOOS LOSSSS EXPENSES');
-  //   //   }else{
-    //   //     console.log('fail')
-    //   //   }
-    //   // })
-    .then(()=>{
-      console.log("este es el dispatch", dispatch(getExpense(ide[0])))
-      dispatch(getExpense(ide[0]))
+      //   //   if(data.description){
+      //   //     console.log(data, 'DAAAAATTTTT');
+
+      //   //     const filter= data.expense.filter((e: any)=> e.id === idExp)
+      //   //     console.log(filter,'TODOOOOOOOOS LOSSSS EXPENSES');
+      //   //   }else{
+      //   //     console.log('fail')
+      //   //   }
+      //   // })
+      .then(()=>{
+        console.log("este es el dispatch", dispatch(getExpense(ide[0])))
+        dispatch(getExpense(ide[0]))
     })
   }
   
+  const colors = ["#5EFC8D","#8EF9F3","#53599A","#ECD444","#FFFFFF","#C42021","#F44708","#CA61C3","#FF958C","#ADFCF9"]
 
-  const colors = [
-    "#5EFC8D",
-    "#8EF9F3",
-    "#53599A",
-    "#ECD444",
-    "#FFFFFF",
-    "#C42021",
-    "#F44708",
-    "#CA61C3",
-    "#FF958C",
-    "#ADFCF9"
-  ]
-  
   const transparent = 'rgba(0,0,0,0.5)'
   
   useEffect(() => {
     dispatch(getExpense(ide[0]))
     dispatch(getAccounts(ide[0]))
   }, [])
-  
-
 
   return (
       <View>
@@ -124,7 +110,7 @@ const Expenses: React.FC<Props> = () => {
           <View style={styles.homeCard}>
             <Text style={styles.title}>Expenses</Text>
             <View>
-              <Text style={styles.text}>${reduceExpense}</Text>
+            <Text style={styles.text}>${reduceExpense}</Text>
               <VictoryPie
                 style={{
                   labels: {
@@ -140,7 +126,7 @@ const Expenses: React.FC<Props> = () => {
                 })}
               />
             </View>
-            
+
             <FlatList
               data={expenses}
               nestedScrollEnabled
@@ -158,14 +144,15 @@ const Expenses: React.FC<Props> = () => {
               keyExtractor={(item) => item.id.toString()}
             />
           </View>
-        </ScrollView>
+          </ScrollView>
       </View>
     );
   }
-    
 
-const styles = StyleSheet.create({
-  homeCard: {
+
+
+  const styles = StyleSheet.create({
+homeCard: {
     alignItems: 'center',
     backgroundColor: Colors.BACKGROUND_COLOR,
     height: '100%',
@@ -204,7 +191,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 40,
     alignSelf: 'center',
-    
+
   },
 });
 

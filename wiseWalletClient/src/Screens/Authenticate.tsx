@@ -19,10 +19,8 @@ const AuthView: React.FC = () => {
   );
 };
 
-export default AuthView;
-
 const styles = StyleSheet.create({
-  
+
   botonRegister:{
     width: 200,
     position: "absolute",
@@ -35,3 +33,4 @@ const styles = StyleSheet.create({
   }
 })
 
+export default AuthView;

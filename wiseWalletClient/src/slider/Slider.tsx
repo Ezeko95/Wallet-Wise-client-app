@@ -26,7 +26,7 @@ const Slider = () => {
   
   const selector = useAppSelector((state) => state.user.user) 
   const ide = selector.map(selector => selector.payload.user.id)
- 
+
   interface SelectAccounts {
     value: string;
     label: string;
@@ -34,7 +34,7 @@ const Slider = () => {
       uri: string;
     };
   }
-  
+
   const data: SelectAccounts[] = [
     {
       value: 'mercadopago',
@@ -73,6 +73,11 @@ const Slider = () => {
     },
   ];
 
+
+
+
+
+
   const submitAccount = () => {
     const data: AccountData = {
       name,
@@ -100,7 +105,6 @@ const Slider = () => {
   return (
     <View style={styles.container}>
       <ImageBackground style={{flex: 1, width: '100%'}} source={require('./assets/fondoCreateAccount.png')}>
-
       <PagerView style={styles.pager} initialPage={0} onPageScroll={(e)=>  console.log(e)} onPageSelected={(e)=> console.log(e)} onPageScrollStateChanged={(e)=> console.log(e)} ref={ref}>
       <View key="1" style={styles.inputContain}>
     
@@ -109,42 +113,45 @@ const Slider = () => {
             <View style={styles.containerInput}>
               {/* <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter your Account"></TextInput> */}
               <SelectCountry<SelectAccounts>
-                style={styles.dropdown}
-                selectedTextStyle={styles.selectedTextStyle}
-                placeholderStyle={styles.placeholderStyle}
-                imageStyle={styles.imageStyle}
-                iconStyle={styles.iconStyle}
-                maxHeight={200}
-                value={name}
-                data={data}
-                valueField="value"
-                labelField="label"
-                imageField="image"
-                placeholder="Select Account"
-                onChange={onChange}
-                />
-              <TextInput style={styles.input} value={total} onChangeText={setTotal} placeholder="Enter an Amount"></TextInput>
-          <TouchableOpacity style={styles.select} onPress={submitAccount}>
-          <Text style={{textAlign: "center", color: "white"}}>Crear</Text>
-          </TouchableOpacity>
-            </View>
-          {/* <TouchableOpacity   onPress={()=>{
-          
-          }
-          } 
-             style={styles.btnContinue}>
-            <Text style={{textAlign: "center", color: "white"}}>Continuar</Text>
-          </TouchableOpacity> */}
-          {/* <Button title="Continue" onPress={()=>{
-              ref.current?.setPage(1)
-              navigation.navigate("MyDrawer")
-          }}/> */}
-        </View>
-      </PagerView>
+                  style={styles.dropdown}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  placeholderStyle={styles.placeholderStyle}
+                  imageStyle={styles.imageStyle}
+                  iconStyle={styles.iconStyle}
+                  maxHeight={200}
+                  value={name}
+                  data={data}
+                  valueField="value"
+                  labelField="label"
+                  imageField="image"
+                  placeholder="Select Account"
+                  onChange={onChange}
+              />
+               <TextInput style={styles.input} value={total} onChangeText={setTotal} placeholder="Enter an Amount"></TextInput>
+                <TouchableOpacity style={styles.select} onPress={submitAccount}>
+                <Text style={{textAlign: "center", color: "white"}}>Crear</Text>
+                </TouchableOpacity>
+            
+              </View>
+               {/*<TouchableOpacity   onPress={()=>{
+              
+              }
+              } 
+                style={styles.btnContinue}>
+                <Text style={{textAlign: "center", color: "white"}}>Continuar</Text>
+              </TouchableOpacity> */}
+              {/* <Button title="Continue" onPress={()=>{
+                  ref.current?.setPage(1)
+                  navigation.navigate("MyDrawer")
+              }}/> */}
+          </View>
+        </PagerView>
       </ImageBackground>
     </View>
   );
-};
+}
+
+
 export default Slider;
 
 const styles = StyleSheet.create({
