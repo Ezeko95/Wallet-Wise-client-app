@@ -9,7 +9,7 @@ import { useAppDispatch } from '../../redux/store';
 import { Dropdown } from 'react-native-element-dropdown';
 import axios from 'axios';
 import { base_URL } from '../../redux/utils';
-import { filterBalanceAccount, getAccounts, getMovements } from '../../redux/slices/allMovementsSlice';
+import { filterBalanceAccount, getAccounts, getMovements, getExpense, getIncome, getExpensesSuccess } from '../../redux/slices/allMovementsSlice';
 
 interface Props {}
 
@@ -21,14 +21,17 @@ const AllMovements: React.FC<Props> = () => {
   const expenses = useAppSelector(state => state.allMovements.expenses)
   const idUser = useAppSelector((state) => state.user.user)
   const allMovements = useAppSelector((state) => state.allMovements.allMovements)
+
   const filter = useAppSelector((state) => state.allMovements.filtered)
+
   const balance = useAppSelector((state)=> state.allMovements.balance)
   console.log(filter,'FILTER');
   console.log(allMovements, 'ALLMOVEMENTS');
   
   console.log('============BALANCE=================');
   console.log(balance, 'Balance from redux');
-  console.log('====================================');
+
+
   
   const ide = idUser.map((idUser) => idUser.payload.user.id)
 
@@ -48,9 +51,10 @@ const AllMovements: React.FC<Props> = () => {
   useEffect(()=>{
     dispatch(getAccounts(ide[0]))
     dispatch(getMovements(ide[0]))
+    dispatch(getIncome(ide[0]))
+    dispatch(getExpense(ide[0]))
   }, [])
 
-  //const account = ["mercadopago", "brubank"]
 
   interface AccountData {
     label: string;
@@ -66,27 +70,12 @@ const AllMovements: React.FC<Props> = () => {
     )
   })
 
-  const reload = () => {
-    dispatch(getMovements(ide[0]))
-    dispatch(getAccounts(ide[0]))
-  } 
 
-  const colors = [
-    "#5EFC8D",
-    "#8EF9F3",
-    "#53599A",
-    "#ECD444",
-    "#FFFFFF",
-    "#C42021",
-    "#F44708",
-    "#CA61C3",
-    "#FF958C",
-    "#ADFCF9"
-  ]
 
-  
+  const colors = ["#5EFC8D","#8EF9F3","#53599A","#ECD444","#FFFFFF","#C42021","#F44708","#CA61C3","#FF958C","#ADFCF9"]
 
   const [value, setValue] = useState(null);
+  
   return (
     <View style={styles.homeCard}>
       <ScrollView bounces={true}>
@@ -110,33 +99,12 @@ const AllMovements: React.FC<Props> = () => {
                 searchPlaceholder="Search..."
                 value={value}
                 onChange={item => {
+                  console.log('filterButton');
                   setValue(value) 
                   dispatch(filterBalanceAccount(item.value))
                 }}
               />
-              <TouchableOpacity onPress={reload}>
-                <Image style={{width: 25, height: 25, top: 33, left: 20}} source={require('./reload.png')}/>
-              </TouchableOpacity>
 
-              {/* <Dropdown
-                style={styles.dropdown}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                inputSearchStyle={styles.inputSearchStyle}
-                
-                iconStyle={styles.iconStyle}
-                data={data}
-                search
-                maxHeight={300}
-                labelField="label"
-                valueField="value"
-                placeholder="Filter by Date"
-                searchPlaceholder="Search..."
-                value={value}
-                onChange={item => {
-                  setValue(value);
-                }}
-              /> */}
             </View>
                     <View>
                       <Text style={styles.text}>${balance}</Text>
@@ -165,14 +133,12 @@ const AllMovements: React.FC<Props> = () => {
                   data={show}
                   renderItem={({item}) =>{
                     if(item.type){
-                      return <Text style={styles.detail}>{item.type}:  {item.amount}</Text>
+                      return <Text style={styles.detail}> {item.type}:  {item.amount}</Text>
                     } else {
                       return <Text style={styles.detail}>{item.category}:  {item.amount}</Text>
                     }
                   }}
                 />
-
-              {/* //<Text style={styles.detail}>{incexp}</Text> */}
           
         </View>
       </ScrollView>
@@ -250,6 +216,7 @@ const styles = StyleSheet.create({
 });
 
 export default AllMovements;
+
 function getAllAccounts(ide: number[]): any {
   throw new Error('Function not implemented.');
 }

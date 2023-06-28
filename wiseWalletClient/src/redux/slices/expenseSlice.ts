@@ -11,8 +11,7 @@ export interface ExpenseData {
     amount : number,
     description: string,
     category: string,
-    paymentMethod: string
-    
+    paymentMethod: string 
 }
 
 interface ExpenseState {
@@ -60,6 +59,8 @@ export const {  postExpenseStart,   postExpenseSuccess,  postExpenseFailure } = 
   return async (dispatch)=>{
     try {
       console.log(id)
+      console.log(data);
+      
       const response = await axios.post(`${base_URL}/movement/${id}`, data);
       console.log(response.data);
       return response.data

@@ -1,15 +1,31 @@
-import React, { useRef } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { StyleSheet, Text, TouchableOpacity, Touchable, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { Colors } from '../../enums/Colors';
 import AllExpenses from './AllMovements';
 import Incomes from './Income';
 import Expenses from './Expenses';
+import { getMovements, getAccounts, getExpense, getIncome } from '../../redux/slices/allMovementsSlice';
+import { useAppSelector, useAppDispatch } from '../../redux/store';
 
 interface Props {}
 
 const Pager: React.FC<Props> = () => {
+  const dispatch = useAppDispatch()
+  const idUser = useAppSelector((state) => state.user.user)
+  const selector = useAppSelector((state) => state.user.user) // esto e user enterito
+  const ide = idUser.map((idUser) => idUser.payload.user.id)
+  const aidi = selector.map(selector => selector.payload.user.id)
+
+  const reload = () => {
+    dispatch(getMovements(ide[0]))
+    dispatch(getAccounts(ide[0]))
+    dispatch(getExpense(aidi[0]))
+    dispatch(getIncome(aidi[0])) 
+  } 
+
   const ref = useRef<PagerView | null>(null);
+
 
   return (
     <View style={styles.container}>
@@ -23,15 +39,21 @@ const Pager: React.FC<Props> = () => {
       >
 
         <View key="1">
-          <AllExpenses />
+          
+            <AllExpenses />
+          
         </View>
 
         <View key="2">
-          <Incomes />
+          
+            <Incomes />
+         
         </View>
 
         <View key="3">
-          <Expenses />
+          
+            <Expenses />
+          
         </View>
         
       </PagerView>

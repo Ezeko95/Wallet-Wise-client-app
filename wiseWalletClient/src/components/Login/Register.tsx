@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet , Image, ImageBackground, KeyboardAvoidingView,Platform} from 'react-native';
+import { View, TextInput, Button, StyleSheet , Image, ImageBackground, KeyboardAvoidingView,Platform, Text, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-
+import Upload from './Upload';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 interface RegisterForm {
   name: string;
   email: string;
   password: string;
+  picture: string;
 }
 
 const Register: React.FC = () => {
   const navigation: (any) = useNavigation();
   const [form, setForm] = useState<RegisterForm>({
+
     name: '',
     email: '',
     password: '',
+    picture: ''
+    
   });
   const [error, setError] = useState<string>('');
-
   const handleInputChange = (name: keyof RegisterForm, value: string) => {
     setForm(prevState => ({
       ...prevState,
@@ -27,7 +31,7 @@ const Register: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(console.log(form));
+    console.log(console.log(form,'INFO AL FORMULARIOOOO'));
     
     try {
       const response = await axios.post<{ accessToken: string }>(
@@ -35,29 +39,33 @@ const Register: React.FC = () => {
         form,
       );
       const { accessToken } = response.data;
-      console.log(response.data);
+      console.log(response.data, "register");
       console.log('Register successful');
       // Save the access token in AsyncStorage or a secure storage
       await AsyncStorage.setItem('accessToken', accessToken);
-      // Call the onRegister function from props to handle the registration action
       navigation.navigate('Slider')
+      // Call the onRegister function from props to handle the registration action
     } catch (error) {
       setError('Invalid email or password');
     }
   };
-
+  console.log(form);
+  
   return (
-    <ImageBackground source={{uri:"https://us.123rf.com/450wm/virtosmedia/virtosmedia2302/virtosmedia230276138/199275054-silueta-de-un-%C3%A1rbol-sobre-un-fondo-de-puesta-de-sol-ilustraci%C3%B3n-vectorial.jpg?ver=6"}}>
+    <ImageBackground source={require('./assets/fondoIntro2.png')}>
       <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-
-
     <View style={styles.container}>
-      <Image source={require("./assets/logo.png")} style={styles.image}/>
+     
+      <Text style={styles.text}>Register</Text>
       <KeyboardAvoidingView>
-
+      {/* <TouchableOpacity style={{display:"flex",alignItems:"center", }}  >
+        <Image source={{uri:'https://i.kym-cdn.com/entries/icons/original/000/026/152/gigachadd.jpg'}} style={styles.imageperfil}/>
+        <Text style={{color:"white"}}>CHOOSE YOUR FOTOU</Text>
+      </TouchableOpacity> */}
+      <Upload handleInputChange={handleInputChange}/>
       <TextInput
         placeholder="Username"
         value={form.name}
@@ -96,7 +104,9 @@ const Register: React.FC = () => {
 const styles = StyleSheet.create({
   image:{
     height:250,
-    width: 250
+    width: 250,
+    position: "relative",
+    top: 60
   },
   input:{
     backgroundColor:"white",
@@ -110,7 +120,7 @@ const styles = StyleSheet.create({
     fontWeight:"bold",
   },
   container: {
-    height: 624,
+    height: "100%",
     paddingBottom:79,
     width: "100%",
     display: 'flex',
@@ -128,6 +138,12 @@ const styles = StyleSheet.create({
     color:"white",
     fontSize:20,
     fontWeight:"bold",
+  },
+  imageperfil:{
+    height: 100,
+    width: 100,
+    borderRadius: 200,
+    margin: 20
   }
 });
 

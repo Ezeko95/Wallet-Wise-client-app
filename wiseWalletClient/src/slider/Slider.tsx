@@ -2,29 +2,21 @@ import React from "react";
 import { useRef , useState, useEffect} from "react";
 import { View, StyleSheet, Text, Image , TouchableOpacity, ImageSourcePropType, Button, TextInput, Alert, ImageBackground} from "react-native";
 import PagerView from "react-native-pager-view";
+import { SelectCountry } from 'react-native-element-dropdown';
 import {useNavigation} from "@react-navigation/native";
 import { Colors } from "../enums/Colors";
-import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../redux/store';
 import { postAccount, AccountData } from "../redux/slices/postAccount";
-import { RootState, AppDispatch } from '../redux/store';
 import { gettingUsers } from "../redux/slices/getUsers";
 
 
 const Slider = () => {
   const ref: any = useRef()
   const dispatch = useAppDispatch()
-  const { loading, error } = useSelector((state: RootState) => state.movement);
   const navigation:(any) = useNavigation();
   const [name, setName] = useState('');
   const [total, setTotal] = useState('');
-  const [docs, setDocs] = React.useState({});
 
-  const [nie, setNie] = React.useState({
-    grafico: {},
-    change:{}
-  })
-  const [ colors, setColors] = React.useState<Array<number>>([]);
   
   interface Buttons{
     id:number,
@@ -32,46 +24,54 @@ const Slider = () => {
     image: ImageSourcePropType
   };
   
-  const onBoarding: Buttons[] = [
-    { id: 1, name: "grafico1", image: require("../Screens/images/grafico1.png")},
-    { id: 2, name: "grafico2", image: require("../Screens/images/grafico2.png")},
-    { id: 3, name: "dinero", image: require("../Screens/images/dinero.png")},
-    { id: 4, name: "euro", image: require("../Screens/images/euro.png")},
-    { id: 5, name: "bitcoin", image: require("../Screens/images/bitcoin.png")},
-
-  ]
-
-  const firstOn = onBoarding.slice(0,2);
-  const secondOn = onBoarding.slice(2,5);
-  const select = (event: Buttons)=>{
-    setColors([event.id]);
-    setDocs(event)
-    if(event.id < 3){
-      setNie({
-        ...nie,
-        grafico: [event]
-      })      
-      console.log(nie);
-    }else if(event.id >= 3){
-      setNie({
-        ...nie,
-        change: [event]
-      })
-    }
-  }
-  
   const selector = useAppSelector((state) => state.user.user) 
   const ide = selector.map(selector => selector.payload.user.id)
  
-  
-  if(selector){
-
-    console.log(ide, "AFUERa");
+  interface SelectAccounts {
+    value: string;
+    label: string;
+    image: {
+      uri: string;
+    };
   }
-
-  // post Account 
-
   
+  const data: SelectAccounts[] = [
+    {
+      value: 'mercadopago',
+      label: 'Mercado Pago',
+      image: {
+        uri: 'https://www.bsr.cl/wp-content/uploads/2018/12/Mercadopago.jpg',
+      },
+    },
+    {
+      value: 'brubank',
+      label: 'Brubank',
+      image: {
+        uri: 'https://th.bing.com/th/id/OIP.JKHQkVt2TiFcTDh4DNNI_AAAAA?pid=ImgDet&rs=1',
+      },
+    },
+    {
+      value: 'cash',
+      label: 'Cash',
+      image: {
+        uri: 'https://th.bing.com/th/id/R.46885d1334b48f81acf9a4e6b5fea757?rik=WUZNoNBF8HztrA&riu=http%3a%2f%2ffishaowiki.com%2fwp-content%2fuploads%2f2013%2f10%2ffishbucks.gif&ehk=jFVu8FmI9rISaCTEcIg7Oc6Cy2lIOwU%2bruIc%2bDIn3fc%3d&risl=&pid=ImgRaw&r=0',
+      },
+    },
+    {
+      value: 'uala',
+      label: 'Uala',
+      image: {
+        uri: 'https://th.bing.com/th/id/OIP.raKhtV2oJ1WEJg8wFUFTJAHaHa?pid=ImgDet&rs=1',
+      },
+    },
+    {
+      value: 'santander',
+      label: 'Santander Rio',
+      image: {
+        uri: 'https://yt3.ggpht.com/-ucfOhKHcl_w/AAAAAAAAAAI/AAAAAAAAAAA/mzypJuHb_go/s900-c-k-no-mo-rj-c0xffffff/photo.jpg',
+      },
+    },
+  ];
 
   const submitAccount = () => {
     const data: AccountData = {
@@ -80,17 +80,22 @@ const Slider = () => {
     };
     if (ide !== undefined) {
       console.log(ide, "ATRODEn");
-      
-      console.log(dispatch(postAccount(ide[0], data)));
+      dispatch(postAccount(ide[(ide.length)-1], data))
       Alert.alert('Successfully created Account');
       setName('');
       setTotal('');
+      navigation.navigate("MyDrawer")
     }
   };
 
+  const onChange = (item: SelectAccounts) => {
+    setName(item.label);
+    console.log(item.value);
+  }
+
   useEffect(()=>{
     dispatch(gettingUsers())
-  },[])
+  },[dispatch])
 
   return (
     <View style={styles.container}>
@@ -102,52 +107,38 @@ const Slider = () => {
         <Text style={styles.text}>Create an account</Text>
 
             <View style={styles.containerInput}>
-              <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter your Account"></TextInput>
+              {/* <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter your Account"></TextInput> */}
+              <SelectCountry<SelectAccounts>
+                style={styles.dropdown}
+                selectedTextStyle={styles.selectedTextStyle}
+                placeholderStyle={styles.placeholderStyle}
+                imageStyle={styles.imageStyle}
+                iconStyle={styles.iconStyle}
+                maxHeight={200}
+                value={name}
+                data={data}
+                valueField="value"
+                labelField="label"
+                imageField="image"
+                placeholder="Select Account"
+                onChange={onChange}
+                />
               <TextInput style={styles.input} value={total} onChangeText={setTotal} placeholder="Enter an Amount"></TextInput>
           <TouchableOpacity style={styles.select} onPress={submitAccount}>
           <Text style={{textAlign: "center", color: "white"}}>Crear</Text>
           </TouchableOpacity>
             </View>
-          <TouchableOpacity   onPress={()=>  ref.current?.setPage(1)}  style={styles.btnContinue}>
-            <Text style={{textAlign: "center", color: "white"}}>Continuar</Text>
-          </TouchableOpacity>
-            
-        </View>
-
-        <View key="2" style={styles.map}>
-        <Text style={styles.text}>Choose your Graphic</Text>
-        {
-          firstOn.map((item, index) => {
-            return (
-              <View style={styles.map} key={item.id}>
-             <TouchableOpacity
-              key={item.id}
-              onPress={() => select(item)}
-              style={[colors.includes(item.id) ? { backgroundColor: "#426581", borderRadius:100 } : null]}
-              >
-              <Image style={styles.image} source={item.image} />
-              </TouchableOpacity>
-              </View>
-            )         
-          })
-        }
-        </View>
-        <View key="3" style={styles.map}>
-        <Text style={styles.text}>Choose your exchange</Text>
-        {
-          secondOn.map((item, index) => {
-            return (
-              <TouchableOpacity key={item.id} onPress={() => select(item)} style={[colors.includes(item.id) ? { backgroundColor: "#6d92b1", borderRadius:100 } : null]}>
-                <Image style={styles.image} source={item.image} />
-              </TouchableOpacity>
-              )         
-            })
+          {/* <TouchableOpacity   onPress={()=>{
+          
           }
-          {
-            Array.isArray(nie.change) && Array.isArray(nie.grafico)  ?  
-            <Button color={"violet"} onPress={() => navigation.navigate('MyDrawer')} title="Continue" />
-            : null
-          }     
+          } 
+             style={styles.btnContinue}>
+            <Text style={{textAlign: "center", color: "white"}}>Continuar</Text>
+          </TouchableOpacity> */}
+          {/* <Button title="Continue" onPress={()=>{
+              ref.current?.setPage(1)
+              navigation.navigate("MyDrawer")
+          }}/> */}
         </View>
       </PagerView>
       </ImageBackground>
@@ -238,5 +229,29 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: 150,
     height: 35,
-  }
+  },
+  dropdown: {
+    margin: 16,
+    height: 40,
+    width: 200,
+    backgroundColor: '#EEEEEE',
+    borderRadius: 22,
+    paddingHorizontal: 8,
+  },
+  imageStyle: {
+    width: 25,
+    height: 25,
+    borderRadius: 12,
+  },
+  placeholderStyle: {
+    fontSize: 12,
+  },
+  selectedTextStyle: {
+    fontSize: 14,
+    marginLeft: 8,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
 });

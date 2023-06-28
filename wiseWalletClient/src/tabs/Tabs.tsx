@@ -2,19 +2,22 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FormIncome from '../components/formIncome/FormIncome';
 import { NavigationContainer } from '@react-navigation/native';
-import SharedScreen from '../Screens/Shared';
+import SharedScreen from '../Screens/Profile';
 import Pager from '../components/home/Pager';
 import { Colors } from '../enums/Colors';
-import { Image, View } from 'react-native';
+import { Image, View, TouchableOpacity, Text } from 'react-native';
 
 
 
 const Tab = createBottomTabNavigator();
 
+
 const MyTabs = () => {
   
-  return (
 
+
+  return (
+      
       <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
@@ -44,18 +47,18 @@ const MyTabs = () => {
           }}  
         />
 
-        <Tab.Screen
-            name="Home" 
-            component={Pager} 
-            options={{
+          <Tab.Screen
+           name="Home" 
+           component={Pager} 
+           options={{
               tabBarIcon: ({ focused }) => {
                 return (
                   <View>
-                    <Image 
-                      source={require('./assets/homeIcon.png')}
-                      resizeMode='contain'
-                      style={{height: 60, tintColor:'white'}}
-                    />
+                      <Image 
+                        source={require('./assets/homeIcon.png')}
+                        resizeMode='contain'
+                        style={{height: 60, tintColor:'white'}}
+                      />
                   </View>
                 )
               }
@@ -75,12 +78,12 @@ const MyTabs = () => {
                     style={{height: 35, tintColor:'white'}}
                   />
                 </View>
-              )
-            }
-          }}
-        />
+          )
+        }
+      }}
+    />
         
-      </Tab.Navigator>
+  </Tab.Navigator>
     
   );
 };

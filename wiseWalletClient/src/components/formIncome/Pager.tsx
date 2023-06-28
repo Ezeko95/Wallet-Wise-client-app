@@ -2,12 +2,13 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet,Text, TextInput, View, TouchableOpacity, Alert } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { SelectCountry } from 'react-native-element-dropdown';
-import { useDispatch, useSelector } from 'react-redux';
 import { postMovement, MovementData } from '../../redux/slices/movementSlice';
 import { ExpenseData, postExpense } from '../../redux/slices/expenseSlice';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { gettingUsers } from '../../redux/slices/getUsers';
+import { getMovements, getAccounts, getExpense, getIncome } from '../../redux/slices/allMovementsSlice';
 
+ 
 
 interface Data {
   value: string;
@@ -147,6 +148,8 @@ const dataExpense: Expense[] = [
   },
 ]; 
 
+
+
 const Pager = () => {
   
   const dispatch = useAppDispatch()
@@ -157,15 +160,19 @@ const Pager = () => {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
-
-
+  
+  
+  
+  
+  const idUser = useAppSelector((state) => state.user.user)
   const selector = useAppSelector((state) => state.user.user) // esto e user enterito
   
-  const aidi = selector.map(selector => selector.payload.user?.id)
+  const aidi = selector.map(selector => selector.payload.user.id)
+  const ide = idUser.map((idUser) => idUser.payload.user.id)
   
-  console.log(aidi, "AIDIIIII ASHEI8IIIII MUCHAS QUERRAN POCAS PODRAN");
+ 
   
-
+  
   const handlePostMovement = () => {
     
     const data: MovementData = {
@@ -175,31 +182,48 @@ const Pager = () => {
     };
     if(!type || !account || !amount) return Alert.alert('Incomplete fields, please complete them all')
     dispatch(postMovement(aidi[0],data));
+    dispatch(getIncome(aidi[0]))
+    dispatch(getMovements(aidi[0]))
+    dispatch(getAccounts(aidi[0]))
+    dispatch(getAccounts(ide[0]))
+    
+    
     Alert.alert('Successfully created income')
     setType('');
     setAccount('');
     setAmount('');
   };
-
+  
   const handlePostExpense = () => {
     const data: ExpenseData = {
       amount: parseFloat(amount),
       description,
       category,
       paymentMethod,
-      
     };
     if(!amount || !category || !description || !paymentMethod ) return Alert.alert('Incomplete fields, please complete them all')
-    console.log(dispatch(postExpense(aidi[0], data)))
+    dispatch(postExpense(aidi[0], data))
+    dispatch(getIncome(aidi[0]))
+    dispatch(getMovements(aidi[0]))
+    dispatch(getAccounts(aidi[0]))
+    dispatch(getAccounts(ide[0]))
     Alert.alert('Successfully created expense')
     setAmount('');
     setDescription('');
     setCategory('');
     setPaymentMethod('');
   };
+  
+  const reload = () => {
+    dispatch(getIncome(aidi[0]))
+    dispatch(getMovements(aidi[0]))
+    dispatch(getExpense(ide[0]))
+    dispatch(getAccounts(ide[0]))
+  } 
+
 
   const onChange = (item: Data) => {
-    setAccount(item.value);
+    setAccount(item.label);
     console.log(item.value);
   }
   const onChange1 = (item: Expense) => {
@@ -207,7 +231,7 @@ const Pager = () => {
     console.log(item.value);
   }
   const onChange2 = (item: PaymentMethod) => {
-    setPaymentMethod(item.value);
+    setPaymentMethod(item.label);
     console.log(item.value);
   }
 
@@ -215,6 +239,8 @@ const Pager = () => {
 
   useEffect(()=>{
     dispatch(gettingUsers())
+    dispatch(getMovements(aidi[0]))
+    dispatch(getExpense(aidi[0]))
   },[])
 
   
@@ -269,7 +295,7 @@ const Pager = () => {
                 style={styles.input}
               />
               
-              <TouchableOpacity onPress={handlePostMovement} disabled={loading}  style={styles.btn}>
+              <TouchableOpacity onPress={() => { handlePostMovement(); reload()}} disabled={loading}  style={styles.btn}>
                 <Text style={styles.textBtn}>Add</Text>
               </TouchableOpacity>
             </View>
@@ -330,7 +356,7 @@ const Pager = () => {
                 placeholderTextColor="gray"
                 style={styles.input}
               />
-              <TouchableOpacity onPress={handlePostExpense} disabled={loading}  style={styles.btn}>
+              <TouchableOpacity onPress={() => { handlePostExpense(); reload()}} disabled={loading}  style={styles.btn}>
                 <Text style={styles.textBtn}>Add</Text>
               </TouchableOpacity>
               
