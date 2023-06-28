@@ -53,14 +53,13 @@ const Login: React.FC = () => {
     }
   };
   return (
-      <ImageBackground source={require('./fondoIntro2.png')} 
- >
-
-  <KeyboardAvoidingView
+    
+      <ImageBackground source={require('./assets/fondoIntro2.png')} 
+>
+      <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-
     <View style={styles.container}>
       <Image source={require("./assets/logo.png")} style={styles.image}/>
       <Text style={styles.text}>Login</Text>

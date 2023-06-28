@@ -2,14 +2,14 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet,Text, TextInput, View, TouchableOpacity, Alert } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { SelectCountry } from 'react-native-element-dropdown';
-import { useDispatch, useSelector } from 'react-redux';
 import { postMovement, MovementData } from '../../redux/slices/movementSlice';
 import { ExpenseData, postExpense } from '../../redux/slices/expenseSlice';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { gettingUsers } from '../../redux/slices/getUsers';
-import MyTabs from "../../tabs/Tabs"
-import Drawer from '../drawer/component/Drawer';
+import { getMovements, getAccounts, getExpense, getIncome } from '../../redux/slices/allMovementsSlice';
 
+
+ 
 
 interface Data {
   value: string;
@@ -149,8 +149,8 @@ const dataExpense: Expense[] = [
   },
 ]; 
 
-const FormPager = () => {
-  
+const Pager = () => {
+
   const dispatch = useAppDispatch()
   const { loading, error } = useAppSelector((state) => state.movement);
   const [type, setType] = useState('');
@@ -159,17 +159,22 @@ const FormPager = () => {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
-
-
+  
+  const idUser = useAppSelector((state) => state.user.user)
   const selector = useAppSelector((state) => state.user.user) // esto e user enterito
   
-  const aidi = selector.map(selector => selector.payload.user?.id)
+  const aidi = selector.map(selector => selector.payload.user.id)
+  const ide = idUser.map((idUser) => idUser.payload.user.id)
   
-  console.log(aidi, "AIDIIIII ASHEI8IIIII MUCHAS QUERRAN POCAS PODRAN");
+ 
+  
   
 
+
+
+
   const handlePostMovement = () => {
-    
+
     const data: MovementData = {
       type,
       account,
@@ -177,28 +182,46 @@ const FormPager = () => {
     };
     if(!type || !account || !amount) return Alert.alert('Incomplete fields, please complete them all')
     dispatch(postMovement(aidi[0],data));
+    dispatch(getIncome(aidi[0]))
+    dispatch(getMovements(aidi[0]))
+    dispatch(getAccounts(aidi[0]))
+    dispatch(getAccounts(ide[0]))
+
+
     Alert.alert('Successfully created income')
     setType('');
     setAccount('');
     setAmount('');
   };
-
+  
   const handlePostExpense = () => {
     const data: ExpenseData = {
       amount: parseFloat(amount),
       description,
       category,
       paymentMethod,
-      
     };
     if(!amount || !category || !description || !paymentMethod ) return Alert.alert('Incomplete fields, please complete them all')
-    console.log(dispatch(postExpense(aidi[(aidi.length)-1], data)))
+
+    dispatch(postExpense(aidi[0], data))
+    dispatch(getIncome(aidi[0]))
+    dispatch(getMovements(aidi[0]))
+    dispatch(getAccounts(aidi[0]))
+    dispatch(getAccounts(ide[0]))
     Alert.alert('Successfully created expense')
     setAmount('');
     setDescription('');
     setCategory('');
     setPaymentMethod('');
   };
+  
+  const reload = () => {
+    dispatch(getIncome(aidi[0]))
+    dispatch(getMovements(aidi[0]))
+    dispatch(getExpense(ide[0]))
+    dispatch(getAccounts(ide[0]))
+  } 
+
 
   const onChange = (item: Data) => {
     setAccount(item.label);
@@ -217,13 +240,15 @@ const FormPager = () => {
 
   useEffect(()=>{
     dispatch(gettingUsers())
+    dispatch(getMovements(aidi[0]))
+    dispatch(getExpense(aidi[0]))
   },[])
 
   
   
 
   return (
-    <Drawer>
+    
     <View style={styles.container}>
       
       <View style={styles.btnContainer}>
@@ -270,8 +295,8 @@ const FormPager = () => {
                 placeholderTextColor="gray"
                 style={styles.input}
               />
-              
-              <TouchableOpacity onPress={handlePostMovement} disabled={loading}  style={styles.btn}>
+
+              <TouchableOpacity onPress={() => { handlePostMovement(); reload()}} disabled={loading}  style={styles.btn}>
                 <Text style={styles.textBtn}>Add</Text>
               </TouchableOpacity>
             </View>
@@ -285,7 +310,6 @@ const FormPager = () => {
              <Text style={styles.textForm}>Add your Expenses here!</Text>
              
              <View style={styles.formContainer}>
-
               <SelectCountry<Expense>
                 style={styles.dropdown}
                 selectedTextStyle={styles.selectedTextStyle}
@@ -332,23 +356,20 @@ const FormPager = () => {
                 placeholderTextColor="gray"
                 style={styles.input}
               />
-              <TouchableOpacity onPress={handlePostExpense} disabled={loading}  style={styles.btn}>
+              <TouchableOpacity onPress={() => { handlePostExpense(); reload()}} disabled={loading}  style={styles.btn}>
                 <Text style={styles.textBtn}>Add</Text>
               </TouchableOpacity>
-              
+
              </View>
              
           </View>
         </View>
       </PagerView>
     </View>
-      <MyTabs/>
-    </Drawer>
   );
 }
 
-export default FormPager;
-
+export default Pager;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -387,7 +408,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   input: {
-    fontSize:15,
     height: 40,
     width: 200,
     borderWidth: 1,
@@ -396,7 +416,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 25,
     backgroundColor: 'white',
-    color: 'black',
     marginTop: 20,
   },
   textBtn: {
@@ -427,9 +446,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEEEEE',
     borderRadius: 22,
     paddingHorizontal: 8,
-    color: 'black',
-    fontSize: 26,
-    marginBottom: 10,
   },
   imageStyle: {
     width: 25,
@@ -449,4 +465,3 @@ const styles = StyleSheet.create({
   },
   
 });
-

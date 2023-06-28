@@ -4,23 +4,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import Upload from './Upload';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
+
 interface RegisterForm {
   name: string;
   email: string;
   password: string;
-  picture: string;
 }
 
 const Register: React.FC = () => {
   const navigation: (any) = useNavigation();
   const [form, setForm] = useState<RegisterForm>({
-
     name: '',
     email: '',
     password: '',
-    picture: ''
-    
   });
   const [error, setError] = useState<string>('');
   const handleInputChange = (name: keyof RegisterForm, value: string) => {
@@ -32,6 +28,7 @@ const Register: React.FC = () => {
 
   const handleSubmit = async () => {
     console.log(console.log(form,'INFO AL FORMULARIOOOO'));
+    console.log(console.log(form,'INFO AL FORMULARIOOOO'));
     
     try {
       const response = await axios.post<{ accessToken: string }>(
@@ -39,6 +36,7 @@ const Register: React.FC = () => {
         form,
       );
       const { accessToken } = response.data;
+      console.log(response.data, "register");
       console.log(response.data, "register");
       console.log('Register successful');
       // Save the access token in AsyncStorage or a secure storage
@@ -49,20 +47,23 @@ const Register: React.FC = () => {
       setError('Invalid email or password');
     }
   };
-  console.log(form);
-  
+
   return (
-    <ImageBackground source={require('./fondoIntro2.png')}>
+
+    <ImageBackground source={require('./assets/fondoIntro2.png')}>
+
       <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
     <View style={styles.container}>
+
       <Image source={require("./assets/logo.png")} style={styles.image}/>
+
      
       <Text style={styles.text}>Register</Text>
       <KeyboardAvoidingView>
-      {/* <TouchableOpacity style={{display:"flex",alignItems:"center", }}  >
+       {/* <TouchableOpacity style={{display:"flex",alignItems:"center", }}  >
         <Image source={{uri:'https://i.kym-cdn.com/entries/icons/original/000/026/152/gigachadd.jpg'}} style={styles.imageperfil}/>
         <Text style={{color:"white"}}>CHOOSE YOUR FOTOU</Text>
       </TouchableOpacity> */}
@@ -105,9 +106,7 @@ const Register: React.FC = () => {
 const styles = StyleSheet.create({
   image:{
     height:250,
-    width: 250,
-    position: "relative",
-    top: 60
+    width: 250
   },
   input:{
     backgroundColor:"white",
@@ -147,6 +146,5 @@ const styles = StyleSheet.create({
     margin: 20
   }
 });
-
 
 export default Register;

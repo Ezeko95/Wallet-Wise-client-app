@@ -8,16 +8,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {launchImageLibrary} from 'react-native-image-picker';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { getUri } from '../../redux/slices/getUsers';
+
+import {launchImageLibrary} from 'react-native-image-picker';   
 
 interface Props {
     handleInputChange: Function
 }
 
 const Upload: React.FC<Props> = ({handleInputChange}) => {
-  const dispatch = useAppDispatch()
 
   const [photo, setPhoto] = useState(
     'https://res.cloudinary.com/dhgn9tq4j/image/upload/v1666764536/cld-sample-2.jpg',
@@ -36,7 +34,7 @@ const Upload: React.FC<Props> = ({handleInputChange}) => {
         const uploadImageUrl = resData.secure_url;
         setPhoto(uploadImageUrl)
         handleInputChange('picture',uploadImageUrl)
-        
+
       })
       //.then(resp=> console.log(resp))
       .catch(err => {
@@ -66,13 +64,13 @@ const Upload: React.FC<Props> = ({handleInputChange}) => {
     });
   };
 
-  
+
   // const getUrL = ()=>{
   //   dispatch(getUri(photo))
   // }
   // console.log(userUri,"CONSOLE.LOGURL")
   return (
-    
+
       <View style={{alignItems: 'center'}}>
         <TouchableOpacity
           onPress={()=>{
@@ -85,7 +83,7 @@ const Upload: React.FC<Props> = ({handleInputChange}) => {
         </TouchableOpacity>
         <Text style={styles.uploadHeaderStyle}>Upload Picture</Text>
       </View>
-    
+
   );
 };
 

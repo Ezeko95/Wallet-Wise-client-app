@@ -7,7 +7,7 @@ import LogoutButton from '../components/Login/LogOut';
 import Drawer from '../components/drawer/component/Drawer';
 import MyTabs from '../tabs/Tabs';
 
-const SharedScreen = () => {
+ const SharedScreen = () => {
   
   const dispatch = useAppDispatch()
   useEffect(()=>{
@@ -18,7 +18,6 @@ const SharedScreen = () => {
   console.log(tp);
   
   return(
-    <Drawer>
         <View style={styles.sharedCard}>
           <View style={styles.perfiView}>
             <View style={styles.perfiView} key={tp.payload.user.id}>
@@ -28,15 +27,13 @@ const SharedScreen = () => {
                 {tp.payload.user.premium  === false ? <Text style={{color: "white"}}>Cuenta Standard</Text>: <Text style={{color: "black"}}>Cuenta premium</Text>}
             </View>   
           </View>
-          <View>
+          <View style={styles.stylesBtn}>
             <LogoutButton/>
           </View>
         </View>
-      <MyTabs/>
-    </Drawer>
   )
 };
-
+export default SharedScreen;
 const styles = StyleSheet.create({
   image:{
     width: 150,
@@ -46,7 +43,8 @@ const styles = StyleSheet.create({
   sharedCard: {
     flex: 1,
     justifyContent: "space-around",
-    backgroundColor: "#131313"
+    backgroundColor: "#131313",
+    alignSelf:"center"
   },
   text: {
     color:"white",
@@ -58,7 +56,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: "center",
     alignItems: "center",
+  },
+  stylesBtn:{
+    justifyContent:"center",
+    alignItems:"center",
   }
 });
-
-export default SharedScreen;

@@ -1,15 +1,14 @@
 import React from 'react';
 import MyTabs from '../../tabs/Tabs';
-import { ScrollView } from 'react-native';
 import Drawer from './component/Drawer';
 import AllMovements from '../home/AllMovements';
-import Pager from '../home/Pager';
-import FormPager from '../formIncome/Pager';
+import Expenses from '../home/Expenses';
 
 const MyDrawer = () => {
+
   return (
       <Drawer>
-        <Pager/>
+        <MyTabs/>
       </Drawer>
   );
 };

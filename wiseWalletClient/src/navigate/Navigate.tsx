@@ -1,50 +1,49 @@
 import React from 'react';
-import { NavigationContainer, RouteProp } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer, RouteProp} from '@react-navigation/native';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import Slider from '../slider/Slider';
 import MyTabs from '../tabs/Tabs';
 import AuthView from '../Screens/Authenticate';
 import Intro from '../components/Intro/Intro';
 import MyDrawer from '../components/drawer';
-import FormPager from '../components/formIncome/Pager';
-import Shared from '../Screens/Shared';
-import { useRoute } from '@react-navigation/native';
-import Pager from '../components/home/Pager';
+import DetailIncome from '../components/home/DetailIncome';
+import DetailExpense from '../components/home/DetailExpense'
+
+
 
 type RootStackParamList = {
   Intro: undefined;
   Login: undefined;
   Slider: undefined;
   MyDrawer: undefined;
-  FormPager: undefined;
-  Profile: undefined;
+  DetailIncome: undefined;
 };
 
 type SliderScreenRouteProp = RouteProp<RootStackParamList, 'Slider'>;
+type DetailScreenRouteProp = RouteProp<RootStackParamList, 'DetailIncome'>;
 
-type Props = {
+
+export type Props = {
   route: SliderScreenRouteProp;
-};
+  routeDetail: DetailScreenRouteProp;
+};;
+
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Navigate = () => {
-  // const route= useRoute<ProfileScreenRouteProp>()
-  // console.log(route,'ROUTE');
-  
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Intro" component={Intro} />
         <Stack.Screen name="Login" component={AuthView} /> 
         <Stack.Screen name="Slider" component={Slider} /> 
-        <Stack.Screen name="MyDrawer" component={Pager} />
-        
-        <Stack.Screen name="FormPager" component={FormPager} />
-        <Stack.Screen name='Profile' component={Shared}/>
+        <Stack.Screen name="MyDrawer" component={MyDrawer} />
+        <Stack.Screen name="DetailIncome" component={DetailIncome} />
+        {/* <Stack.Screen name="DetailExpense" component={DetailExpense} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
-
 export default Navigate;
