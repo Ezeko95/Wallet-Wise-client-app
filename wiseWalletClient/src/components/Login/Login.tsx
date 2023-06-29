@@ -1,8 +1,10 @@
 import { Text, TextInput,View, Button, StyleSheet, ImageBackground , Image ,KeyboardAvoidingView, Platform} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useState } from 'react';
+import React, { useState,  } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { gettingUsers } from '../../redux/slices/getUsers';
+import { useAppDispatch } from '../../redux/store';
 
 interface LoginForm {
   email: string;
@@ -10,6 +12,7 @@ interface LoginForm {
 }
 
 const Login: React.FC = () => {
+  const dispatch = useAppDispatch()
   const navigation:(any) = useNavigation();
   const [form, setForm] = useState<LoginForm>({
     email: '',
@@ -47,11 +50,13 @@ const Login: React.FC = () => {
       console.log(response.data);
       console.log('Login successful');
       await AsyncStorage.setItem('accessToken', accessToken);
+      console.log(dispatch(gettingUsers()) ,"este es DISPATCH DE LOGIN")
       setLogin(true)
     } catch (error) {
       setError('Invalid email or password');
     }
   };
+
   return (
     
       <ImageBackground source={require('./assets/fondoIntro2.png')} 

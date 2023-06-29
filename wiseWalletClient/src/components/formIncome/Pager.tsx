@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet,Text, TextInput, View, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet,Text, TextInput, View, TouchableOpacity, Alert, ScrollView, KeyboardAvoidingView } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { SelectCountry } from 'react-native-element-dropdown';
 import { postMovement, MovementData } from '../../redux/slices/movementSlice';
@@ -165,13 +165,6 @@ const Pager = () => {
   
   const aidi = selector.map(selector => selector.payload.user.id)
   const ide = idUser.map((idUser) => idUser.payload.user.id)
-  
- 
-  
-  
-
-
-
 
   const handlePostMovement = () => {
 
@@ -249,6 +242,7 @@ const Pager = () => {
 
   return (
     
+   
     <View style={styles.container}>
       
       <View style={styles.btnContainer}>
@@ -260,10 +254,15 @@ const Pager = () => {
         </TouchableOpacity>
       </View>
       <PagerView style={styles.pager} ref={ref} initialPage={0}>
+
+
+      <ScrollView>
         <View key="1">
         <View>
             <Text style={styles.textForm}>Add your Incomes here!</Text>
+
             <View style={styles.formContainer}>
+              
               <SelectCountry<Data>
                 style={styles.dropdown}
                 selectedTextStyle={styles.selectedTextStyle}
@@ -279,13 +278,15 @@ const Pager = () => {
                 placeholder="Select Account"
                 onChange={onChange as (item: Data) => void}
                 />
+                
               <TextInput
                 value={type}
                 onChangeText={setType}
                 placeholder="Type"
                 placeholderTextColor="gray"
                 style={styles.input}
-              />
+                />
+              
               
               <TextInput
                 value={amount} 
@@ -294,17 +295,19 @@ const Pager = () => {
                 placeholder="Amount"
                 placeholderTextColor="gray"
                 style={styles.input}
-              />
+                />
+
+            </View>
 
               <TouchableOpacity onPress={() => { handlePostMovement(); reload()}} disabled={loading}  style={styles.btn}>
                 <Text style={styles.textBtn}>Add</Text>
               </TouchableOpacity>
-            </View>
             
           </View>
-          
         </View>
-        
+      </ScrollView>
+
+      <ScrollView>
         <View key="2">
           <View>
              <Text style={styles.textForm}>Add your Expenses here!</Text>
@@ -347,7 +350,7 @@ const Pager = () => {
                 placeholder="Description"
                 placeholderTextColor="gray"
                 style={styles.input}
-              />
+                />
               <TextInput
                 value={amount} 
                 onChangeText={setAmount} 
@@ -355,15 +358,16 @@ const Pager = () => {
                 placeholder="Amount"
                 placeholderTextColor="gray"
                 style={styles.input}
-              />
+                />
+             </View>
               <TouchableOpacity onPress={() => { handlePostExpense(); reload()}} disabled={loading}  style={styles.btn}>
                 <Text style={styles.textBtn}>Add</Text>
               </TouchableOpacity>
-
-             </View>
              
           </View>
-        </View>
+          </View>
+        </ScrollView>
+        
       </PagerView>
     </View>
   );
@@ -428,7 +432,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   btn: {
-    marginTop: 30,
+    marginTop: 85,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',

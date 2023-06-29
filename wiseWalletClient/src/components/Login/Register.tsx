@@ -4,6 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import Upload from './Upload';
+import { useAppDispatch } from '../../redux/store';
+import { gettingUsers } from '../../redux/slices/getUsers';
 
 interface RegisterForm {
   name: string;
@@ -13,6 +15,7 @@ interface RegisterForm {
 
 const Register: React.FC = () => {
   const navigation: (any) = useNavigation();
+  const dispatch = useAppDispatch()
   const [form, setForm] = useState<RegisterForm>({
     name: '',
     email: '',
@@ -27,7 +30,7 @@ const Register: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(console.log(form,'INFO AL FORMULARIOOOO'));
+    
     console.log(console.log(form,'INFO AL FORMULARIOOOO'));
     
     try {
@@ -41,7 +44,9 @@ const Register: React.FC = () => {
       console.log('Register successful');
       // Save the access token in AsyncStorage or a secure storage
       await AsyncStorage.setItem('accessToken', accessToken);
+     console.log(dispatch(gettingUsers), 'ESTE ES EL DISPATCH DE REGISTER'  );
       navigation.navigate('Slider')
+
       // Call the onRegister function from props to handle the registration action
     } catch (error) {
       setError('Invalid email or password');

@@ -8,6 +8,9 @@ import Intro from '../components/Intro/Intro';
 import MyDrawer from '../components/drawer';
 import DetailIncome from '../components/home/DetailIncome';
 import DetailExpense from '../components/home/DetailExpense'
+import CloudinaryComponent from '../components/goals/Goals';
+import GoalList from '../components/goals/GoalsList';
+import GoalDetail from '../components/goals/GoalDetail';
 
 
 
@@ -17,17 +20,22 @@ type RootStackParamList = {
   Slider: undefined;
   MyDrawer: undefined;
   DetailIncome: undefined;
+  DetailExpense: undefined;
+  Goals: undefined;
+  GoalsList: undefined;
+  GoalDetail: undefined;
 };
 
 type SliderScreenRouteProp = RouteProp<RootStackParamList, 'Slider'>;
 type DetailScreenRouteProp = RouteProp<RootStackParamList, 'DetailIncome'>;
+type DetailExpenseRouteProp = RouteProp<RootStackParamList, 'DetailExpense'>;
 
 
 export type Props = {
   route: SliderScreenRouteProp;
   routeDetail: DetailScreenRouteProp;
+  routeExpense: DetailExpenseRouteProp;
 };;
-
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -38,12 +46,17 @@ const Navigate = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Intro" component={Intro} />
         <Stack.Screen name="Login" component={AuthView} /> 
-        <Stack.Screen name="Slider" component={Slider} /> 
+        <Stack.Screen name="Slider" component={Slider} />  
         <Stack.Screen name="MyDrawer" component={MyDrawer} />
         <Stack.Screen name="DetailIncome" component={DetailIncome} />
-        {/* <Stack.Screen name="DetailExpense" component={DetailExpense} /> */}
+        <Stack.Screen name="DetailExpense" component={DetailExpense} />
+        <Stack.Screen name="Goals" component={CloudinaryComponent} />
+        <Stack.Screen name="GoalsList" component={GoalList} />
+        <Stack.Screen name="GoalDetail" component={GoalDetail} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
+
+
 export default Navigate;

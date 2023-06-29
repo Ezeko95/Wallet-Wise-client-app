@@ -5,8 +5,6 @@ import { Colors } from '../../enums/Colors';
 import { useAppSelector } from '../../redux/hooks/hooks';
 import { useAppDispatch } from '../../redux/store';
 import { Dropdown } from 'react-native-element-dropdown';
-import axios from 'axios';
-import { base_URL } from '../../redux/utils';
 import { filterBalanceAccount, getAccounts, getMovements, getExpense, getIncome, getExpensesSuccess } from '../../redux/slices/allMovementsSlice';
 
 interface Props {}
@@ -20,6 +18,8 @@ const AllMovements: React.FC<Props> = () => {
   const idUser = useAppSelector((state) => state.user.user)
   const allMovements = useAppSelector((state) => state.allMovements.allMovements)
 
+ console.log(idUser, 'REDUX USUARIO');
+ 
   const filter = useAppSelector((state) => state.allMovements.filtered)
 
   const balance = useAppSelector((state)=> state.allMovements.balance)
@@ -31,11 +31,23 @@ const AllMovements: React.FC<Props> = () => {
 
 
   
-  const ide = idUser.map((idUser) => idUser.payload.user.id)
+  const ide =  idUser.map((idUser) =>  idUser.payload.user.id)
+  console.log(ide[0], 'ide ceroooooooooo');
+  console.log(ide[ide.length-1], 'ide menos unooooooooooooooooooo');
+  
 
   //const incexp: any[] = [...incomes, ...expenses]
-  const show: any[] = filter; 
-  console.log(account);
+  //const showExpense= expenses.filter(e=> !e.deletedExpense)
+  //const showIncome= incomes.filter(e=> !e.deletedIncome)
+  const showExp= filter.filter(e=> e.deletedExpense=== false)
+  console.log(showExp);
+  
+  const showInc= filter.filter(e=> e.deletedIncome=== false)
+  const show: any[] = [...showExp, ...showInc]; 
+  console.log(show, 'SHOW');
+  
+  //const showFiltered= filter.map(e=> e.)
+
   
   //const filterIncome = incomes.filter((element: { amount: any; })=> element.amount)
   
@@ -47,12 +59,14 @@ const AllMovements: React.FC<Props> = () => {
   
 
   useEffect(()=>{
-    dispatch(getAccounts(ide[0]))
-    dispatch(getMovements(ide[0]))
-    dispatch(getIncome(ide[0]))
-    dispatch(getExpense(ide[0]))
-  }, [])
-
+    dispatch(getAccounts(ide[ide.length-1]))
+    dispatch(getMovements(ide[ide.length-1]))
+    dispatch(getIncome(ide[ide.length-1]))
+    dispatch(getExpense(ide[ide.length-1]))
+    
+  }, [dispatch])
+  
+ 
   interface AccountData {
     label: string;
     value: string;
@@ -69,11 +83,7 @@ const AllMovements: React.FC<Props> = () => {
 
   const colors = ["#5EFC8D","#8EF9F3","#53599A","#ECD444","#FFFFFF","#C42021","#F44708","#CA61C3","#FF958C","#ADFCF9"]
 
-  const [value, setValue] = useState(null);
-
-  const charGraficos = useAppSelector((state) => state.onBoarding.Onboarding);
-  const change = charGraficos.change.map((item) => item.name);
-  const chart = charGraficos.grafico.map((item) => item.name);
+  const [value, setValue] = useState<string | null>(null);
 
   return (
     <View style={styles.homeCard}>
@@ -87,7 +97,6 @@ const AllMovements: React.FC<Props> = () => {
                 placeholderStyle={styles.placeholderStyle}
                 selectedTextStyle={styles.selectedTextStyle}
                 inputSearchStyle={styles.inputSearchStyle}
-                /* imageStyle={styles.imageStyle} */
                 iconStyle={styles.iconStyle}
                 data={data}
                 search
@@ -98,9 +107,10 @@ const AllMovements: React.FC<Props> = () => {
                 searchPlaceholder="Search..."
                 value={value}
                 onChange={item => {
-                  console.log('filterButton');
-                  setValue(value) 
-                  dispatch(filterBalanceAccount(item.value))
+                  setValue(item.value);
+                  
+                  dispatch(filterBalanceAccount(item.value));
+                  
                 }}
               />
 
@@ -108,7 +118,7 @@ const AllMovements: React.FC<Props> = () => {
                     <View>
                       <Text style={styles.text}>${balance}</Text>
                       <VictoryPie
-                      
+
                             style={{
                               labels: {
                                 fill: '#FFFFFF'
@@ -126,10 +136,29 @@ const AllMovements: React.FC<Props> = () => {
                           />
                     </View>
                           
+                 {
+                  show.map(mov=>{
+            
+                      if(mov.type){
+                        return(
+                        <View> 
+                          <Text style={styles.detail}> {mov.type}:  {mov.amount}</Text>
+                        </View>
+                        )  
+                        
+                      } else {
+                        return(
+                        <View>
+                         <Text style={styles.detail}>{mov.category}:  {mov.amount}</Text>
+                        </View>
+                        )
+                      }  
                     
-                <FlatList
+                  })
+                }     
+                {/* <FlatList
                 nestedScrollEnabled
-                  data={show}
+                data={filter}
                   renderItem={({item}) =>{
                     if(item.type){
                       return <Text style={styles.detail}> {item.type}:  {item.amount}</Text>
@@ -137,7 +166,7 @@ const AllMovements: React.FC<Props> = () => {
                       return <Text style={styles.detail}>{item.category}:  {item.amount}</Text>
                     }
                   }}
-                />
+                /> */}
         </View>
       </ScrollView>
     </View>

@@ -40,7 +40,11 @@ const Drawer = ({ children }: DrawerProps) => {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('Slider')}>
-        <Text style={styles.text}>Currency</Text>
+        <Text style={styles.text}>New Account</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => navigation.navigate('GoalsList')}>
+        <Text style={styles.text}>My Goals</Text>
       </TouchableOpacity>
     </View>
   );

@@ -26,7 +26,7 @@ interface UserState {
 }
 
 const initialState: UserState = {
-        user:[],
+    user:[],
 }
 
 export const usersSlice = createSlice({
@@ -52,7 +52,7 @@ export const gettingUsers = (): ThunkAction <void, RootState, unknown, AnyAction
       if (accesTokken) {
         const decodedToken = jwtDecode(accesTokken);
         dispatch(getUserTokken({payload: decodedToken}))
-        console.log("usuario regista2")
+        console.log("usuario registado REDUX", decodedToken)
       }
     } catch (error) {
       console.log(error);
