@@ -41,8 +41,9 @@ const getMovementsSlicer = createSlice ({
         getIncomesSuccess: (state, action: PayloadAction<IIncome[]>) => {
             return {
                 ...state,
+                loading: false,
+                error: null,
                 incomes: action.payload,
-               
             }
         },
         getAllMovementsError: (state, action: PayloadAction<Error>) => {
@@ -70,10 +71,11 @@ const getMovementsSlicer = createSlice ({
             }
         },
         filterBalanceAccount: (state, action: PayloadAction<string>)=>{
-            const account: any =  state.allMovements.filter((m: any)=> m.accaount=== action.payload || m.paymentMethod=== action.payload  )
+            const account: any =  state.allMovements.filter((m: any)=> m.account=== action.payload )
+            const paymentMethod: any =  state.allMovements.filter((m: any)=> m.paymentMethod=== action.payload  )
             return{
                 ...state,
-                filtered: account
+                filtered: [...account, ...paymentMethod]
             }
         },
         filterBalanceDate: (state, action: PayloadAction<string>) => {
@@ -178,7 +180,6 @@ export const getAccounts= (id: number): AppThunk=>{
     return async (dispatch)=>{
         try {
             const response= await axios(`${base_URL}/balance/${id}`)
-            console.log(response, "response de axios")
             const accounts: string[]= []
             response.data?.Account.map((account: Account) => {
                 accounts.push(account.name)

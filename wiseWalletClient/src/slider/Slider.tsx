@@ -98,6 +98,7 @@ const Slider = () => {
     console.log(item.value);
   }
 
+  
   useEffect(()=>{
     dispatch(gettingUsers())
   },[dispatch])

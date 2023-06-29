@@ -62,6 +62,8 @@ console.log(itemId, 'itemId');
     if (response.status === 200) {
       dispatch(getIncome(ide));
       dispatch(getAccounts(ide));
+      dispatch(getMovements(ide))
+
       setDetail({
         id: 0,
         amount: 0,
@@ -72,17 +74,8 @@ console.log(itemId, 'itemId');
 
     }
   };
-     /* const filterExpenses= expenses.filter((incomes)=> incomes.deletedExpense)
-    dispatch(getExpense(ide))
-     const handleShowIncome= async(idinc: number, ide: number)=>{
-      const response= await axios.put(`${base_URL}/movement/income/${idinc}`)
-      .then(()=>{  
-        dispatch(getIncome(ide))
-      }
-      )
-    } */
    
-    const inc: any = incomes?.find(e=> e.id===itemId)
+  const inc: any = incomes?.find(e=> e.id===itemId)
 
   const handleUpdateIncome= async ()=>{
     const infoEdit: IUpdateStateInc = {
@@ -95,8 +88,9 @@ console.log(itemId, 'itemId');
     itemId && console.log(`${base_URL}/movement/newIncome/${itemId}`);
     itemId &&  await axios.put(`${base_URL}/movement/newIncome/${itemId}`, infoEdit)
     .then(()=>{
-      console.log("este es el dispatch", dispatch(getIncome(ide[0])))
-      dispatch(getIncome(ide[0]))
+      console.log("este es el dispatch", dispatch(getIncome(ide[ide.length-1])))
+      dispatch(getIncome(ide[ide.length-1]))
+      dispatch(getMovements(ide[ide.length-1]))
       
     })
    }
@@ -121,7 +115,7 @@ console.log(itemId, 'itemId');
   
   useEffect(() => {
 
-    dispatch(getIncome(ide[0]))
+    dispatch(getIncome(ide[ide.length-1]))
     inc && setDetail(inc)
   
   }, [])
@@ -161,7 +155,7 @@ console.log(itemId, 'itemId');
       </View>
       <TouchableOpacity
         style={{ borderRadius: 100, margin: 10 }}
-        onPress={() => handleDeleteIncome(detail.id, ide[0])}
+        onPress={() => handleDeleteIncome(detail.id, ide[ide.length-1])}
       >
         <Image style={{ width: 35, height: 35, top: 6, alignSelf: 'center' }} source={require('./assets/delete1.png')} />
       </TouchableOpacity>

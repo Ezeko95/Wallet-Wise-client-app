@@ -25,8 +25,7 @@ const Incomes: React.FC<Props> = () => {
   const ide = idUser.map((idUser) => idUser.payload.user.id);
   const filter = useAppSelector((state) => state.allMovements.filtered);
   const balance = useAppSelector((state) => state.allMovements.balance);
-  const selector = useAppSelector((state) => state.user.user);
-  const aidi = selector.map((selector) => selector.payload.user.id);
+  
   const itemId = useAppSelector((state) => state.allMovements.itemId);
   const [type, setType] = useState('');
   const [amount, setAmount] = useState('');
@@ -48,7 +47,7 @@ const Incomes: React.FC<Props> = () => {
     };
 
     itemId && (await axios.put(`${base_URL}/movement/newIncome/${itemId}`, infoEdit));
-    dispatch(getIncome(ide[0]));
+    dispatch(getIncome(ide[ide.length-1]));
   };
 
   const colors = [
@@ -65,9 +64,9 @@ const Incomes: React.FC<Props> = () => {
   ];
 
   useEffect(() => {
-    dispatch(getMovements(ide[0]));
-    dispatch(getAccounts(ide[0]));
-    dispatch(getIncome(aidi[0]));
+    dispatch(getMovements(ide[ide.length-1]));
+    dispatch(getAccounts(ide[ide.length-1]));
+    dispatch(getIncome(ide[ide.length-1]));
   }, []);
 
   return (
@@ -101,7 +100,7 @@ const Incomes: React.FC<Props> = () => {
                     onPress={() => {
                       navigateToDetail(item);
                       dispatch(setItemId(item.id));
-                      dispatch(getIncome(ide[0]));
+                      dispatch(getIncome(ide[ide.length-1]));
                     }}
                   >
                     <View style={styles.detail}>

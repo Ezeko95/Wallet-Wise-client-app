@@ -53,5 +53,7 @@ export interface Filtered {
     paymentMethod: string | null,
     createdAt: Date,
     type: string,
-    category: string
+    category: string,
+    deletedIncome: boolean,
+    deletedExpense: boolean
 }

@@ -2,7 +2,7 @@
 import React, { useState, useEffect }from 'react';
 import { ScrollView, StatusBar, View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Image, ImageBackground } from 'react-native';
 import { Colors } from '../../enums/Colors';
-import {  getExpense} from '../../redux/slices/allMovementsSlice';
+import {  getExpense, getMovements} from '../../redux/slices/allMovementsSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import axios from 'axios';
 import { base_URL } from '../../redux/utils';
@@ -62,7 +62,9 @@ console.log(itemId, 'itemId');
     const response = await axios.delete(`${base_URL}/movement/expense/${idinc}`);
     if (response.status === 200) {
       dispatch(getExpense(ide));
+
       dispatch(getAccounts(ide));
+      dispatch(getMovements(ide))
       setDetail({
         id: 0,
         amount: 0,
@@ -97,8 +99,9 @@ console.log(itemId, 'itemId');
     itemId && console.log(`${base_URL}/movement/newExpense/${itemId}`);
     itemId &&  await axios.put(`${base_URL}/movement/newExpense/${itemId}`, infoEdit)
     .then(()=>{
-      console.log("este es el dispatch", dispatch(getExpense(ide[0])))
-      dispatch(getExpense(ide[0]))
+      console.log("este es el dispatch", dispatch(getExpense(ide[ide.length-1])))
+      dispatch(getExpense(ide[ide.length-1]))
+      dispatch(getMovements(ide[ide.length-1]))
       
     })
    }
@@ -123,7 +126,7 @@ console.log(itemId, 'itemId');
   
   useEffect(() => {
 
-    dispatch(getExpense(ide[0]))
+    dispatch(getExpense(ide[ide.length-1]))
     inc && setDetail(inc)
   
   }, [])
@@ -163,7 +166,7 @@ console.log(itemId, 'itemId');
       </View>
       <TouchableOpacity
         style={{ borderRadius: 100, margin: 10 }}
-        onPress={() => handleDeleteExpense(detail.id, ide[0])}
+        onPress={() => handleDeleteExpense(detail.id, ide[ide.length-1])}
       >
         <Image style={{ width: 35, height: 35, top: 6, alignSelf: 'center' }} source={require('./assets/delete1.png')} />
       </TouchableOpacity>
