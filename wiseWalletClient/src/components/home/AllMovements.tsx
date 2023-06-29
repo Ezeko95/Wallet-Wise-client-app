@@ -34,8 +34,11 @@ const AllMovements: React.FC<Props> = () => {
   const ide = idUser.map((idUser) => idUser.payload.user.id)
 
   //const incexp: any[] = [...incomes, ...expenses]
-  const show: any[] = filter; 
-  console.log(account);
+  const showExpense= expenses.filter(e=> !e.deletedExpense)
+  const showIncome= incomes.filter(e=> !e.deletedIncome)
+  const show: any[] = [...showExpense, ...showIncome]; 
+  //const showFiltered= filter.map(e=> e.)
+  console.log(filter, 'FILTERRRRRR');
   
   //const filterIncome = incomes.filter((element: { amount: any; })=> element.amount)
   
@@ -71,10 +74,6 @@ const AllMovements: React.FC<Props> = () => {
 
   const [value, setValue] = useState(null);
 
-  const charGraficos = useAppSelector((state) => state.onBoarding.Onboarding);
-  const change = charGraficos.change.map((item) => item.name);
-  const chart = charGraficos.grafico.map((item) => item.name);
-
   return (
     <View style={styles.homeCard}>
       <ScrollView bounces={true}>
@@ -87,7 +86,6 @@ const AllMovements: React.FC<Props> = () => {
                 placeholderStyle={styles.placeholderStyle}
                 selectedTextStyle={styles.selectedTextStyle}
                 inputSearchStyle={styles.inputSearchStyle}
-                /* imageStyle={styles.imageStyle} */
                 iconStyle={styles.iconStyle}
                 data={data}
                 search

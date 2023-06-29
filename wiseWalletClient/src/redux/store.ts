@@ -6,12 +6,15 @@ import thunk from 'redux-thunk';
 import { usersSlice } from './slices/getUsers';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { onBoardingSlice } from './slices/onBoarding';
+import goalSlice from './slices/goalSlice';
+ 
 const store = configureStore({
   reducer: {
     allMovements: allMovementsReducer,
     movement: movementReducer,
     user: usersSlice.reducer,
     onBoarding: onBoardingSlice.reducer,
+    goal: goalSlice
   },
   middleware: [thunk],
   devTools: true

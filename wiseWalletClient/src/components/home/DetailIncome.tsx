@@ -8,7 +8,7 @@ import axios from 'axios';
 import { base_URL } from '../../redux/utils';
 import { getAccounts } from '../../redux/slices/allMovementsSlice';
 import { useNavigation } from '@react-navigation/native';
-
+import { IIncome } from '../../redux/interfaces/Interface';
 
 
 interface IUpdateStateInc {
@@ -16,20 +16,10 @@ interface IUpdateStateInc {
   amount: number
 }
 
-interface Props {
-  route: {
-    params: {
-      income: any;
-      type: string;
-      account: string;
-      amount: number;
-    };
-  };
-}
 
-const DetailIncome: React.FC<Props> = ({ route }) => {
+const DetailIncome = () => {
   const navigation:(any) = useNavigation();
-  const { income } = route.params;
+  
 
   const dispatch = useAppDispatch()
   const incomes = useAppSelector(state=> state.allMovements.incomes)
@@ -39,60 +29,60 @@ const DetailIncome: React.FC<Props> = ({ route }) => {
   const balance = useAppSelector((state)=> state.allMovements.balance)
   
   const itemId = useAppSelector((state)=> state.allMovements.itemId)
+console.log(itemId, 'itemId');
 
   const show: any[] = filter; 
+
   const [type, setType]= useState('')
   const [amount, setAmount] = useState('')
+
   const [openModal, setOpenModal] = useState(false)
   
   const incomesFilterDel = incomes.filter((income)=> !income.deletedIncome)
   const mapIncome = incomesFilterDel.map(amount => amount.amount)
   const reduceIncome = mapIncome.reduce((a, b) => a + b, 0)
-
+  
   //const incexp: any[] = [...incomes]
   
   
   
-  // const handleDeleteIncome= (id: number)=>{
-    //   const response= await axios.delete(`${base_URL}/movement/income/${id}`)
-    // }
-    const handleDeleteIncome= async (idinc: number, ide: number)=>{
-      const response= await axios.delete(`${base_URL}/movement/income/${idinc}`)
-      .then(()=>{  
-        dispatch(getIncome(ide))
-        dispatch(getAccounts(ide))  
-      }
-      )
+  
+  
+  const [detail, setDetail]= useState<IIncome>({
+    id: 0,
+    amount: 0,
+    type: '',
+    account: '',
+    deletedIncome: false,
+    
+  })
+     
+  const handleDeleteIncome = async (idinc: number, ide: number) => {
+    const response = await axios.delete(`${base_URL}/movement/income/${idinc}`);
+    if (response.status === 200) {
+      dispatch(getIncome(ide));
+      dispatch(getAccounts(ide));
+      setDetail({
+        id: 0,
+        amount: 0,
+        type: '',
+        account: '',
+        deletedIncome: true
+      });
+
     }
-    //esto agregarrrr const filterExpenses= expenses.filter((expense)=> expense.deletedExpense)
-    //dispatch(getExpense(ide))
-    const handleShowIncome= async(idinc: number, ide: number)=>{
+  };
+     /* const filterExpenses= expenses.filter((incomes)=> incomes.deletedExpense)
+    dispatch(getExpense(ide))
+     const handleShowIncome= async(idinc: number, ide: number)=>{
       const response= await axios.put(`${base_URL}/movement/income/${idinc}`)
       .then(()=>{  
         dispatch(getIncome(ide))
       }
       )
-    }
-    
-    /* const handleUpdateIncome= async ()=>{
-      const infoEdit: IUpdateStateInc = {
-        type,
-        amount: parseFloat(amount)
-      }
-      console.log(handleDeleteIncome);
-      
-      
-      console.log(infoEdit,'QUE INFO LE MANDAMOS AL BAAAACCCCKKKK');
-      itemId && console.log(itemId,'QUE ID LE MANDAMOS AL BAAAACCCCKKKK');
-      itemId && console.log(`${base_URL}/movement/newIncome/${itemId}`);
-      itemId &&  await axios.put(`${base_URL}/movement/newIncome/${itemId}`, infoEdit)
-      
-      
-    .then(()=>{
-      console.log("este es el dispatch", dispatch(getIncome(ide[0])))
-      dispatch(getIncome(ide[0]))
-    })
-  } */
+    } */
+   
+    const inc: any = incomes?.find(e=> e.id===itemId)
 
   const handleUpdateIncome= async ()=>{
     const infoEdit: IUpdateStateInc = {
@@ -104,20 +94,10 @@ const DetailIncome: React.FC<Props> = ({ route }) => {
     itemId && console.log(itemId,'QUE ID LE MANDAMOS AL BAAAACCCCKKKK');
     itemId && console.log(`${base_URL}/movement/newIncome/${itemId}`);
     itemId &&  await axios.put(`${base_URL}/movement/newIncome/${itemId}`, infoEdit)
-  //  .then(response=> console.log(response, 'ESTO ES EL RESPONSE'))
-    // .then(data=> {
-    //   if(data.description){
-    //     console.log(data, 'DAAAAATTTTT');
-
-    //     const filter= data.expense.filter((e: any)=> e.id === idExp)
-    //     console.log(filter,'TODOOOOOOOOS LOSSSS EXPENSES');
-    //   }else{
-    //     console.log('fail')
-    //   }
-    // })
     .then(()=>{
       console.log("este es el dispatch", dispatch(getIncome(ide[0])))
       dispatch(getIncome(ide[0]))
+      
     })
    }
   
@@ -135,15 +115,18 @@ const DetailIncome: React.FC<Props> = ({ route }) => {
     "#FF958C",
     "#ADFCF9"
   ]
-  
   const transparent = 'rgba(0,0,0,0.5)'
   
+  
+  
   useEffect(() => {
-    dispatch(getAccounts(ide[0]))
-    dispatch(getMovements(ide[0]))
+
     dispatch(getIncome(ide[0]))
+    inc && setDetail(inc)
+  
   }, [])
   
+
 
 
   return (
@@ -167,68 +150,62 @@ const DetailIncome: React.FC<Props> = ({ route }) => {
           </View>
         </View>
 
-        {/* <FlatList
-          data={incomes}
-          nestedScrollEnabled
-          renderItem={({ item }) => {
-            if (item.type) {
-              return ( */}
-                <View>
-                  <View style={{ flexDirection: 'row' }}>
-                    
-                      <View style={styles.detail}>
-                        <Text style={{ fontSize: 20, color: 'white', top: 5, marginLeft: 10 }}>{income.type}: ${income.amount}</Text>
-                      </View>
-                    
-
-                  
-                      <TouchableOpacity style={{ borderRadius: 100, margin: 10, }}>
-                        <Image style={{ width: 35, height: 35, top: 6, alignSelf: 'center' }} source={require('./assets/delete1.png')} />
+        
+        {!detail.deletedIncome && (
+  <View>
+    <View style={{ flexDirection: 'row' }}>
+      <View style={styles.detail}>
+        <Text style={{ fontSize: 20, color: 'white', top: 5, marginLeft: 10 }}>
+          {detail.type}: ${detail.amount}
+        </Text>
+      </View>
+      <TouchableOpacity
+        style={{ borderRadius: 100, margin: 10 }}
+        onPress={() => handleDeleteIncome(detail.id, ide[0])}
+      >
+        <Image style={{ width: 35, height: 35, top: 6, alignSelf: 'center' }} source={require('./assets/delete1.png')} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => setOpenModal(true)}>
+        <View style={{ padding: 8, borderRadius: 20, top: 7 }}>
+          <Image style={{ width: 40, height: 40 }} source={require('./assets/edit.png')} />
+        </View>
+        {
+          openModal &&
+            <View>
+              <Modal visible={openModal} animationType='slide' transparent={true}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: transparent }}>
+                  <View style={{ backgroundColor: '#1E2349', padding: 15, width: 300, height: 400, borderRadius: 10 }}>
+                    <ImageBackground style={{ flex: 1 }} source={require('./assets/fondoModal.png') }>
+                      <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setOpenModal(false), setDetail(inc) /* dispatch(cleanItemId()) */ }}>
+                        <Image style={{ width: 40, height: 40, alignItems: 'center' }} source={require('./assets/x.png')} />
                       </TouchableOpacity>
-                    
-                    <TouchableOpacity onPress={() => { setOpenModal(true) }}>
 
-                      <View style={{ padding: 8, borderRadius: 20, top: 7 }}>
-                        <Image style={{ width: 40, height: 40 }} source={require('./assets/edit.png')} />
+                      <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>Update your Income</Text>
+                      <View>
+
+                        <TextInput style={styles.inputs} placeholder='Type' value={type} onChangeText={(value) => setType(value)} />
+                        <TextInput style={styles.inputs} placeholder='Amount' keyboardType='numeric' value={amount} onChangeText={(value) => setAmount(value)} />
+
+                        <TouchableOpacity onPress={() => { handleUpdateIncome() }} style={{ backgroundColor: '#6071EB', padding: 10, borderRadius: 10, marginTop: 30, width: 80, alignSelf: 'center' }}>
+                          <Text style={{ fontSize: 14, textAlign: 'center', color: 'white' }}>Update</Text>
+                        </TouchableOpacity>
                       </View>
-
-                      {openModal &&
-                        <View>
-                          <Modal visible={openModal} animationType='slide' transparent={true}>
-                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: transparent }}>
-                              <View style={{ backgroundColor: '#1E2349', padding: 15, width: 300, height: 400, borderRadius: 10 }}>
-                                <ImageBackground style={{ flex: 1 }} source={require('./assets/fondoModal.png') }>
-                                  <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setOpenModal(false), dispatch(cleanItemId()) }}>
-                                    <Image style={{ width: 40, height: 40, alignItems: 'center' }} source={require('./assets/x.png')} />
-                                  </TouchableOpacity>
-
-                                  <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>Update your Income</Text>
-                                  <View>
-                                    <TextInput style={styles.inputs} placeholder='Type' value={type} onChangeText={(value) => setType(value)} />
-                                    <TextInput style={styles.inputs} placeholder='Amount' keyboardType='numeric' value={amount} onChangeText={(value) => setAmount(value)} />
-                                    <TouchableOpacity onPress={() => { handleUpdateIncome() }} style={{ backgroundColor: '#6071EB', padding: 10, borderRadius: 10, marginTop: 30, width: 80, alignSelf: 'center' }}>
-                                      <Text style={{ fontSize: 14, textAlign: 'center', color: 'white' }}>Update</Text>
-                                    </TouchableOpacity>
-                                  </View>
-                                </ImageBackground>
-                              </View>
-                            </View>
-                          </Modal>
-                        </View>
-                      }
-                    </TouchableOpacity>
+                    </ImageBackground>
                   </View>
                 </View>
-              
-            {/* } else {
-              return null;
-            }
-          }}
-        /> */}
+              </Modal>
+            </View>
+        }
+      </TouchableOpacity>
+    </View>
+  </View>
+)}
       </View>
     </ScrollView>
   </ImageBackground>
 </View>
+
+
 
 );                     
 };
