@@ -48,7 +48,7 @@ const Drawer = ({ children }: DrawerProps) => {
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => navigation.navigate('SharedList')}>
-            <Text style={styles.text}>SharedList</Text>
+            <Text style={styles.text}>Shared</Text>
           </TouchableOpacity>
           
     </View>

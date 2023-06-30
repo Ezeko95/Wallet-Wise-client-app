@@ -4,15 +4,16 @@ import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Colors } from '../../enums/Colors';
 
-const SharedList = () => {
+const SharedList: React.FC = () => {
 
     const navigation: any = useNavigation();
 
     
     return (
         <View style={styles.container}>
+            <Text style={{color: "white"}}>ACA DEBERIA LLEGAR PRIMERO</Text>
             <View style={styles.allItems}>
-                <TouchableOpacity style={styles.create} onPress={navigation.navigate('NewShared')}>
+                <TouchableOpacity style={styles.create} onPress={() => navigation.navigate('NewShared')}>
                     <Text style={{color: 'white', fontSize: 40}}>+</Text>
                 </TouchableOpacity>
             </View>
