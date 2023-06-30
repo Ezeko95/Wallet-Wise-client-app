@@ -7,6 +7,12 @@ import { useAppDispatch } from '../../redux/store';
 import { Dropdown } from 'react-native-element-dropdown';
 import { filterBalanceAccount, getAccounts, getMovements, getExpense, getIncome, getExpensesSuccess } from '../../redux/slices/allMovementsSlice';
 
+export interface AccountData {
+  label: string;
+  value: string;
+}
+
+
 interface Props {}
 
 const AllMovements: React.FC<Props> = () => {
@@ -67,12 +73,14 @@ const AllMovements: React.FC<Props> = () => {
   }, [dispatch])
   
  
-  interface AccountData {
-    label: string;
-    value: string;
-  }
+ 
 
-  const data: AccountData[] = [];
+  const data: AccountData[] = [
+    
+  ];
+
+  
+  
 
   account.forEach((a: string) => {
     data.push({
@@ -126,7 +134,8 @@ const AllMovements: React.FC<Props> = () => {
                             }}
                             innerRadius={110}
                             colorScale={colors}
-                            data={show?.map(e=>{
+                            data={show?.map((e) =>{
+                      
                               if (e.type){
                               return {x: e.type, y: e.amount}
                               } else {
@@ -135,14 +144,16 @@ const AllMovements: React.FC<Props> = () => {
                             })}
                           />
                     </View>
-                          
+                   
                  {
                   show.map(mov=>{
             
                       if(mov.type){
                         return(
-                        <View> 
-                          <Text style={styles.detail}> {mov.type}:  {mov.amount}</Text>
+                          <View key={mov.type}>
+                          <Text style={styles.detail}>
+                            {mov.type}: {mov.amount} 
+                          </Text>
                         </View>
                         )  
                         
@@ -153,20 +164,8 @@ const AllMovements: React.FC<Props> = () => {
                         </View>
                         )
                       }  
-                    
                   })
                 }     
-                {/* <FlatList
-                nestedScrollEnabled
-                data={filter}
-                  renderItem={({item}) =>{
-                    if(item.type){
-                      return <Text style={styles.detail}> {item.type}:  {item.amount}</Text>
-                    } else {
-                      return <Text style={styles.detail}>{item.category}:  {item.amount}</Text>
-                    }
-                  }}
-                /> */}
         </View>
       </ScrollView>
     </View>
@@ -193,7 +192,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: Colors.DETAIL_COLOR,
     margin: 10,
-    borderRadius: 10,
+    borderRadius: 100,
     color: '#fff',
     fontSize: 20,
     justifyContent: 'center',
