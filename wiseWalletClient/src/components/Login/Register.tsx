@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet , Image, ImageBackground, KeyboardAvoidingView,Platform, Text, TouchableOpacity} from 'react-native';
+import { View, TextInput, Button, StyleSheet , Image, ImageBackground, KeyboardAvoidingView,Platform, Text, TouchableOpacity, Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
@@ -7,126 +7,166 @@ import Upload from './Upload';
 import { useAppDispatch } from '../../redux/store';
 import { gettingUsers } from '../../redux/slices/getUsers';
 
+
 interface RegisterForm {
   name: string;
   email: string;
   password: string;
 }
 
-const Register: React.FC = () => {
-  const navigation: (any) = useNavigation();
-  const dispatch = useAppDispatch()
+const Register = () => {
+  const navigation: any = useNavigation();
+  const dispatch = useAppDispatch();
   const [form, setForm] = useState<RegisterForm>({
     name: '',
     email: '',
     password: '',
   });
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<RegisterForm>({
+    name: '',
+    password: '',
+    email: '',
+  });
+
   const handleInputChange = (name: keyof RegisterForm, value: string) => {
-    setForm(prevState => ({
+    setForm((prevState) => ({
       ...prevState,
       [name]: value,
+    }));
+  
+    setError((prevState) => ({
+      ...prevState,
+      [name]: '',
     }));
   };
 
   const handleSubmit = async () => {
     
-    console.log(console.log(form,'INFO AL FORMULARIOOOO'));
     
+    let nameError = ''
+    if(!form.name){
+      nameError = '* Please enter a username'
+    }
+    
+    
+    let emailError = '';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      emailError = '* Please enter a valid email address'
+    }
+    
+
+    let passwordError = '';
+    if (!/^\w{8,16}$/.test(form.password)) {
+        passwordError = '* The password must be between 8 and 16 characters'
+  
+    }
+
+    setError({
+      ...error,
+      email: emailError,
+      password: passwordError,
+      name: nameError,
+    });
+
+    if (emailError || passwordError) {
+      return;
+    }
+  
+  
+
     try {
       const response = await axios.post<{ accessToken: string }>(
         'http://10.0.2.2:3001/user/register',
-        form,
+        form
       );
       const { accessToken } = response.data;
-      console.log(response.data, "register");
-      console.log(response.data, "register");
+      console.log(response.data, 'register');
+      console.log(response.data, 'register');
       console.log('Register successful');
       // Save the access token in AsyncStorage or a secure storage
       await AsyncStorage.setItem('accessToken', accessToken);
-     console.log(dispatch(gettingUsers), 'ESTE ES EL DISPATCH DE REGISTER'  );
-      navigation.navigate('Slider')
+      console.log(dispatch(gettingUsers), 'ESTE ES EL DISPATCH DE REGISTER');
+      navigation.navigate('Slider');
 
       // Call the onRegister function from props to handle the registration action
     } catch (error) {
-      setError('Invalid email or password');
+      console.log(error);
     }
   };
 
-  return (
-
-    <ImageBackground source={require('./assets/fondoIntro2.png')}>
+    return (
+      
+      <ImageBackground source={require('./assets/signUp.png')}>
 
       <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
+      >
     <View style={styles.container}>
 
-      <Image source={require("./assets/logo.png")} style={styles.image}/>
-
      
-      <Text style={styles.text}>Register</Text>
+
       <KeyboardAvoidingView>
        {/* <TouchableOpacity style={{display:"flex",alignItems:"center", }}  >
         <Image source={{uri:'https://i.kym-cdn.com/entries/icons/original/000/026/152/gigachadd.jpg'}} style={styles.imageperfil}/>
         <Text style={{color:"white"}}>CHOOSE YOUR FOTOU</Text>
       </TouchableOpacity> */}
       <Upload handleInputChange={handleInputChange}/>
+
       <TextInput
-        placeholder="Username"
+        placeholder="* Username"
         value={form.name}
         onChangeText={value => handleInputChange('name', value)}
         style={styles.input}
         />
+        {error.name && <Text style={styles.textError}>{error.name}</Text>}
       {/* <TextInput
         placeholder="picture"
         value={form.picture}
         onChangeText={value => handleInputChange('picture', value)}
         style={styles.input}
-        /> */}
+      /> */}
       <TextInput
-        placeholder="Email"
+        placeholder="* Email"
         value={form.email}
         onChangeText={value => handleInputChange('email', value)}
         style={styles.input}
         />
+        {error.email && <Text style={styles.textError}>{error.email}</Text>}
       <TextInput
-        placeholder="Password"
+        placeholder="* Password"
         secureTextEntry
         value={form.password}
         onChangeText={value => handleInputChange('password', value)}
         style={styles.input}
         />
+        {error.password && <Text style={styles.textError}>{error.password}</Text>}
         </KeyboardAvoidingView>
-      <Button title="Register" onPress={()=>{
-        handleSubmit()
-      }} color={"black"}/>
+      <TouchableOpacity style={{padding: 12, marginTop: 10, backgroundColor: '#1b7ced', borderRadius: 10}} onPress={()=>{ handleSubmit()}}>
+        <Text style={{color:'white', fontWeight:'700'}}>Sign up</Text>
+      </TouchableOpacity>
     </View>
       </KeyboardAvoidingView>
       </ImageBackground>
   );
-};
+
+    }
 
 const styles = StyleSheet.create({
-  image:{
-    height:250,
-    width: 250
-  },
   input:{
     backgroundColor:"white",
-    padding:10,
-    margin:10,
-    borderRadius:10,
+    margin:15,
+    borderRadius:100,
     width:300,
-    height:45,
+    height:40,
     color:"black",
-    fontSize:20,
+    fontSize:16,
     fontWeight:"bold",
+    alignSelf:"center",
   },
   container: {
     height: "100%",
-    paddingBottom:79,
+    top: -10,
     width: "100%",
     display: 'flex',
     justifyContent: 'center',
@@ -144,11 +184,11 @@ const styles = StyleSheet.create({
     fontSize:20,
     fontWeight:"bold",
   },
-  imageperfil:{
-    height: 100,
-    width: 100,
-    borderRadius: 200,
-    margin: 20
+  textError:{
+    color:"white",
+    textAlign: 'center',
+    marginLeft: 20,
+    marginRight: 20
   }
 });
 

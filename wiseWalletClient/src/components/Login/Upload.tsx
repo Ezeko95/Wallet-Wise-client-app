@@ -72,14 +72,10 @@ const Upload: React.FC<Props> = ({handleInputChange}) => {
   return (
 
       <View style={{alignItems: 'center'}}>
-        <TouchableOpacity
-          onPress={()=>{
-            handleUploadImage()
-            //getUrL()
-          }
-        }
-          style={styles.openGalaryStyle}>
-          <Image source={{uri: photo}} style={StyleSheet.absoluteFill} />
+        <TouchableOpacity onPress={()=>{ handleUploadImage()}} style={styles.openGalaryStyle}>
+          
+          <Image source={{uri: photo}} style={StyleSheet.absoluteFillObject} />
+          
         </TouchableOpacity>
         <Text style={styles.uploadHeaderStyle}>Upload Picture</Text>
       </View>
@@ -90,21 +86,22 @@ const Upload: React.FC<Props> = ({handleInputChange}) => {
 
 
 const styles = StyleSheet.create({
+
   uploadHeaderStyle: {
     fontStyle: 'normal',
     color: 'white',
     fontWeight: 'bold',
     lineHeight: 24,
     fontSize: 16,
+    borderRadius: 100,
   },
   openGalaryStyle: {
-    backgroundColor: 'white',
     margin: 10,
     padding: 10,
-    borderRadius: 60,
-    height: 150,
-    width: 160,
-
+    borderRadius: 100,
+    height: 120,
+    width: 120,
+    backgroundColor: 'white'
   },
 });
 export default Upload;

@@ -31,7 +31,7 @@ const Drawer = ({ children }: DrawerProps) => {
         <Text style={styles.text}>Home</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('FormPager')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Pager')}>
         <Text style={styles.text}>Add+</Text>
       </TouchableOpacity>
 
