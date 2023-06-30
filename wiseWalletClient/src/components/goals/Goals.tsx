@@ -139,7 +139,7 @@ const CloudinaryComponent: React.FC = () => {
                   disabled={photos.length > 0}
                   style={styles.upload}
                   onPress={handleUploadImage}>
-                  <Text style={styles.text}>Upload</Text>
+                  <Text style={styles.text}>Upload Image</Text>
                 </TouchableOpacity>
               )}
             </View>

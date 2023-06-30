@@ -10,7 +10,8 @@ export interface Detail {
   total: number,
   saved : number,
   picture: string,
-  id: number
+  id: number,
+  deletedGoal: boolean
 }
 
 export interface IGoalState{
@@ -28,7 +29,8 @@ const initialState: IGoalState={
         total: 0,
         saved : 0,
         picture: '',
-        id:0
+        id:0,
+        deletedGoal: false
     },
     goalId: 0,
     allGoals:[],
@@ -50,7 +52,8 @@ const goalSlice= createSlice({
           total:0,
           saved:0,
           picture: '',
-          id:0
+          id:0,
+          deletedGoal: false
         }
       },
       goalError: (state, action: PayloadAction<Error>) => {

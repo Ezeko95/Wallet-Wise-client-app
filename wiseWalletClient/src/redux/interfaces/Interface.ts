@@ -18,7 +18,8 @@ export interface IIncome{
     id: number,
     amount: number,
     type: string,
-    account: string
+    account: string,
+    logo: string;
     deletedIncome: boolean
 }
 

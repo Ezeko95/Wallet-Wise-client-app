@@ -10,6 +10,9 @@ import { getAccounts } from '../../redux/slices/allMovementsSlice';
 import { useNavigation } from '@react-navigation/native';
 import { IIncome } from '../../redux/interfaces/Interface';
 
+
+
+
 interface IUpdateStateInc {
   type: string;
   amount: number;
@@ -17,10 +20,13 @@ interface IUpdateStateInc {
 
 interface Props {}
 
+
+
 const Incomes: React.FC<Props> = () => {
   const navigation: any = useNavigation();
   const dispatch = useAppDispatch();
   const incomes = useAppSelector((state) => state.allMovements.incomes);
+
   const idUser = useAppSelector((state) => state.user.user);
   const ide = idUser.map((idUser) => idUser.payload.user.id);
   const filter = useAppSelector((state) => state.allMovements.filtered);
@@ -68,7 +74,11 @@ const Incomes: React.FC<Props> = () => {
     dispatch(getAccounts(ide[ide.length-1]));
     dispatch(getIncome(ide[ide.length-1]));
   }, []);
+  
 
+  
+  
+  
   return (
     <View>
       <ScrollView bounces={true}>

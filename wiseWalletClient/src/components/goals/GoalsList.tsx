@@ -23,6 +23,7 @@ export interface IGoal {
   save: number;
   picture: string;
   id: number;
+  deletedGoal: boolean;
 }
 const GoalList: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -39,7 +40,12 @@ const GoalList: React.FC = () => {
     dispatch(getAllGoals(ide[ide.length - 1]));
   }, [dispatch]);
 
-  const goalDelete = async () => {};
+  const goalDelete = async (id: number) => {
+    await axios.delete(`${base_URL}/goal/${id}`);
+    dispatch(getAllGoals(ide[ide.length - 1]));
+  };
+
+  const showGoal = goals.filter(g => !g.deletedGoal);
 
   return (
     <View style={styles.container}>
@@ -49,8 +55,8 @@ const GoalList: React.FC = () => {
         <Text style={styles.text}>+</Text>
       </TouchableOpacity>
       <ScrollView bounces={true}>
-        {goals.length > 0 &&
-          goals?.map((goal, index) => {
+        {showGoal.length > 0 &&
+          showGoal?.map((goal, index) => {
             return (
               <View key={index} style={styles.touchable}>
                 <TouchableOpacity
@@ -65,7 +71,7 @@ const GoalList: React.FC = () => {
                     </Text>
                     <TouchableOpacity
                       style={styles.buttonDelete}
-                      onPress={goalDelete}>
+                      onPress={() => goalDelete(goal.id)}>
                       <Text
                         style={{
                           color: 'white',
