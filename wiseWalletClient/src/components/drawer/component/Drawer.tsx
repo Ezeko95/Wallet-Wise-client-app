@@ -35,6 +35,7 @@ const Drawer = ({ children }: DrawerProps) => {
             <Text style={styles.text}>Add+</Text>
           </TouchableOpacity>
 
+
           <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
             <Text style={styles.text}>Profile</Text>
           </TouchableOpacity>
