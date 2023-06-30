@@ -26,8 +26,10 @@ type RootStackParamList = {
   Goals: undefined;
   GoalsList: undefined;
   GoalDetail: undefined;
+
   SharedList: undefined;
   NewShared: undefined;
+
 };
 
 type SliderScreenRouteProp = RouteProp<RootStackParamList, 'Slider'>;
@@ -48,9 +50,9 @@ const Navigate = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/* <Stack.Screen name="Intro" component={Intro} />
+        <Stack.Screen name="Intro" component={Intro} />
         <Stack.Screen name="Login" component={AuthView} /> 
-        <Stack.Screen name="Slider" component={Slider} />   */}
+        <Stack.Screen name="Slider" component={Slider} />  
         <Stack.Screen name="MyDrawer" component={MyDrawer} />
         <Stack.Screen name="DetailIncome" component={DetailIncome} />
         <Stack.Screen name="DetailExpense" component={DetailExpense} />
