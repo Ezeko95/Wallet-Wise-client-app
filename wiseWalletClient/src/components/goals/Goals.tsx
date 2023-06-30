@@ -288,19 +288,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
   },
-  goBack: {
-    color: 'black',
-    backgroundColor: "yellow",
-    borderRadius: 10,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 25,
-    width: 40,
-    height: 40,
-    borderColor: '#FFF7AE',
-    borderWidth: 2,
-    
-}
+  
 });
 
 export default CloudinaryComponent;

@@ -11,7 +11,6 @@ export interface participants {
     gasto:number
 }
 
-
 export interface detailRoom {
     id:number
     participants: participants[]
@@ -25,7 +24,6 @@ export interface sharedState {
     error: string | null, 
     roomId: number,
 }
-
 
 const initialState : sharedState = {
     allRooms : [],
@@ -45,7 +43,6 @@ const sharedSlice = createSlice ({
     },
 
     
-
 })
 
 export const {setShared} = sharedSlice.actions;
