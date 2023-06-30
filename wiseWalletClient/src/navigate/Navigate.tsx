@@ -50,6 +50,7 @@ const Navigate = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+
         <Stack.Screen name="Intro" component={Intro} />
         <Stack.Screen name="Login" component={AuthView} /> 
         <Stack.Screen name="Slider" component={Slider} />  

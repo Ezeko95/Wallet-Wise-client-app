@@ -49,6 +49,9 @@ const GoalList: React.FC = () => {
 
   return (
     <View style={styles.container}>
+           <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
+        <Text  style={styles.goBack}>{'<'}</Text>
+      </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate('Goals')}
         style={styles.create}>
@@ -155,4 +158,18 @@ const styles = StyleSheet.create({
     width: 50,
     marginTop: 60,
   },
+  goBack: {
+    color: 'black',
+    backgroundColor: "yellow",
+    borderRadius: 10,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 25,
+    width: 40,
+    height: 40,
+    borderColor: '#FFF7AE',
+    borderWidth: 2,
+    left: -165,
+    margin: 15
+}
 });
