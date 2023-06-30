@@ -11,6 +11,8 @@ import DetailExpense from '../components/home/DetailExpense'
 import CloudinaryComponent from '../components/goals/Goals';
 import GoalList from '../components/goals/GoalsList';
 import GoalDetail from '../components/goals/GoalDetail';
+import SharedList from '../components/shared/SharedList';
+import NewShared from '../components/shared/NewShared';
 
 
 
@@ -24,6 +26,9 @@ type RootStackParamList = {
   Goals: undefined;
   GoalsList: undefined;
   GoalDetail: undefined;
+
+  SharedList: undefined;
+  NewShared: undefined;
 
 };
 
@@ -54,6 +59,8 @@ const Navigate = () => {
         <Stack.Screen name="Goals" component={CloudinaryComponent} />
         <Stack.Screen name="GoalsList" component={GoalList} />
         <Stack.Screen name="GoalDetail" component={GoalDetail} />
+        <Stack.Screen name="SharedList" component={SharedList} />
+        <Stack.Screen name="NewShared" component={NewShared} />
       </Stack.Navigator>
     </NavigationContainer>
   );
