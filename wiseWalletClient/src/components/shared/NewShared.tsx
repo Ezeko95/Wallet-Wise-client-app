@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
 import { Colors } from "../../enums/Colors";
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
@@ -13,17 +13,16 @@ const NewShared: React.FC = () => {
     const [room, setRoom] = useState<string>("")
     const [name, setName] = useState<string>("")
     const [expense, setExpense] = useState<string>("")
-    
+    const [selfExpense, setSelfExpense] = useState<string>("")
+    const [participants, setParticipants] = useState<IParticipant[]>([])
+    const [personalExpense, setPersonalExpense] = useState<string>("")
+    const [arrayRender, setArrayRender] = useState<IParticipant[]>([])
 
     interface IParticipant {
         name: string,
         expense: number,        
     }
 
-    //let allParticipant:IParticipant[] = [];
-        
-    const [participants, setParticipants]= useState<IParticipant[]>([])
-    
     const onChangeRoom = (value: string) => {
         setRoom(value)
     }
@@ -34,29 +33,49 @@ const NewShared: React.FC = () => {
             expense: parseFloat(expense),
         }
         setParticipants([...participants, participant]);
-        // setName("");
-        // setExpense("");
+        setArrayRender([...arrayRender,participant])
+        setName("");
+        setExpense("");
+        console.log(participants)
     }
-    console.log(participants)
+
+    const handleSelf = async () => {
+        setPersonalExpense(selfExpense)
+        setArrayRender([...arrayRender,  { "name": "Self Expense", "expense": parseFloat(selfExpense)}])
+        setSelfExpense("")
+    }
 
 
-
-    const handleSubmit=()=>{}
     
     const handlerSubmit = async () => {
-
-        await axios.post(`${base_URL}/shared/${ide[ide.length -1]}`, participants)
+        let cont=0;
+        participants.forEach(e=> cont += e.expense)
+        const info={
+            name,
+            total: cont * participants.length ,
+            personalExpense: personalExpense,
+            participants
+        }
+        console.log(info, 'INFOOOOOOOOOO');
+        
+        await axios.post(`${base_URL}/shared/${ide[ide.length -1]}`, info)
+        setSelfExpense('')
+        navigation.navigate('NewShared')
     }
+
+
+
+   
 
     return(
         <View style={styles.container}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignContent: 'center', margin: 20}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignContent: 'center', margin: 10}}>
                 <TouchableOpacity onPress={() => navigation.navigate('SharedList')}>
                     <Text style={styles.goBack}>{'<'}</Text>
                 </TouchableOpacity>
                     <Text style={{ fontSize: 30, color: 'white', fontWeight: 'bold', left: -15}}>
-                        Create your 
-                        <Text style={{color: 'yellow'}}>Room</Text>
+                        Create your  
+                        <Text style={{color: 'yellow'}}> Room</Text>
                     </Text>
             </View>
             
@@ -70,40 +89,71 @@ const NewShared: React.FC = () => {
             </View>
             
             <View style={styles.inputContainer}>
+
+                <View style={styles.addSelfExpense}>
+                    <TextInput
+                    style={styles.inputAddParticipant}
+                    value={selfExpense}
+                    onChangeText={value => setSelfExpense(value)}
+                    placeholder="Add self expense..."
+                 />
+                    <TouchableOpacity onPress={()=> handleSelf() }  style={styles.containerButtonAdd}  >
+                     <Text style={styles.buttonAdd}>
+                        +
+                     </Text>
+                     </TouchableOpacity>
+                 </View>
+
+
+              <View style={styles.addParticipantContainer}>
                 <TextInput
                     value={name}
                     onChangeText={value => setName(value)}
-                    style={styles.input}
+                    style={styles.inputAddParticipant}
                     placeholder="Add Participant..."
-                />
+                    />
                 <TextInput
                     keyboardType="numeric"
                     value={expense}
                     onChangeText={value => setExpense(value)}
-                    style={styles.input}
-                    placeholder="Monto"
-                />
-                <TouchableOpacity onPress={()=> handleParticipant()}  >
-                    <Text style={styles.text}>
-                        AGREGAR
-                    </Text>
-                </TouchableOpacity>
+                    style={styles.inputExpenseParticipant}
+                    placeholder="Amount"
+                    />
             </View>
-                {participants.length > 0 && <Text  style={{ fontSize: 15, color: 'white', fontWeight: 'bold'}} >Participants of {room}</Text>}
-                
-                {participants.length > 0 && participants.map((participant, index) => {
-                  return( 
-                    <View key={index} style={styles.detailParticipant}  >
-                        <Text style={{color:"white", fontSize:10}} >{participant.name}</Text>
-                        <Text>{participant.expense}</Text>
-                    </View>)})
-                } 
-                {participants.length > 0  && 
+                <View style={styles.containerButtons} >
+                    <TouchableOpacity onPress={()=> handleParticipant()}  >
+                        <Text style={styles.text}>
+                        AGREGAR
+                        </Text>
+                    </TouchableOpacity>
+
+                </View>
+            </View>
+            <ScrollView>
+                <View  style={styles.containerAllDetails} >
+                    {arrayRender.length > 0 && <Text  style={{ fontSize: 15, color: 'white', fontWeight: 'bold'}} >Participants of {room}</Text>}
+
+                    {arrayRender.length > 0 &&  arrayRender.map((participant, index) => {
+                        return( 
+                            <View key={index} style={styles.detailParticipant}  >
+                                <Text style={{ textAlign:"center", color:"white", fontSize:16, justifyContent: 'center', fontWeight: 'bold'}} >
+                                    {participant.name} - {participant.expense}
+                                </Text>
+                            </View>
+                        )})
+                    } 
+                    
+                </View>
+                        </ScrollView>
+
+                {arrayRender.length > 0  && 
                     <View>
-                        <TouchableOpacity onPress={handleSubmit}>
-                            <Text style={styles.text} >Finish</Text>
+                        <TouchableOpacity onPress={() => handlerSubmit()}>
+                            <Text style={styles.textFinish} >Finish</Text>
                         </TouchableOpacity>
-                    </View>}
+                    </View>
+                }
+                
         </View>
     )
 };
@@ -117,27 +167,25 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: Colors.BACKGROUND_COLOR,
     },
-    
     input: {
         alignItems:"center",
         width: "90%",
         backgroundColor: Colors.TITLE_COLOR,
         borderRadius: 15,
         color: 'black',
-        margin: 10,
+        margin: 15,
         
     },
     inputContainer: {
         width: "80%",
-        justifyContent: 'center',
-        alignSelf: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: Colors.DETAIL_COLOR,
         borderRadius: 15,
         margin: 15,
-        height: 200
+        height: 200,
+        padding: 15
     },
-
     text: {
         color: 'black',
         backgroundColor: "yellow",
@@ -146,8 +194,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         padding: 8,
+        marginTop: 15
     },
-
     roomInput: {
         width: "80%",
         justifyContent: 'center',
@@ -155,12 +203,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: Colors.DETAIL_COLOR,
         borderRadius: 15,
-        margin: 15
+        marginTop: 10
     },
     goBack: {
         color: 'black',
         backgroundColor: "yellow",
-        borderRadius: 10,
+        borderRadius: 15,
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 25,
@@ -169,17 +217,87 @@ const styles = StyleSheet.create({
         borderColor: '#FFF7AE',
         borderWidth: 2,
         right: 50,
-        top: -10
     },
     detailParticipant:{
         marginTop:10,
+        justifyContent:"center",
         alignItems:"center",
-        flex: 1,
-        height: '100%',
-        width: '100%',
+        height: 40,
+        width: 300,
         backgroundColor: Colors.DETAIL_COLOR,
-        borderRadius:10,
+        borderRadius:15,
+    },
+    scrollDetail:{  
+        flex:1,
+        width:'100%',
+        height: 300
+    },
+    containerButtons:{
+        width:'100%',
+        display:"flex",
+        alignItems:"center",
+        justifyContent:"center",
+        margin:10,
+    },
+
+    addSelfExpense: {
+        width: 300,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        right: 15,
+        
+    },
+    inputSelfExpense:{
+        width: 150,
+        backgroundColor: 'white',
+        borderRadius: 15,
+        height: 50,
+        margin: 15
+    },
+    inputExpenseParticipant:{
+        width: "30%",
+        backgroundColor: 'white',
+        borderRadius: 15,    
+        margin: 15,
+
+    },
+    inputAddParticipant:{
+        width: '60%',
+        backgroundColor: 'white',
+        borderRadius: 15,
+        margin: 15,
+    },
+    addParticipantContainer: {
+        flexDirection: 'row'
+    },
+    buttonAdd: {
+        backgroundColor: 'yellow',
+        fontWeight: 'bold',
+        fontSize: 30,
+        borderRadius: 15,
+        width: '100%',
+        textAlign:'center',
+        color: 'black',
+        height: "52%"
+    },
+    containerButtonAdd: {
+        width:"30%",
+        left: 15,
+    },
+    containerAllDetails:{
+        
+    },
+    textFinish:{
+        color: 'black',
+        backgroundColor: "yellow",
+        borderRadius: 15,
+        width: 85,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        padding: 8,
+        marginBottom:15
     }
- 
+
 })
         export default NewShared;
