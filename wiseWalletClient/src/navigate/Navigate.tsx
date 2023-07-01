@@ -2,7 +2,6 @@ import React from 'react';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import Slider from '../slider/Slider';
-import MyTabs from '../tabs/Tabs';
 import AuthView from '../Screens/Authenticate';
 import Intro from '../components/Intro/Intro';
 import MyDrawer from '../components/drawer';
@@ -13,7 +12,13 @@ import GoalList from '../components/goals/GoalsList';
 import GoalDetail from '../components/goals/GoalDetail';
 import SharedList from '../components/shared/SharedList';
 import NewShared from '../components/shared/NewShared';
+
 import Premium from '../components/Premium/Premium';
+
+import SharedDetail from '../components/shared/SharedDetail'
+
+
+
 type RootStackParamList = {
   Intro: undefined;
   Login: undefined;
@@ -26,7 +31,11 @@ type RootStackParamList = {
   GoalDetail: undefined;
   SharedList: undefined;
   NewShared: undefined;
+
   Premium: undefined;
+
+  SharedDetail: undefined;
+
 };
 
 type SliderScreenRouteProp = RouteProp<RootStackParamList, 'Slider'>;
@@ -57,6 +66,8 @@ const Navigate = () => {
         <Stack.Screen name="GoalDetail" component={GoalDetail} />
         <Stack.Screen name="SharedList" component={SharedList} />
         <Stack.Screen name="NewShared" component={NewShared} />
+        <Stack.Screen name="SharedDetail" component={SharedDetail} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

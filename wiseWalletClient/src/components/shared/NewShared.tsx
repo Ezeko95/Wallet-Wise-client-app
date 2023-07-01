@@ -4,12 +4,14 @@ import { Colors } from "../../enums/Colors";
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 import { base_URL } from "../../redux/utils";
-import { useAppSelector } from "../../redux/hooks/hooks";
+import { useAppSelector, useAppDispatch} from "../../redux/hooks/hooks";
+import { getDetail, setDetail, setRoomId } from "../../redux/slices/sharedSlice";
 
 const NewShared: React.FC = () => {
     const idUser = useAppSelector(state => state.user.user);
     const ide = idUser.map(idUser => idUser.payload.user.id);
     const navigation: any = useNavigation()
+    const dispatch= useAppDispatch()
     const [room, setRoom] = useState<string>("")
     const [name, setName] = useState<string>("")
     const [expense, setExpense] = useState<string>("")
@@ -17,6 +19,7 @@ const NewShared: React.FC = () => {
     const [participants, setParticipants] = useState<IParticipant[]>([])
     const [personalExpense, setPersonalExpense] = useState<string>("")
     const [arrayRender, setArrayRender] = useState<IParticipant[]>([])
+    const [editableInput, setEditableInput] = useState(true);
 
     interface IParticipant {
         name: string,
@@ -41,6 +44,7 @@ const NewShared: React.FC = () => {
 
     const handleSelf = async () => {
         setPersonalExpense(selfExpense)
+        setEditableInput(false) 
         setArrayRender([...arrayRender,  { "name": "Self Expense", "expense": parseFloat(selfExpense)}])
         setSelfExpense("")
     }
@@ -51,40 +55,40 @@ const NewShared: React.FC = () => {
         let cont=0;
         participants.forEach(e=> cont += e.expense)
         const info={
-            name,
-            total: cont * participants.length ,
+            name: room,
+            total: (+cont) + (+personalExpense),
             personalExpense: personalExpense,
             participants
         }
         console.log(info, 'INFOOOOOOOOOO');
         
-        await axios.post(`${base_URL}/shared/${ide[ide.length -1]}`, info)
+        const response= await axios.post(`${base_URL}/shared/${ide[ide.length -1]}`, info)
         setSelfExpense('')
-        navigation.navigate('NewShared')
+        setRoom("")
+        dispatch(setRoomId(response.data.id))
+        dispatch(getDetail(response.data.id))
+        navigation.navigate('SharedDetail')
     }
-
-
-
-   
 
     return(
         <View style={styles.container}>
+
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignContent: 'center', margin: 10}}>
                 <TouchableOpacity onPress={() => navigation.navigate('SharedList')}>
                     <Text style={styles.goBack}>{'<'}</Text>
                 </TouchableOpacity>
                     <Text style={{ fontSize: 30, color: 'white', fontWeight: 'bold', left: -15}}>
-                        Create your  
-                        <Text style={{color: 'yellow'}}> Room</Text>
+                    Create your  
+                    <Text style={{color: 'yellow'}}> Room</Text>
                     </Text>
             </View>
             
             <View style={styles.roomInput}>
                 <TextInput
-                    value={room}
-                    onChangeText={value => onChangeRoom(value)}
-                    style={styles.input}
-                    placeholder="roomName..."
+                value={room}
+                onChangeText={value => onChangeRoom(value)}
+                style={styles.input}
+                placeholder="roomName..."
                 />
             </View>
             
@@ -92,47 +96,46 @@ const NewShared: React.FC = () => {
 
                 <View style={styles.addSelfExpense}>
                     <TextInput
+                    
+                    
+                    editable={editableInput}
                     style={styles.inputAddParticipant}
                     value={selfExpense}
                     onChangeText={value => setSelfExpense(value)}
                     placeholder="Add self expense..."
-                 />
-                    <TouchableOpacity onPress={()=> handleSelf() }  style={styles.containerButtonAdd}  >
-                     <Text style={styles.buttonAdd}>
-                        +
-                     </Text>
-                     </TouchableOpacity>
-                 </View>
-
-
-              <View style={styles.addParticipantContainer}>
-                <TextInput
-                    value={name}
-                    onChangeText={value => setName(value)}
-                    style={styles.inputAddParticipant}
-                    placeholder="Add Participant..."
                     />
-                <TextInput
-                    keyboardType="numeric"
-                    value={expense}
-                    onChangeText={value => setExpense(value)}
-                    style={styles.inputExpenseParticipant}
-                    placeholder="Amount"
-                    />
-            </View>
+                    <TouchableOpacity onPress={()=>{ handleSelf()}}  style={styles.containerButtonAdd}  >
+                        <Text style={styles.buttonAdd}>+</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.addParticipantContainer}>
+                    <TextInput
+                        value={name}
+                        onChangeText={value => setName(value)}
+                        style={styles.inputAddParticipant}
+                        placeholder="Add Participant..."
+                        />
+                    <TextInput
+                        keyboardType="numeric"
+                        value={expense}
+                        onChangeText={value => setExpense(value)}
+                        style={styles.inputExpenseParticipant}
+                        placeholder="Amount"
+                        />
+                </View>
+
                 <View style={styles.containerButtons} >
-                    <TouchableOpacity onPress={()=> handleParticipant()}  >
+                    <TouchableOpacity onPress={()=> handleParticipant()} disabled={!name || !expense} >
                         <Text style={styles.text}>
                         AGREGAR
                         </Text>
                     </TouchableOpacity>
-
                 </View>
             </View>
             <ScrollView>
-                <View  style={styles.containerAllDetails} >
+                <View  style={styles.containerAllDetails}>
                     {arrayRender.length > 0 && <Text  style={{ fontSize: 15, color: 'white', fontWeight: 'bold'}} >Participants of {room}</Text>}
-
                     {arrayRender.length > 0 &&  arrayRender.map((participant, index) => {
                         return( 
                             <View key={index} style={styles.detailParticipant}  >
@@ -142,18 +145,15 @@ const NewShared: React.FC = () => {
                             </View>
                         )})
                     } 
-                    
                 </View>
-                        </ScrollView>
-
-                {arrayRender.length > 0  && 
-                    <View>
-                        <TouchableOpacity onPress={() => handlerSubmit()}>
-                            <Text style={styles.textFinish} >Finish</Text>
-                        </TouchableOpacity>
-                    </View>
-                }
-                
+            </ScrollView>
+            {arrayRender.length > 1 && 
+                <View>
+                    <TouchableOpacity onPress={() => {handlerSubmit()}}>
+                        <Text style={styles.textFinish} >Finish</Text>
+                    </TouchableOpacity>
+                </View>
+            }
         </View>
     )
 };

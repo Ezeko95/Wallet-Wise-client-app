@@ -7,6 +7,7 @@ import { usersSlice } from './slices/getUsers';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { onBoardingSlice } from './slices/onBoarding';
 import goalSlice from './slices/goalSlice';
+import sharedSlice from './slices/sharedSlice';
  
 const store = configureStore({
   reducer: {
@@ -14,7 +15,8 @@ const store = configureStore({
     movement: movementReducer,
     user: usersSlice.reducer,
     onBoarding: onBoardingSlice.reducer,
-    goal: goalSlice
+    goal: goalSlice,
+    share: sharedSlice
   },
   middleware: [thunk],
   devTools: true
