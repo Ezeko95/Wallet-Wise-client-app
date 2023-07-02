@@ -96,7 +96,7 @@ const Register = () => {
 
     return (
       
-      <ImageBackground source={require('./assets/signUp.png')}>
+      <ImageBackground source={require('./assets/signUp3.png')}>
 
       <KeyboardAvoidingView
       style={styles.container}
@@ -145,12 +145,12 @@ const Register = () => {
       <TouchableOpacity style={{padding: 12, marginTop: 10, backgroundColor: '#1b7ced', borderRadius: 10}} onPress={()=>{ handleSubmit()}}>
         <Text style={{color:'white', fontWeight:'700'}}>Sign up</Text>
       </TouchableOpacity>
+      <Text style={{top: 30, color: 'white', textAlign: 'center'}}>Do you already have an account?  Sign in here!</Text>
     </View>
       </KeyboardAvoidingView>
       </ImageBackground>
   );
-
-    }
+}
 
 const styles = StyleSheet.create({
   input:{

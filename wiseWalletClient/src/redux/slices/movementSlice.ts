@@ -8,6 +8,7 @@ export interface MovementData {
   type: string;
   account: string;
   amount: number;
+  
 }
 
 interface MovementState {

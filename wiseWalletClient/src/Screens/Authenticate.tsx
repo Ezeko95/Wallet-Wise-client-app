@@ -13,7 +13,7 @@ const AuthView: React.FC = () => {
     <View style={{backgroundColor:"black"}}>
         {isLoginView ? <Register /> :  <Login />}
         <TouchableOpacity onPress={handleToggleView} style={styles.botonRegister}>
-          {isLoginView ? <Image source={require('./images/btnSignUp.png')}/> :<Text style={{color:"white",  textAlign:"center", fontWeight: '700'}}>REGISTER</Text>}
+          {isLoginView ? <Image style={{borderRadius: 10}} source={require('./images/signInbtn2.png')}/> :<Image style={{borderRadius: 10}} source={require('./images/signUpbtn1.png')}/>}
         </TouchableOpacity>
       
     </View>
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#4285F4",
     borderRadius:10,
     height: 50 ,
-    justifyContent: "center"
+    justifyContent: "center",
   }
 })
 

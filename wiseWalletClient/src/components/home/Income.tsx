@@ -13,6 +13,7 @@ import { IIncome } from '../../redux/interfaces/Interface';
 
 
 
+
 interface IUpdateStateInc {
   type: string;
   amount: number;
@@ -36,11 +37,12 @@ const Incomes: React.FC<Props> = () => {
   const [type, setType] = useState('');
   const [amount, setAmount] = useState('');
   const show: IIncome[] = useAppSelector((state) => state.allMovements.incomes).filter((income) => !income.deletedIncome);
-
   const navigateToDetail = (selectedIncome: IIncome) => {
     navigation.navigate('DetailIncome', { income: selectedIncome });
   };
-
+  
+  
+  
   const handleShowIncome = async (idinc: number, ide: number) => {
     const response = await axios.put(`${base_URL}/movement/income/${idinc}`);
     dispatch(getIncome(ide));
@@ -51,11 +53,11 @@ const Incomes: React.FC<Props> = () => {
       type,
       amount: parseFloat(amount),
     };
-
+    
     itemId && (await axios.put(`${base_URL}/movement/newIncome/${itemId}`, infoEdit));
     dispatch(getIncome(ide[ide.length-1]));
   };
-
+  
   const colors = [
     '#5EFC8D',
     '#8EF9F3',
@@ -68,14 +70,13 @@ const Incomes: React.FC<Props> = () => {
     '#FF958C',
     '#ADFCF9',
   ];
-
+  
   useEffect(() => {
     dispatch(getMovements(ide[ide.length-1]));
     dispatch(getAccounts(ide[ide.length-1]));
     dispatch(getIncome(ide[ide.length-1]));
-  }, []);
-  
 
+  }, []);
   
   
   
@@ -104,16 +105,19 @@ const Incomes: React.FC<Props> = () => {
             data={show}
             nestedScrollEnabled
             renderItem={({ item }) => (
+              
               <View>
                 <View style={{ flexDirection: 'row' }}>
                   <TouchableOpacity
                     onPress={() => {
+                      
                       navigateToDetail(item);
                       dispatch(setItemId(item.id));
                       dispatch(getIncome(ide[ide.length-1]));
                     }}
                   >
                     <View style={styles.detail}>
+                  
                       <Text style={{ fontSize: 20, color: 'white', top: 5, marginLeft: 10 }}>
                         {item.type}: {item.amount}
                       </Text>

@@ -151,6 +151,8 @@ const dataExpense: Expense[] = [
 
 const Pager = () => {
 
+
+  
   const dispatch = useAppDispatch()
   const { loading, error } = useAppSelector((state) => state.movement);
   const [type, setType] = useState('');
@@ -166,20 +168,23 @@ const Pager = () => {
   const aidi = selector.map(selector => selector.payload.user.id)
   const ide = idUser.map((idUser) => idUser.payload.user.id)
 
+
+
   const handlePostMovement = () => {
 
     const data: MovementData = {
       type,
       account,
       amount: parseFloat(amount),
+ 
     };
     if(!type || !account || !amount) return Alert.alert('Incomplete fields, please complete them all')
+    if(!/^\d+$/.test(amount)) return Alert.alert('In amount only numbers are allowed')
     dispatch(postMovement(aidi[0],data));
     dispatch(getIncome(aidi[0]))
     dispatch(getMovements(aidi[0]))
     dispatch(getAccounts(aidi[0]))
     dispatch(getAccounts(ide[0]))
-
 
     Alert.alert('Successfully created income')
     setType('');
@@ -193,9 +198,10 @@ const Pager = () => {
       description,
       category,
       paymentMethod,
+      
     };
     if(!amount || !category || !description || !paymentMethod ) return Alert.alert('Incomplete fields, please complete them all')
-
+    if(!/^\d+$/.test(amount)) return Alert.alert('Only numbers are allowed')
     dispatch(postExpense(aidi[0], data))
     dispatch(getIncome(aidi[0]))
     dispatch(getMovements(aidi[0]))
@@ -218,6 +224,7 @@ const Pager = () => {
 
   const onChange = (item: Data) => {
     setAccount(item.label);
+   
     console.log(item.value);
   }
   const onChange1 = (item: Expense) => {
@@ -226,6 +233,7 @@ const Pager = () => {
   }
   const onChange2 = (item: PaymentMethod) => {
     setPaymentMethod(item.label);
+
     console.log(item.value);
   }
 
@@ -282,7 +290,7 @@ const Pager = () => {
               <TextInput
                 value={type}
                 onChangeText={setType}
-                placeholder="Type"
+                placeholder="Desciption"
                 placeholderTextColor="gray"
                 style={styles.input}
                 />

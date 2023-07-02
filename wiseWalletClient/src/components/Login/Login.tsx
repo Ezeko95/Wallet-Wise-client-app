@@ -109,7 +109,7 @@ const Login: React.FC = () => {
 
   return (
     
-      <ImageBackground source={require('./assets/signIn.png')} 
+      <ImageBackground source={require('./assets/signIn3.png')} 
 >
       <KeyboardAvoidingView
       style={styles.container}

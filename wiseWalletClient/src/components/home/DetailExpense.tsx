@@ -12,7 +12,7 @@ import { IExpenses } from '../../redux/interfaces/Interface';
 
 
 interface IUpdateStateInc {
-  category: string,
+  description: string,
   amount: number
 }
 
@@ -35,7 +35,7 @@ console.log(itemId, 'itemId');
 
   const [category, setCategory]= useState('')
   const [amount, setAmount] = useState('')
-
+  const [description, setDescription] = useState('')
   const [openModal, setOpenModal] = useState(false)
   
   const expensesFilterDel = expense.filter((income)=> !income.deletedExpense)
@@ -54,6 +54,8 @@ console.log(itemId, 'itemId');
     category: '',
     description: '',
     paymentMethod: '',
+    logoCategory: '',
+    logo: '',
     deletedExpense: false,
     
   })
@@ -70,6 +72,8 @@ console.log(itemId, 'itemId');
         amount: 0,
         category: '',
         description: '',
+        logoCategory: '',
+        logo: '',
         paymentMethod: '',
         deletedExpense: true,
       });
@@ -90,7 +94,7 @@ console.log(itemId, 'itemId');
 
   const handleUpdateExpense = async ()=>{
     const infoEdit: IUpdateStateInc = {
-      category,
+      description,
       amount: parseFloat(amount)
     }
 
@@ -105,6 +109,41 @@ console.log(itemId, 'itemId');
       
     })
    }
+
+
+  const logo = () => {
+    if (detail.paymentMethod === 'Brubank') {
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/brubank.png')} />;
+    } else if (detail.paymentMethod === 'Mercado Pago') {
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/mercadopago.jpg')} />;
+    }else if (detail.paymentMethod === 'Uala') {
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/uala.png')} />;
+    }
+    else if (detail.paymentMethod === 'Cash') {
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/cash.png')} />;
+    }
+    else if (detail.paymentMethod === 'Santander Rio') {
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/rio.jpg')} />;
+    }
+    
+  }
+
+  const logoCategory = () => {
+    if (detail.category === 'farmacia') {
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5, backgroundColor: 'white'}} source={require('./assets/logos/farmacia.png')} />;
+    } else if (detail.category === 'supermarket') {
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/supermarket.jpg')} />;
+    }else if (detail.category === 'dinner') {
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/dinner.png')} />;
+    }
+    else if (detail.category === 'electrodomestics') {
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/electrodomestics1.jpg')} />;
+    }
+    else if (detail.category === 'technology') {
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/technology.jpg')} />;
+    }
+    
+  }
   
   
   
@@ -135,48 +174,33 @@ console.log(itemId, 'itemId');
 
 
   return (
-    <View>
-  <ImageBackground style={{ height: '100%' }} source={require('./assets/bgForm.png')}>
+    <View style={{backgroundColor: '#1C1F3B'}}>
+  
     <ScrollView bounces={true}>
       <StatusBar barStyle="light-content" />
 
-      <View style={styles.homeCard}>
-        <View style={{ flexDirection: 'row', marginTop: 40 }}>
-          <TouchableOpacity onPress={() => navigation.navigate('Income')}>
-            <Image style={{ width: 50, height: 50, right: 100 }} source={require('./assets/left.png')} />
+      <View style={{width:' 100%', backgroundColor: '#202254', height: 220, borderBottomEndRadius: 50, borderBottomStartRadius: 50}}>
+        <View>
+          <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
+                <Image style={{ width: 50, height: 50, left: 30, top: 15 }} source={require('./assets/left1.png')} />
           </TouchableOpacity>
-          <Text style={styles.title}>Incomes</Text>
+                <Text style={styles.title}>Incomes details</Text>
         </View>
 
-        <View style={{ backgroundColor: 'white', borderRadius: 100, padding: 3, marginTop: 50, marginBottom: 50 }}>
-          <View style={{ backgroundColor: '#1E2349', borderRadius: 100, paddingLeft: 30, paddingRight: 30 }}>
-            <Text style={{ color: 'white', fontSize: 40, marginTop: 40, marginBottom: 20, textAlign: 'center' }}>Total</Text>
-            <Text style={{ color: 'white', fontSize: 40, marginBottom: 40, textAlign: 'center', top: -15 }}>${reduceExpense}</Text>
-          </View>
+        <View style={{marginTop: 30}}>
+          <Text style={{textAlign: 'center', color: 'white', fontSize: 35, marginBottom: 10, fontWeight: '300'}}>Total</Text>
+          <Text style={{textAlign: 'center', color: 'white', fontSize: 25, fontWeight: 'bold'}}>$ {detail.amount}</Text>
         </View>
-
-        
-        {!detail.deletedExpense && (
-  <View>
-    <View style={{ flexDirection: 'row' }}>
-      <View style={styles.detail}>
-        <Text style={{ fontSize: 20, color: 'white', top: 5, marginLeft: 10 }}>
-          {detail.category}: ${detail.amount}
-        </Text>
       </View>
-      <TouchableOpacity
-        style={{ borderRadius: 100, margin: 10 }}
-        onPress={() => handleDeleteExpense(detail.id, ide[ide.length-1])}
-      >
-        <Image style={{ width: 35, height: 35, top: 6, alignSelf: 'center' }} source={require('./assets/delete1.png')} />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => setOpenModal(true)}>
-        <View style={{ padding: 8, borderRadius: 20, top: 7 }}>
+      <Image style={{alignSelf: 'center', top: 10}} source={require('./assets/line2.png')}/>
+      <TouchableOpacity onPress={() => setOpenModal(true)} style={{alignSelf: 'flex-end', top: -245, marginRight: 20}}>
+        <View style={{ padding: 8, borderRadius: 20 }}>
           <Image style={{ width: 40, height: 40 }} source={require('./assets/edit.png')} />
         </View>
+
         {
           openModal &&
-            <View>
+          <View>
               <Modal visible={openModal} animationType='slide' transparent={true}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: transparent }}>
                   <View style={{ backgroundColor: '#1E2349', padding: 15, width: 300, height: 400, borderRadius: 10 }}>
@@ -188,7 +212,7 @@ console.log(itemId, 'itemId');
                       <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>Update your Income</Text>
                       <View>
 
-                        <TextInput style={styles.inputs} placeholder='Type' value={category} onChangeText={(value) => setCategory(value)} />
+                        <TextInput style={styles.inputs} placeholder='Type' value={description} onChangeText={(value) => setDescription(value)} />
                         <TextInput style={styles.inputs} placeholder='Amount' keyboardType='numeric' value={amount} onChangeText={(value) => setAmount(value)} />
 
                         <TouchableOpacity onPress={() => { handleUpdateExpense() }} style={{ backgroundColor: '#6071EB', padding: 10, borderRadius: 10, marginTop: 30, width: 80, alignSelf: 'center' }}>
@@ -202,12 +226,59 @@ console.log(itemId, 'itemId');
             </View>
         }
       </TouchableOpacity>
+        <Text></Text>
+      
+
+      <View style={styles.homeCard}>
+        
+
+        
+        {!detail.deletedExpense && (
+  <View>
+    <View style={{ alignSelf: 'center' ,width:'90%', top: -20 }}>
+      
+
+      <View style={{backgroundColor: '#4D2FE4', width:'100%', top: -40, borderRadius: 40, height: 500}}>
+        
+          <Text style={{fontWeight: '300', color: 'white', fontSize: 16, marginLeft: 20, marginTop: 20 }}>Description</Text>
+          <Text style={{ fontSize: 30, color: 'white', fontWeight: 'bold', marginTop: 20, textAlign: 'center'}}>
+            {detail.description}
+          </Text>
+
+            
+              <Text style={{fontWeight: '300', color: 'white', fontSize: 16, marginLeft: 20, marginTop: 40 }}>Category</Text>
+                <View style={{flexDirection: 'row', backgroundColor: '#202254', borderRadius: 100, marginTop: 20, width: '90%', margin: 20, height: 60}}>
+                    {logoCategory()}
+                    <Text style={{ fontSize: 25, color: 'white', fontWeight: 'bold', marginTop: 10, marginLeft: 30}}>
+                      {detail.category}
+                    </Text>
+                </View>
+          
+    
+          
+              <Text style={{fontWeight: '300', color: 'white', fontSize: 16, marginLeft: 20, marginTop: 40 }}>Account</Text>
+              <View style={{flexDirection: 'row', backgroundColor: '#202254', borderRadius: 100, marginTop: 20, width: '90%', margin: 20, height: 60}}>
+                  {logo()}
+                  <Text style={{ fontSize: 25, color: 'white', fontWeight: 'bold', marginTop: 10, marginLeft: 30}}>
+                    {detail.paymentMethod}
+                  </Text>
+              </View>
+         
+      </View>
+
     </View>
   </View>
 )}
       </View>
+      <TouchableOpacity
+        style={{ borderRadius: 10, backgroundColor: 'red', width: 120, alignSelf: 'center', padding: 10, }}
+        onPress={() => handleDeleteExpense(detail.id, ide[ide.length-1])}
+        
+      >
+        <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}>DELETE</Text>
+      </TouchableOpacity>
     </ScrollView>
-  </ImageBackground>
+ 
 </View>
 
 
@@ -221,15 +292,16 @@ export default DetailIncome;
       
   const styles = StyleSheet.create({
     homeCard: {
-    alignItems: 'center',
+    
 
 
   },
 
   title: {
     color: 'white',
-    fontSize: 30,
-    right: 20,
+    fontSize: 25,
+    textAlign: 'center',
+    top: -30,
   },
 
   chart: {
