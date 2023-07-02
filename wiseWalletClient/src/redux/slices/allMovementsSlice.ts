@@ -131,24 +131,34 @@ const getMovementsSlicer = createSlice({
       };
     },
     orderByAlpha: (state, action: PayloadAction<string>) => {
-      const resultsArray = [...state.filtered].filter(item => item.category);
-      // const expenses= state.filtered.map(e=> e.category)
-      // const incomes= state.filtered.map(e=> e.type)
-
-      //  [...expenses , ...incomes]
+      const show: any[] = [...state.filtered].filter(e => e.deletedExpense === false || e.deletedIncome === false);
+      const resultsArray = show.map(item => item.category || item.type);
 
       const results =
-        action.payload === 'a'
-          ? resultsArray.sort((a: any, b: any) =>
-              a.category.localeCompare(b.category),
-            )
-          : resultsArray.sort((a: any, b: any) =>
-              b.category.localeCompare(a.category),
-            );
+        action.payload === 'a' ? 
+        resultsArray.sort((a: any, b: any) =>
+              a.localeCompare(b),
+          )
+        : resultsArray.sort((a: any, b: any) =>
+              b.localeCompare(a),
+          );
+          console.log("results en el alpha",results)
+      const orderAlphaArray:any =[]
+      for(let i = 0; i < results.length; i++){
+
+        for(let movement of [...state.filtered]){
+          if(results[i] === movement.type || results[i]  === movement.category){
+            orderAlphaArray.push(movement)
+            break;
+          }
+        }
+
+      }
+    
 
       return {
         ...state,
-        filtered: results,
+        filtered: orderAlphaArray,
       };
     },
     orderByDate: (state, action: PayloadAction<string>) => {},
