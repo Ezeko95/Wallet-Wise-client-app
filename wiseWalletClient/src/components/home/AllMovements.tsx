@@ -40,46 +40,22 @@ interface Props {}
 
 const AllMovements: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
-  const account = useAppSelector(state => state.allMovements.accounts);
-  const incomes = useAppSelector(state => state.allMovements.incomes);
-  const expenses = useAppSelector(state => state.allMovements.expenses);
+  let account = useAppSelector(state => state.allMovements.accounts);
   const idUser = useAppSelector(state => state.user.user);
   const allMovements = useAppSelector(state => state.allMovements.allMovements);
-
-  console.log(idUser, 'REDUX USUARIO');
-
   const filter = useAppSelector(state => state.allMovements.filtered);
-
   const balance = useAppSelector(state => state.allMovements.balance);
-  console.log(filter, 'FILTERRRRRRRRRRRRRRRR');
-  // console.log(allMovements, 'ALLMOVEMENTS');
 
-  console.log('============BALANCE=================');
-  // console.log(balance, 'Balance from redux');
+  console.log('FILTER',filter);
+  console.log("allmovements",allMovements)
+  console.log('Balance from redux', balance);
+  
+  account = [...account, "All accounts"]
 
   const ide = idUser.map(idUser => idUser.payload.user.id);
-  // console.log(ide[0], 'ide ceroooooooooo');
-  // console.log(ide[ide.length - 1], 'ide menos unooooooooooooooooooo');
+  const show: any[] = filter.filter(e => e.deletedExpense === false || e.deletedIncome === false);
 
-  //const incexp: any[] = [...incomes, ...expenses]
-  //const showExpense= expenses.filter(e=> !e.deletedExpense)
-  //const showIncome= incomes.filter(e=> !e.deletedIncome)
-  const showExp = filter.filter(e => e.deletedExpense === false);
-  // console.log(showExp);
-
-  const showInc = filter.filter(e => e.deletedIncome === false);
-  const show: any[] = [...showExp, ...showInc];
-  // console.log(show, 'SHOW');
-
-  //const showFiltered= filter.map(e=> e.)
-
-  //const filterIncome = incomes.filter((element: { amount: any; })=> element.amount)
-
-  // type, amount
-
-  // incomes.map((e, index) => incexp.push( {['key']: index, ['account']:e.account, ['amount']:e.amount }))
-  //console.log("incexp en el pager",incexp)
-  //onsole.log(account,'ACCOUNT');
+  console.log('show', show);
 
   useEffect(() => {
     dispatch(getAccounts(ide[ide.length - 1]));
@@ -91,45 +67,26 @@ const AllMovements: React.FC<Props> = () => {
   const data: AccountData[] = [];
 
   account.forEach((a: string) => {
-    data.push({
-      label: a,
-      value: a,
-    });
+    data.push({ label: a, value: a});
   });
 
   const valuesOrders: AccountData[] = [
-    {
-      label: 'ascendent',
-      value: 'asc',
-    },
+    { label: 'ascendent',value: 'asc' },
     { label: 'descendent', value: 'desc' },
   ];
 
   const valueOrderAlpha: AccountData[] = [
-    {
-      label: 'A-Z',
-      value: 'a',
-    },
+    { label: 'A-Z', value: 'a' },
     { label: 'Z-A', value: 'z' },
   ];
 
-  const colors = [
-    '#5EFC8D',
-    '#8EF9F3',
-    '#53599A',
-    '#ECD444',
-    '#FFFFFF',
-    '#C42021',
-    '#F44708',
-    '#CA61C3',
-    '#FF958C',
-    '#ADFCF9',
-  ];
+  const colors = ['#5EFC8D','#8EF9F3','#53599A','#ECD444','#FFFFFF','#C42021','#F44708','#CA61C3','#FF958C','#ADFCF9'];
+  
   const [value, setValue] = useState<string | null>(null);
   const [valueOrder, setValueOrder] = useState<string | null>(null);
   const [valueAlpha, setValueAlpha] = useState<string | null>(null);
 
-  console.log(valueAlpha);
+  console.log(valueAlpha, "valueAlpha");
 
   return (
     <View style={styles.homeCard}>
@@ -145,7 +102,6 @@ const AllMovements: React.FC<Props> = () => {
               inputSearchStyle={styles.inputSearchStyle}
               iconStyle={styles.iconStyle}
               data={data}
-              search
               maxHeight={150}
               valueField="value"
               labelField="label"
@@ -201,7 +157,6 @@ const AllMovements: React.FC<Props> = () => {
               inputSearchStyle={styles.inputSearchStyle}
               iconStyle={styles.iconStyle}
               data={data}
-              search
               maxHeight={150}
               valueField="value"
               labelField="label"
@@ -234,10 +189,10 @@ const AllMovements: React.FC<Props> = () => {
             />
           </View>
 
-          {show.map(mov => {
+          {show.map((mov, index) => {
             if (mov.type) {
               return (
-                <View key={mov.type}>
+                <View key={index}>
                   <Text style={styles.detail}>
                     {mov.type}: {mov.amount}
                   </Text>
@@ -245,7 +200,7 @@ const AllMovements: React.FC<Props> = () => {
               );
             } else {
               return (
-                <View>
+                <View key={index}>
                   <Text style={styles.detail}>
                     {mov.category}: {mov.amount}
                   </Text>

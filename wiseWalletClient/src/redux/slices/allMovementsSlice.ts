@@ -76,16 +76,23 @@ const getMovementsSlicer = createSlice({
       };
     },
     filterBalanceAccount: (state, action: PayloadAction<string>) => {
-      const account: any = state.allMovements.filter(
-        (m: any) => m.account === action.payload,
-      );
-      const paymentMethod: any = state.allMovements.filter(
-        (m: any) => m.paymentMethod === action.payload,
-      );
-      return {
-        ...state,
-        filtered: [...account, ...paymentMethod],
-      };
+      if (action.payload === "All accounts"){
+        return {
+          ...state,
+          filtered: [...state.allMovements]
+        }
+      } else {
+        const account: any = state.allMovements.filter(
+          (m: any) => m.account === action.payload,
+        );
+        const paymentMethod: any = state.allMovements.filter(
+          (m: any) => m.paymentMethod === action.payload,
+        )
+        return {
+          ...state,
+          filtered: [...account, ...paymentMethod],
+        }
+      }
     },
     getMovementsSuccess: (state, action: PayloadAction<any[]>) => {
       return {
@@ -107,25 +114,15 @@ const getMovementsSlicer = createSlice({
       };
     },
     orderByAmount: (state, action: PayloadAction<string>) => {
-      console.log(state.filtered);
-      const results =
-        action.payload.toLowerCase() === 'asc'
-          ? [...state.filtered].sort((a: any, b: any) => {
-              if (a.amount > b.amount) {
-                return 1;
-              }
-              if (a.amount < b.amount) {
-                return -1;
-              }
+      const results = (action.payload.toLowerCase() === 'asc') ?
+            [...state.filtered].sort((a: any, b: any) => {
+              if (a.amount > b.amount) { return 1 }
+              if (a.amount< b.amount) {return -1}
               return 0;
             })
-          : [...state.filtered].sort((a: any, b: any) => {
-              if (a.amount > b.amount) {
-                return -1;
-              }
-              if (a.amount < b.amount) {
-                return 1;
-              }
+            : [...state.filtered].sort((a: any, b: any) => {
+              if (a.amount> b.amount) {return -1}
+              if (a.amount< b.amount) {return 1}
               return 0;
             });
       return {
@@ -226,7 +223,7 @@ export const getMovements = (id: number): AppThunk => {
       dataIncome.data?.forEach((account: Account) => {
         account.income.forEach((income: IIncome) => allMovements.push(income));
       });
-
+      console.log("el allmovements", allMovements)
       dispatch(getMovementsSuccess(allMovements));
     } catch (error) {
       dispatch(getAllMovementsError(error as Error));
@@ -251,3 +248,4 @@ export const getAccounts = (id: number): AppThunk => {
     }
   };
 };
+
