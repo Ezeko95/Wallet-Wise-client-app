@@ -15,9 +15,7 @@ import NewShared from '../components/shared/NewShared';
 
 import Premium from '../components/Premium/Premium';
 
-import SharedDetail from '../components/shared/SharedDetail'
-
-
+import SharedDetail from '../components/shared/SharedDetail';
 
 type RootStackParamList = {
   Intro: undefined;
@@ -35,7 +33,6 @@ type RootStackParamList = {
   Premium: undefined;
 
   SharedDetail: undefined;
-
 };
 
 type SliderScreenRouteProp = RouteProp<RootStackParamList, 'Slider'>;
@@ -54,8 +51,8 @@ const Navigate = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Intro" component={Intro} />
-        <Stack.Screen name="Login" component={AuthView} />
+        {/* <Stack.Screen name="Intro" component={Intro} />*/}
+        {/* <Stack.Screen name="Login" component={AuthView} />*/}
         <Stack.Screen name="Premium" component={Premium} />
         <Stack.Screen name="Slider" component={Slider} />
         <Stack.Screen name="MyDrawer" component={MyDrawer} />
@@ -67,7 +64,6 @@ const Navigate = () => {
         <Stack.Screen name="SharedList" component={SharedList} />
         <Stack.Screen name="NewShared" component={NewShared} />
         <Stack.Screen name="SharedDetail" component={SharedDetail} />
-
       </Stack.Navigator>
     </NavigationContainer>
   );
