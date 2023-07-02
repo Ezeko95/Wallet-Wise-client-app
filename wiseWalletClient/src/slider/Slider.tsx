@@ -73,11 +73,6 @@ const Slider = () => {
     },
   ];
 
-
-
-
-
-
   const submitAccount = () => {
     const data: AccountData = {
       name,
@@ -141,10 +136,10 @@ const Slider = () => {
                 style={styles.btnContinue}>
                 <Text style={{textAlign: "center", color: "white"}}>Continuar</Text>
               </TouchableOpacity> */}
-              {/* <Button title="Continue" onPress={()=>{
+              <Button title="Continue" onPress={()=>{
                   ref.current?.setPage(1)
                   navigation.navigate("MyDrawer")
-              }}/> */}
+              }}/>
           </View>
         </PagerView>
       </ImageBackground>

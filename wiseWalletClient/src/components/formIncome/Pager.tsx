@@ -174,6 +174,7 @@ const Pager = () => {
       amount: parseFloat(amount),
     };
     if(!type || !account || !amount) return Alert.alert('Incomplete fields, please complete them all')
+    console.log(aidi[0])
     dispatch(postMovement(aidi[0],data));
     dispatch(getIncome(aidi[0]))
     dispatch(getMovements(aidi[0]))
