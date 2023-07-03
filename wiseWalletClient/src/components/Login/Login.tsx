@@ -18,6 +18,7 @@ import axios from 'axios';
 import { gettingUsers } from '../../redux/slices/getUsers';
 import { useAppDispatch } from '../../redux/store';
 
+
 interface LoginForm {
   email: string;
   password: string;
@@ -114,55 +115,39 @@ const Login: React.FC = () => {
   };
 
   return (
-    <ImageBackground source={require('./assets/signIn.png')}>
+    
+      <ImageBackground source={require('./assets/signIn3.png')} 
+>
       <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <View style={styles.container}>
-          <Image source={require('./assets/logo.png')} style={styles.image} />
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+    <View style={styles.container}>
+        <Image source={require("./assets/logo.png")} style={styles.image}/>
 
-          <TextInput
-            style={styles.input}
-            placeholder="*Email"
-            value={form.email}
-            onChangeText={value => {
-              handleInputChange('email', value);
-            }}
-          />
-          {error.emailError && (
-            <Text style={styles.textError}>{error.emailError}</Text>
-          )}
-          <TextInput
-            style={styles.input}
-            placeholder="* Password"
-            secureTextEntry
-            value={form.password}
-            onChangeText={value => {
-              handleInputChange('password', value);
-            }}
-          />
-          {error.passwordError && (
-            <Text style={styles.textError}>{error.passwordError}</Text>
-          )}
 
-          <TouchableOpacity
-            style={{
-              padding: 12,
-              marginTop: 10,
-              backgroundColor: '#1b7ced',
-              borderRadius: 10,
-            }}
-            onPress={() => {
-              handleSubmit();
-            }}
-            disabled={isButtonDisabled}>
-            <Text style={{ color: 'white', fontWeight: '700' }}>Sign In</Text>
-          </TouchableOpacity>
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={{ top: 50, color: 'white', textAlign: 'center' }}>
-              You don't have an account yet? Sign up here!
-            </Text>
-          </View>
+      <TextInput
+        style={styles.input}
+        placeholder="*Email"
+        value={form.email}
+        onChangeText={value => { handleInputChange('email', value)}}
+        />
+        {error.emailError && <Text style={styles.textError}>{error.emailError}</Text>}
+      <TextInput
+        style={styles.input}
+        placeholder="* Password"
+        secureTextEntry
+        value={form.password}
+        onChangeText={value => { handleInputChange('password', value)}}
+        />
+        {error.passwordError && <Text style={styles.textError}>{error.passwordError}</Text>}
+
+        <TouchableOpacity  style={{padding: 12, marginTop: 10, backgroundColor: '#1b7ced', borderRadius: 10}} onPress={() => { handleSubmit()}} disabled={isButtonDisabled}>
+          <Text style={{color:'white', fontWeight:'700'}}>Sign In</Text>
+        </TouchableOpacity>
+        <View style={{flexDirection: 'row'}}>
+        
+          <Text style={{top: 50, color: 'white', textAlign: 'center'}}>You don't have an account yet?  Sign up here!</Text>
         </View>
       </KeyboardAvoidingView>
     </ImageBackground>

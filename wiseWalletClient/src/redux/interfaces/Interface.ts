@@ -10,6 +10,8 @@ export interface IExpenses{
     amount: number,
     description: string,
     category: string,
+    logo: string;
+    logoCategory: string
     paymentMethod: string,
     deletedExpense: boolean
 }

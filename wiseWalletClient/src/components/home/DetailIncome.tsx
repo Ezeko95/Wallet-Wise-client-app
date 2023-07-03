@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect }from 'react';
-import { ScrollView, StatusBar, View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Image, ImageBackground } from 'react-native';
+import { ScrollView, StatusBar, View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Image, ImageBackground, Alert, FlatList } from 'react-native';
 import { Colors } from '../../enums/Colors';
 import { getIncome, cleanItemId, setItemId, getMovements} from '../../redux/slices/allMovementsSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
@@ -15,6 +15,7 @@ interface IUpdateStateInc {
   type: string,
   amount: number
 }
+
 
 
 const DetailIncome = () => {
@@ -46,16 +47,32 @@ console.log(itemId, 'itemId');
   
   
   
-  
-  
   const [detail, setDetail]= useState<IIncome>({
     id: 0,
     amount: 0,
     type: '',
     account: '',
+    logo: '',
     deletedIncome: false,
     
   })
+
+  const logo = () => {
+    if (detail.account === 'Brubank') {
+      return <Image style={{width: 60, height: 60, borderRadius: 100, marginLeft: 5, marginTop: 7}} source={require('./assets/logos/brubank.png')} />;
+    } else if (detail.account === 'Mercado Pago') {
+      return <Image style={{width: 60, height: 60, borderRadius: 100, marginLeft: 5, marginTop: 7}} source={require('./assets/logos/mercadopago.jpg')} />;
+    }else if (detail.account === 'Uala') {
+      return <Image style={{width: 60, height: 60, borderRadius: 100, marginLeft: 5, marginTop: 7}} source={require('./assets/logos/uala.png')} />;
+    }
+    else if (detail.account === 'Cash') {
+      return <Image style={{width: 60, height: 60, borderRadius: 100, marginLeft: 5, marginTop: 7}} source={require('./assets/logos/cash.png')} />;
+    }
+    else if (detail.account === 'Santander Rio') {
+      return <Image style={{width: 60, height: 60, borderRadius: 100, marginLeft: 5, marginTop: 7}} source={require('./assets/logos/rio.jpg')} />;
+    }
+    
+  }
      
   const handleDeleteIncome = async (idinc: number, ide: number) => {
     const response = await axios.delete(`${base_URL}/movement/income/${idinc}`);
@@ -63,12 +80,14 @@ console.log(itemId, 'itemId');
       dispatch(getIncome(ide));
       dispatch(getAccounts(ide));
       dispatch(getMovements(ide))
+      navigation.navigate('MyDrawer')
 
       setDetail({
         id: 0,
         amount: 0,
         type: '',
         account: '',
+        logo: '',
         deletedIncome: true
       });
 
@@ -95,8 +114,6 @@ console.log(itemId, 'itemId');
     })
    }
   
-  
-  
   const colors = [
     "#5EFC8D",
     "#8EF9F3",
@@ -117,55 +134,43 @@ console.log(itemId, 'itemId');
 
     dispatch(getIncome(ide[ide.length-1]))
     inc && setDetail(inc)
-  
+    
   }, [])
   
 
-
-
+  
+  
+  
+  
   return (
-    <View>
-  <ImageBackground style={{ height: '100%' }} source={require('./assets/bgForm.png')}>
+    <View style={{backgroundColor: '#1C1F3B'}}>
+  
     <ScrollView bounces={true}>
       <StatusBar barStyle="light-content" />
 
-      <View style={styles.homeCard}>
-        <View style={{ flexDirection: 'row', marginTop: 40 }}>
-          <TouchableOpacity onPress={() => navigation.navigate('Income')}>
-            <Image style={{ width: 50, height: 50, right: 100 }} source={require('./assets/left.png')} />
-          </TouchableOpacity>
-          <Text style={styles.title}>Incomes</Text>
+      <View style={{width:' 100%', backgroundColor: '#202254', height: 220, borderBottomEndRadius: 50, borderBottomStartRadius: 50}}>
+        <View>
+            <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
+                <Text style={styles.goBack}>{'<'}</Text>
+            </TouchableOpacity>
+                <Text style={styles.title}>Incomes details</Text>
         </View>
 
-        <View style={{ backgroundColor: 'white', borderRadius: 100, padding: 3, marginTop: 50, marginBottom: 50 }}>
-          <View style={{ backgroundColor: '#1E2349', borderRadius: 100, paddingLeft: 30, paddingRight: 30 }}>
-            <Text style={{ color: 'white', fontSize: 40, marginTop: 40, marginBottom: 20, textAlign: 'center' }}>Total</Text>
-            <Text style={{ color: 'white', fontSize: 40, marginBottom: 40, textAlign: 'center', top: -15 }}>${reduceIncome}</Text>
-          </View>
+        <View style={{marginTop: 30}}>
+          <Text style={{textAlign: 'center', color: 'white', fontSize: 35, marginBottom: 10, fontWeight: '300'}}>Total</Text>
+          <Text style={{textAlign: 'center', color: 'white', fontSize: 25, fontWeight: 'bold'}}>$ {detail.amount}</Text>
         </View>
-
-        
-        {!detail.deletedIncome && (
-  <View>
-    <View style={{ flexDirection: 'row' }}>
-      <View style={styles.detail}>
-        <Text style={{ fontSize: 20, color: 'white', top: 5, marginLeft: 10 }}>
-          {detail.type}: ${detail.amount}
-        </Text>
       </View>
-      <TouchableOpacity
-        style={{ borderRadius: 100, margin: 10 }}
-        onPress={() => handleDeleteIncome(detail.id, ide[ide.length-1])}
-      >
-        <Image style={{ width: 35, height: 35, top: 6, alignSelf: 'center' }} source={require('./assets/delete1.png')} />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => setOpenModal(true)}>
-        <View style={{ padding: 8, borderRadius: 20, top: 7 }}>
+      <Image style={{alignSelf: 'center', top: 10}} source={require('./assets/line2.png')}/>
+      
+      <TouchableOpacity onPress={() => setOpenModal(true)} style={{alignSelf: 'flex-end', top: -245, marginRight: 20}}>
+        <View style={{ padding: 8, borderRadius: 20 }}>
           <Image style={{ width: 40, height: 40 }} source={require('./assets/edit.png')} />
         </View>
+
         {
           openModal &&
-            <View>
+          <View>
               <Modal visible={openModal} animationType='slide' transparent={true}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: transparent }}>
                   <View style={{ backgroundColor: '#1E2349', padding: 15, width: 300, height: 400, borderRadius: 10 }}>
@@ -191,12 +196,47 @@ console.log(itemId, 'itemId');
             </View>
         }
       </TouchableOpacity>
+      
+
+      <View style={styles.homeCard}>
+        
+
+        
+        {!detail.deletedIncome && (
+  <View>
+    <View style={{ alignSelf: 'center' ,width:'90%', top: -20 }}>
+      
+
+      <View style={{backgroundColor: 'white', width:'100%', top: -20, borderRadius: 40, height: 300}}>
+        
+          <Text style={{fontWeight: '400', color: '#4D2FE4', fontSize: 16, marginLeft: 20, marginTop: 20 }}>Description</Text>
+          <Text style={{ fontSize: 30, color: '#202254', fontWeight: 'bold', marginTop: 20, textAlign: 'center'}}>
+            {detail.type}
+          </Text>
+    
+
+            <Text style={{fontWeight: '400', color: '#4D2FE4', fontSize: 16, marginLeft: 20, marginTop: 40 }}>Account</Text>
+            <View style={{flexDirection: 'row', backgroundColor: '#202254', borderRadius: 100, marginTop: 20, width: '90%', margin: 20, height: 80, borderColor: '#4D2FE4', borderWidth: 3 ,}}>
+                {logo()}
+                <Text style={{ fontSize: 25, color: 'white', fontWeight: 'bold', marginTop: 20, marginLeft: 30}}>
+                  {detail.account}
+                </Text>
+            </View>
+      </View>
+
     </View>
   </View>
 )}
       </View>
+      <TouchableOpacity
+        style={{ borderRadius: 10, backgroundColor: 'red', width: 120, alignSelf: 'center', padding: 10, marginBottom: 40}}
+        onPress={() => handleDeleteIncome(detail.id, ide[ide.length-1])}
+        
+      >
+        <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}>DELETE</Text>
+      </TouchableOpacity>
     </ScrollView>
-  </ImageBackground>
+ 
 </View>
 
 
@@ -210,15 +250,16 @@ export default DetailIncome;
       
   const styles = StyleSheet.create({
     homeCard: {
-    alignItems: 'center',
+    
 
 
   },
 
   title: {
     color: 'white',
-    fontSize: 30,
-    right: 20,
+    fontSize: 25,
+    textAlign: 'center',
+    top: -20
   },
 
   chart: {
@@ -251,6 +292,20 @@ export default DetailIncome;
     alignSelf: 'center',
     
   },
+  goBack: {
+    color: '#4D2FE4',
+    backgroundColor: "white",
+    borderRadius: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 25,
+    width: 40,
+    height: 40,
+    borderColor: '#4D2FE4',
+    borderWidth: 2,
+    left: 30,
+    top: 20
+},
 });
 
 function useAPPDispatch() {

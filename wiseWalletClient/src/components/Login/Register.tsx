@@ -98,8 +98,12 @@ const Register = () => {
     }
   };
 
-  return (
-    <ImageBackground source={require('./assets/signUp.png')}>
+
+    return (
+      
+      <ImageBackground source={require('./assets/signUp3.png')}>
+
+
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -124,41 +128,35 @@ const Register = () => {
         onChangeText={value => handleInputChange('picture', value)}
         style={styles.input}
       /> */}
-            <TextInput
-              placeholder="* Email"
-              value={form.email}
-              onChangeText={value => handleInputChange('email', value)}
-              style={styles.input}
-            />
-            {error.email && <Text style={styles.textError}>{error.email}</Text>}
-            <TextInput
-              placeholder="* Password"
-              secureTextEntry
-              value={form.password}
-              onChangeText={value => handleInputChange('password', value)}
-              style={styles.input}
-            />
-            {error.password && (
-              <Text style={styles.textError}>{error.password}</Text>
-            )}
-          </KeyboardAvoidingView>
-          <TouchableOpacity
-            style={{
-              padding: 12,
-              marginTop: 10,
-              backgroundColor: '#1b7ced',
-              borderRadius: 10,
-            }}
-            onPress={() => {
-              handleSubmit();
-            }}>
-            <Text style={{ color: 'white', fontWeight: '700' }}>Sign up</Text>
-          </TouchableOpacity>
-        </View>
+
+      <TextInput
+        placeholder="* Email"
+        value={form.email}
+        onChangeText={value => handleInputChange('email', value)}
+        style={styles.input}
+        />
+        {error.email && <Text style={styles.textError}>{error.email}</Text>}
+      <TextInput
+        placeholder="* Password"
+        secureTextEntry
+        value={form.password}
+        onChangeText={value => handleInputChange('password', value)}
+        style={styles.input}
+        />
+        {error.password && <Text style={styles.textError}>{error.password}</Text>}
+        </KeyboardAvoidingView>
+      <TouchableOpacity style={{padding: 12, marginTop: 10, backgroundColor: '#1b7ced', borderRadius: 10}} onPress={()=>{ handleSubmit()}}>
+        <Text style={{color:'white', fontWeight:'700'}}>Sign up</Text>
+      </TouchableOpacity>
+      <Text style={{top: 30, color: 'white', textAlign: 'center'}}>Do you already have an account?  Sign in here!</Text>
+    </View>
+
       </KeyboardAvoidingView>
     </ImageBackground>
   );
-};
+
+}
+
 
 const styles = StyleSheet.create({
   input: {
