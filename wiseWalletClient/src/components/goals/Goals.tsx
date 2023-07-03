@@ -16,6 +16,7 @@ import axios from 'axios';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { Colors } from '../../enums/Colors';
 import { getAllGoals } from '../../redux/slices/goalSlice';
+import { useNavigation } from '@react-navigation/native';
 
 const CloudinaryComponent: React.FC = () => {
   const [photos, setPhotos] = useState<string[]>([]);
@@ -26,6 +27,7 @@ const CloudinaryComponent: React.FC = () => {
   const ide = idUser.map(idUser => idUser.payload.user.id);
   const error = useAppSelector(state => state.goal.error);
   const dispatch = useAppDispatch();
+  const navigation: any = useNavigation();
   console.log(ide);
 
   const cloudinaryUpload = (photo: object) => {
@@ -103,6 +105,9 @@ const CloudinaryComponent: React.FC = () => {
 
   return (
     <View style={styles.container}>
+       <TouchableOpacity onPress={() => navigation.navigate('GoalsList')}>
+        <Text style={styles.goBack}>{'<'}</Text>
+      </TouchableOpacity>
       <ScrollView bounces={true}>
         <View
           style={{
@@ -139,7 +144,11 @@ const CloudinaryComponent: React.FC = () => {
                   disabled={photos.length > 0}
                   style={styles.upload}
                   onPress={handleUploadImage}>
-                  <Text style={styles.text}>Upload Image</Text>
+                  <Text style={{
+                      color: 'yellow',
+                      fontWeight: 'bold',
+                      fontSize: 18,
+                    }}>Upload Image</Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -167,7 +176,10 @@ const CloudinaryComponent: React.FC = () => {
                     <TouchableOpacity
                       style={styles.closeBtn}
                       onPress={handleUploadImage}>
-                      <Text style={styles.text}> E </Text>
+                       <Image
+                        source={require('../home/assets/edit.png')}
+                        style={{ width: 30, height: 34 }}
+                      />
                     </TouchableOpacity>
                   )}
                 </View>
@@ -181,7 +193,7 @@ const CloudinaryComponent: React.FC = () => {
           disabled={!photos.length || !description || !title || !total}
           style={styles.submit}
           onPress={() => onSubmit()}>
-          <Text style={styles.text}>SUBMIT</Text>
+          <Text style={{ color: 'yellow', fontWeight: 'bold', fontSize: 18 }}>SUBMIT</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -196,7 +208,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     alignContent: 'center',
-    backgroundColor: 'darkslateblue',
+    backgroundColor: /* 'darkslateblue' */'#3D2766',
   },
   openGalaryStyle: {
     margin: 20,
@@ -222,10 +234,11 @@ const styles = StyleSheet.create({
     top: 50,
   },
   text: {
-    backgroundColor: Colors.DETAIL_COLOR,
+    backgroundColor:  '#8757FF',
     color: 'white',
     fontWeight: 'bold',
     fontSize: 20,
+    borderRadius: 5,
   },
   uploadImage: {
     width: 170,
@@ -239,8 +252,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
   },
   submit: {
-    backgroundColor: 'red',
-    color: 'white',
+    backgroundColor: '#513273',
+    color: 'yellow',
     borderRadius: 5,
     width: 100,
     padding: 5,
@@ -248,26 +261,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    marginBottom: 10,
+    marginBottom: .1,
+    position: 'absolute'
   },
 
   upload: {
-    backgroundColor: Colors.DETAIL_COLOR,
+    backgroundColor: '#513273',
     color: 'white',
-    borderRadius: 5,
-    width: 100,
+    borderRadius: 10,
+    width: 190,
     padding: 5,
     alignContent: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
     margin: 10,
+    marginTop: 40,
+    height: 45,
   },
   buttons: {
     flex: 1,
     flexDirect5on: 'row',
     padding: 2,
     margin: 30,
+    justifyContent: 'flex-end',
   },
 
   inputContainer: {
@@ -278,8 +295,9 @@ const styles = StyleSheet.create({
   },
 
   closeBtn: {
-    height: 25,
-    width: 25,
+    height: 28,
+    width: 27,
+    borderRadius: 10,
   },
 
   imageContainer: {
@@ -287,6 +305,22 @@ const styles = StyleSheet.create({
     margin: 30,
     alignContent: 'center',
     justifyContent: 'center',
+  },
+
+  goBack: {
+    color: 'black',
+    backgroundColor: 'yellow',
+    borderRadius: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 25,
+    width: 40,
+    height: 40,
+    borderColor: '#FFF7AE',
+    borderWidth: 2,
+    right: 50,
+    left: -170,
+    marginTop: 25,
   },
   
 });
