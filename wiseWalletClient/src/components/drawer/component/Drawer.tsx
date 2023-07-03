@@ -22,7 +22,7 @@ const Drawer = ({ children }: DrawerProps) => {
   const navigationView = () => (
     <View style={styles.container}>
           <TouchableOpacity
-            style={styles.text}
+            style={styles.x}
             onPress={() => drawer.current?.closeDrawer()}>
             <Image style={styles.burguerBtn} source={require('./closeX.png')}/>
           </TouchableOpacity>
@@ -31,10 +31,12 @@ const Drawer = ({ children }: DrawerProps) => {
             <Text style={styles.text}>Home</Text>
           </TouchableOpacity>
 
+
           <TouchableOpacity onPress={() => navigation.navigate('FormPager')}>
             <Text style={styles.text}>Add+</Text>
           </TouchableOpacity>
 
+          
 
           <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
             <Text style={styles.text}>Profile</Text>
@@ -81,8 +83,10 @@ const styles = StyleSheet.create({
   text: {
     color: Colors.TITLE_COLOR,
     fontSize: 20,
+    marginTop: 20,
     marginBottom: 20,
     padding: 8,
+    marginLeft: 20
   },
   drawer: {
     backgroundColor: Colors.BACKGROUND_COLOR,
@@ -94,6 +98,11 @@ const styles = StyleSheet.create({
     width: 40,
     resizeMode: 'contain',
     left: 20,
+  },
+  x:{
+    marginBottom: 20,
+    marginTop: 20
+
   }
 
 });

@@ -59,17 +59,17 @@ console.log(itemId, 'itemId');
 
   const logo = () => {
     if (detail.account === 'Brubank') {
-      return <Image style={{width: 70, height: 70, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/brubank.png')} />;
+      return <Image style={{width: 60, height: 60, borderRadius: 100, marginLeft: 5, marginTop: 7}} source={require('./assets/logos/brubank.png')} />;
     } else if (detail.account === 'Mercado Pago') {
-      return <Image style={{width: 70, height: 70, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/mercadopago.jpg')} />;
+      return <Image style={{width: 60, height: 60, borderRadius: 100, marginLeft: 5, marginTop: 7}} source={require('./assets/logos/mercadopago.jpg')} />;
     }else if (detail.account === 'Uala') {
-      return <Image style={{width: 70, height: 70, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/uala.png')} />;
+      return <Image style={{width: 60, height: 60, borderRadius: 100, marginLeft: 5, marginTop: 7}} source={require('./assets/logos/uala.png')} />;
     }
     else if (detail.account === 'Cash') {
-      return <Image style={{width: 70, height: 70, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/cash.png')} />;
+      return <Image style={{width: 60, height: 60, borderRadius: 100, marginLeft: 5, marginTop: 7}} source={require('./assets/logos/cash.png')} />;
     }
     else if (detail.account === 'Santander Rio') {
-      return <Image style={{width: 70, height: 70, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/rio.jpg')} />;
+      return <Image style={{width: 60, height: 60, borderRadius: 100, marginLeft: 5, marginTop: 7}} source={require('./assets/logos/rio.jpg')} />;
     }
     
   }
@@ -150,9 +150,9 @@ console.log(itemId, 'itemId');
 
       <View style={{width:' 100%', backgroundColor: '#202254', height: 220, borderBottomEndRadius: 50, borderBottomStartRadius: 50}}>
         <View>
-          <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
-                <Image style={{ width: 50, height: 50, left: 30, top: 15 }} source={require('./assets/left1.png')} />
-          </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
+                <Text style={styles.goBack}>{'<'}</Text>
+            </TouchableOpacity>
                 <Text style={styles.title}>Incomes details</Text>
         </View>
 
@@ -207,16 +207,16 @@ console.log(itemId, 'itemId');
     <View style={{ alignSelf: 'center' ,width:'90%', top: -20 }}>
       
 
-      <View style={{backgroundColor: '#4D2FE4', width:'100%', top: -20, borderRadius: 40, height: 300}}>
+      <View style={{backgroundColor: 'white', width:'100%', top: -20, borderRadius: 40, height: 300}}>
         
-          <Text style={{fontWeight: '300', color: 'white', fontSize: 16, marginLeft: 20, marginTop: 20 }}>Description</Text>
-          <Text style={{ fontSize: 30, color: 'white', fontWeight: 'bold', marginTop: 20, textAlign: 'center'}}>
+          <Text style={{fontWeight: '400', color: '#4D2FE4', fontSize: 16, marginLeft: 20, marginTop: 20 }}>Description</Text>
+          <Text style={{ fontSize: 30, color: '#202254', fontWeight: 'bold', marginTop: 20, textAlign: 'center'}}>
             {detail.type}
           </Text>
     
 
-            <Text style={{fontWeight: '300', color: 'white', fontSize: 16, marginLeft: 20, marginTop: 40 }}>Account</Text>
-            <View style={{flexDirection: 'row', backgroundColor: '#202254', borderRadius: 100, marginTop: 20, width: '90%', margin: 20, height: 80}}>
+            <Text style={{fontWeight: '400', color: '#4D2FE4', fontSize: 16, marginLeft: 20, marginTop: 40 }}>Account</Text>
+            <View style={{flexDirection: 'row', backgroundColor: '#202254', borderRadius: 100, marginTop: 20, width: '90%', margin: 20, height: 80, borderColor: '#4D2FE4', borderWidth: 3 ,}}>
                 {logo()}
                 <Text style={{ fontSize: 25, color: 'white', fontWeight: 'bold', marginTop: 20, marginLeft: 30}}>
                   {detail.account}
@@ -259,7 +259,7 @@ export default DetailIncome;
     color: 'white',
     fontSize: 25,
     textAlign: 'center',
-    top: -30,
+    top: -20
   },
 
   chart: {
@@ -292,6 +292,20 @@ export default DetailIncome;
     alignSelf: 'center',
     
   },
+  goBack: {
+    color: '#4D2FE4',
+    backgroundColor: "white",
+    borderRadius: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 25,
+    width: 40,
+    height: 40,
+    borderColor: '#4D2FE4',
+    borderWidth: 2,
+    left: 30,
+    top: 20
+},
 });
 
 function useAPPDispatch() {

@@ -113,34 +113,34 @@ console.log(itemId, 'itemId');
 
   const logo = () => {
     if (detail.paymentMethod === 'Brubank') {
-      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/brubank.png')} />;
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 4}} source={require('./assets/logos/brubank.png')} />;
     } else if (detail.paymentMethod === 'Mercado Pago') {
-      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/mercadopago.jpg')} />;
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 4}} source={require('./assets/logos/mercadopago.jpg')} />;
     }else if (detail.paymentMethod === 'Uala') {
-      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/uala.png')} />;
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 4}} source={require('./assets/logos/uala.png')} />;
     }
     else if (detail.paymentMethod === 'Cash') {
-      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/cash.png')} />;
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 4}} source={require('./assets/logos/cash.png')} />;
     }
     else if (detail.paymentMethod === 'Santander Rio') {
-      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/rio.jpg')} />;
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 4}} source={require('./assets/logos/rio.jpg')} />;
     }
     
   }
 
   const logoCategory = () => {
     if (detail.category === 'farmacia') {
-      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5, backgroundColor: 'white'}} source={require('./assets/logos/farmacia.png')} />;
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 4, backgroundColor: 'white'}} source={require('./assets/logos/farmacia.png')} />;
     } else if (detail.category === 'supermarket') {
-      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/supermarket.jpg')} />;
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 4}} source={require('./assets/logos/supermarket.jpg')} />;
     }else if (detail.category === 'dinner') {
-      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/dinner.png')} />;
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 4}} source={require('./assets/logos/dinner.png')} />;
     }
     else if (detail.category === 'electrodomestics') {
-      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/electrodomestics1.jpg')} />;
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 4}} source={require('./assets/logos/electrodomestics1.jpg')} />;
     }
     else if (detail.category === 'technology') {
-      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 5}} source={require('./assets/logos/technology.jpg')} />;
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 4}} source={require('./assets/logos/technology.jpg')} />;
     }
     
   }
@@ -181,9 +181,9 @@ console.log(itemId, 'itemId');
 
       <View style={{width:' 100%', backgroundColor: '#202254', height: 220, borderBottomEndRadius: 50, borderBottomStartRadius: 50}}>
         <View>
-          <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
-                <Image style={{ width: 50, height: 50, left: 30, top: 15 }} source={require('./assets/left1.png')} />
-          </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
+                <Text style={styles.goBack}>{'<'}</Text>
+            </TouchableOpacity>
                 <Text style={styles.title}>Incomes details</Text>
         </View>
 
@@ -247,7 +247,7 @@ console.log(itemId, 'itemId');
 
             
               <Text style={{fontWeight: '300', color: 'white', fontSize: 16, marginLeft: 20, marginTop: 40 }}>Category</Text>
-                <View style={{flexDirection: 'row', backgroundColor: '#202254', borderRadius: 100, marginTop: 20, width: '90%', margin: 20, height: 60}}>
+                <View style={{flexDirection: 'row', backgroundColor: '#202254', borderRadius: 100, marginTop: 20, width: '90%', margin: 20, height: 60, borderColor: 'white', borderWidth: 1}}>
                     {logoCategory()}
                     <Text style={{ fontSize: 25, color: 'white', fontWeight: 'bold', marginTop: 10, marginLeft: 30}}>
                       {detail.category}
@@ -257,7 +257,7 @@ console.log(itemId, 'itemId');
     
           
               <Text style={{fontWeight: '300', color: 'white', fontSize: 16, marginLeft: 20, marginTop: 40 }}>Account</Text>
-              <View style={{flexDirection: 'row', backgroundColor: '#202254', borderRadius: 100, marginTop: 20, width: '90%', margin: 20, height: 60}}>
+              <View style={{flexDirection: 'row', backgroundColor: '#202254', borderRadius: 100, marginTop: 20, width: '90%', margin: 20, height: 60, borderColor: 'white', borderWidth: 1}}>
                   {logo()}
                   <Text style={{ fontSize: 25, color: 'white', fontWeight: 'bold', marginTop: 10, marginLeft: 30}}>
                     {detail.paymentMethod}
@@ -334,6 +334,20 @@ export default DetailIncome;
     alignSelf: 'center',
     
   },
+  goBack: {
+    color: '#4D2FE4',
+    backgroundColor: "white",
+    borderRadius: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 25,
+    width: 40,
+    height: 40,
+    borderColor: '#4D2FE4',
+    borderWidth: 2,
+    left: 30,
+    top: 20
+},
 });
 
 function useAPPDispatch() {

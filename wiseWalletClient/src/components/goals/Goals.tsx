@@ -288,6 +288,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
   },
+  
 });
 
 export default CloudinaryComponent;

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { gettingUsers } from '../../redux/slices/getUsers';
 import { useAppDispatch } from '../../redux/store';
 
+
 interface LoginForm {
   email: string;
   password: string;
@@ -141,7 +142,7 @@ const Login: React.FC = () => {
         <View style={{flexDirection: 'row'}}>
         
           <Text style={{top: 50, color: 'white', textAlign: 'center'}}>You don't have an account yet?  Sign up here!</Text>
-          
+       
         </View>
     </View>
       </KeyboardAvoidingView>

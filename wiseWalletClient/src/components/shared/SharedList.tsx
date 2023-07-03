@@ -3,20 +3,36 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Colors } from '../../enums/Colors';
+import { useAppSelector } from '../../redux/store';
 
 const SharedList: React.FC = () => {
 
     const navigation: any = useNavigation();
-
+    const rooms= useAppSelector(state=> state.share.allRooms);
     
+    //const showRoom= rooms.filter(e=> ! e.deletedShared)
+
     return (
         <View style={styles.container}>
-            <Text style={{color: "white"}}>ACA DEBERIA LLEGAR PRIMERO</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
+                <Text  style={styles.goBack}>{'<'}</Text>
+            </TouchableOpacity>
+            
             <View style={styles.allItems}>
                 <TouchableOpacity style={styles.create} onPress={() => navigation.navigate('NewShared')}>
                     <Text style={{color: 'white', fontSize: 40}}>+</Text>
                 </TouchableOpacity>
             </View>
+        {/* <ScrollView bounces={false}>
+            {
+                showRoom.length &&
+                showRoom.map((room, index)=>{
+                    return(
+                        <View></View>
+                    )
+                })
+            }
+        </ScrollView> */}
         </View>
     )
 }
@@ -46,5 +62,19 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         justifyContent: 'center',
         alignItems: 'center'
-      }
+      },
+      goBack: {
+        color: 'black',
+        backgroundColor: "yellow",
+        borderRadius: 10,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontSize: 25,
+        width: 40,
+        height: 40,
+        borderColor: '#FFF7AE',
+        borderWidth: 2,
+        left: 10,
+        top: 10   
+    }
 })
