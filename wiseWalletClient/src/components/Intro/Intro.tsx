@@ -6,6 +6,7 @@ import ButtonNext from './ButtonNext';
 import Login from '../Login/Login'
 
 
+
 interface Slide {
     image: number;
 }
@@ -60,14 +61,15 @@ const Intro = () => {
 
 
     return (
+        <>
         <ImageBackground style={styles.img} source={require('./assets/fondoIntro2.png')}>
             <View style={styles.container}>
                 <FlatList  data={slide} renderItem={renderItem} keyExtractor={(_, index) => index.toString()} horizontal showsHorizontalScrollIndicator={false} pagingEnabled bounces={false} onScroll={Animated.event([{nativeEvent: { contentOffset: {x: scrollX} } }], {
                     useNativeDriver: false
                 })}
-                    scrollEventThrottle={32}
-                    onViewableItemsChanged={viewableItemsChanged}
-                    ref={slidesRef}
+                scrollEventThrottle={32}
+                onViewableItemsChanged={viewableItemsChanged}
+                ref={slidesRef}
                 />
             </View>
             <Paginattor data={slide} scrollX={scrollX}/>
@@ -76,6 +78,8 @@ const Intro = () => {
                     <Text style={styles.skip}>Skip</Text>
             </TouchableOpacity>
         </ImageBackground>
+        
+        </>
     )
 }
 
