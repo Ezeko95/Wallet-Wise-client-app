@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet , Image, ImageBackground, KeyboardAvoidingView,Platform, Text, TouchableOpacity, Alert} from 'react-native';
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  KeyboardAvoidingView,
+  Platform,
+  Text,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import Upload from './Upload';
 import { useAppDispatch } from '../../redux/store';
 import { gettingUsers } from '../../redux/slices/getUsers';
-
 
 interface RegisterForm {
   name: string;
@@ -29,36 +40,31 @@ const Register = () => {
   });
 
   const handleInputChange = (name: keyof RegisterForm, value: string) => {
-    setForm((prevState) => ({
+    setForm(prevState => ({
       ...prevState,
       [name]: value,
     }));
-  
-    setError((prevState) => ({
+
+    setError(prevState => ({
       ...prevState,
       [name]: '',
     }));
   };
 
   const handleSubmit = async () => {
-    
-    
-    let nameError = ''
-    if(!form.name){
-      nameError = '* Please enter a username'
+    let nameError = '';
+    if (!form.name) {
+      nameError = '* Please enter a username';
     }
-    
-    
+
     let emailError = '';
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      emailError = '* Please enter a valid email address'
+      emailError = '* Please enter a valid email address';
     }
-    
 
     let passwordError = '';
     if (!/^\w{8,16}$/.test(form.password)) {
-        passwordError = '* The password must be between 8 and 16 characters'
-  
+      passwordError = '* The password must be between 8 and 16 characters';
     }
 
     setError({
@@ -71,13 +77,11 @@ const Register = () => {
     if (emailError || passwordError) {
       return;
     }
-  
-  
 
     try {
       const response = await axios.post<{ accessToken: string }>(
-        'http://10.0.2.2:3001/user/register',
-        form
+        'http://localhost:3001/user/register',
+        form,
       );
       const { accessToken } = response.data;
       console.log(response.data, 'register');
@@ -94,38 +98,37 @@ const Register = () => {
     }
   };
 
+
     return (
       
       <ImageBackground source={require('./assets/signUp3.png')}>
 
+
       <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-    <View style={styles.container}>
-
-     
-
-      <KeyboardAvoidingView>
-       {/* <TouchableOpacity style={{display:"flex",alignItems:"center", }}  >
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <View style={styles.container}>
+          <KeyboardAvoidingView>
+            {/* <TouchableOpacity style={{display:"flex",alignItems:"center", }}  >
         <Image source={{uri:'https://i.kym-cdn.com/entries/icons/original/000/026/152/gigachadd.jpg'}} style={styles.imageperfil}/>
         <Text style={{color:"white"}}>CHOOSE YOUR FOTOU</Text>
       </TouchableOpacity> */}
-      <Upload handleInputChange={handleInputChange}/>
+            <Upload handleInputChange={handleInputChange} />
 
-      <TextInput
-        placeholder="* Username"
-        value={form.name}
-        onChangeText={value => handleInputChange('name', value)}
-        style={styles.input}
-        />
-        {error.name && <Text style={styles.textError}>{error.name}</Text>}
-      {/* <TextInput
+            <TextInput
+              placeholder="* Username"
+              value={form.name}
+              onChangeText={value => handleInputChange('name', value)}
+              style={styles.input}
+            />
+            {error.name && <Text style={styles.textError}>{error.name}</Text>}
+            {/* <TextInput
         placeholder="picture"
         value={form.picture}
         onChangeText={value => handleInputChange('picture', value)}
         style={styles.input}
       /> */}
+
       <TextInput
         placeholder="* Email"
         value={form.email}
@@ -147,27 +150,30 @@ const Register = () => {
       </TouchableOpacity>
       <Text style={{top: 30, color: 'white', textAlign: 'center'}}>Do you already have an account?  Sign in here!</Text>
     </View>
+
       </KeyboardAvoidingView>
-      </ImageBackground>
+    </ImageBackground>
   );
+
 }
 
+
 const styles = StyleSheet.create({
-  input:{
-    backgroundColor:"white",
-    margin:15,
-    borderRadius:100,
-    width:300,
-    height:40,
-    color:"black",
-    fontSize:16,
-    fontWeight:"bold",
-    alignSelf:"center",
+  input: {
+    backgroundColor: 'white',
+    margin: 15,
+    borderRadius: 100,
+    width: 300,
+    height: 40,
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
+    alignSelf: 'center',
   },
   container: {
-    height: "100%",
+    height: '100%',
     top: -10,
-    width: "100%",
+    width: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -179,17 +185,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     textAlign: 'center',
   },
-  text:{
-    color:"white",
-    fontSize:20,
-    fontWeight:"bold",
+  text: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
-  textError:{
-    color:"white",
+  textError: {
+    color: 'white',
     textAlign: 'center',
     marginLeft: 20,
-    marginRight: 20
-  }
+    marginRight: 20,
+  },
 });
 
 export default Register;
