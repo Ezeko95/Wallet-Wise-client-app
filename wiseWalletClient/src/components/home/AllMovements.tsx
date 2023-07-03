@@ -31,6 +31,7 @@ import {
   getExpensesSuccess,
   orderByAmount,
   orderByAlpha,
+  orderByDate,
 } from '../../redux/slices/allMovementsSlice';
 
 export interface AccountData {
@@ -181,16 +182,16 @@ const AllMovements: React.FC<Props> = () => {
                 selectedTextStyle={styles.selectedTextStyle}
                 inputSearchStyle={styles.inputSearchStyle}
                 iconStyle={styles.iconStyle}
-                data={data}
+                data={valuesOrders}
                 maxHeight={150}
                 valueField="value"
                 labelField="label"
-                placeholder="By Account"
+                placeholder="By Date"
                 searchPlaceholder="Search..."
                 value={value}
                 onChange={item => {
                   setValue(item.value);
-                  dispatch(filterBalanceAccount(item.value));
+                  dispatch(orderByDate(item.value));
                 }}
                 />
                 </View>

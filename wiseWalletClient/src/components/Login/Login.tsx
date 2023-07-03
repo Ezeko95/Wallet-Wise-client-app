@@ -136,7 +136,6 @@ const Login: React.FC = () => {
     <View style={styles.container}>
         <Image source={require("./assets/logo.png")} style={styles.image}/>
 
-
       <TextInput
         style={styles.input}
         placeholder="*Email"
@@ -163,7 +162,9 @@ const Login: React.FC = () => {
         </View>
       </View>
       </KeyboardAvoidingView>
+
       {showLoader && <Loader />}
+
       
     </ImageBackground>
   );

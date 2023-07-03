@@ -152,18 +152,32 @@ const getMovementsSlicer = createSlice({
             break;
           }
         }
-
       }
-    
-
       return {
         ...state,
         filtered: orderAlphaArray,
       };
     },
-    orderByDate: (state, action: PayloadAction<string>) => {},
+    orderByDate: (state, action: PayloadAction<string>) => {
+      const results = (action.payload.toLowerCase() === 'asc') ?
+      [...state.filtered].sort((a: any, b: any) => {
+        if (a.createdAt > b.createdAt) { return 1 }
+        if (a.createdAt< b.createdAt) {return -1}
+        return 0;
+      })
+      : [...state.filtered].sort((a: any, b: any) => {
+        if (a.createdAt> b.createdAt) {return -1}
+        if (a.createdAt< b.createdAt) {return 1}
+        return 0;
+      });
+    return {
+    ...state,
+    filtered: results,
+    };
+    },
+    },
   },
-});
+);
 
 export const {
   getAllMovementsStart,
@@ -178,6 +192,7 @@ export const {
   cleanItemId,
   orderByAmount,
   orderByAlpha,
+  orderByDate
 } = getMovementsSlicer.actions;
 
 export default getMovementsSlicer.reducer;
