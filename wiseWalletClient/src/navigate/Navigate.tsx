@@ -12,10 +12,9 @@ import GoalList from '../components/goals/GoalsList';
 import GoalDetail from '../components/goals/GoalDetail';
 import SharedList from '../components/shared/SharedList';
 import NewShared from '../components/shared/NewShared';
-
 import Premium from '../components/Premium/Premium';
-
 import SharedDetail from '../components/shared/SharedDetail';
+
 
 type RootStackParamList = {
   Intro: undefined;
@@ -51,10 +50,11 @@ const Navigate = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Intro" component={Intro} />
-        <Stack.Screen name="Login" component={AuthView} />
+        {/*
+        <Stack.Screen name="Intro" component={Intro} /> */}
+        {/* <Stack.Screen name="Login" component={AuthView} />
         <Stack.Screen name="Premium" component={Premium} />
-        <Stack.Screen name="Slider" component={Slider} />
+        <Stack.Screen name="Slider" component={Slider} /> */}
         <Stack.Screen name="MyDrawer" component={MyDrawer} />
         <Stack.Screen name="DetailIncome" component={DetailIncome} />
         <Stack.Screen name="DetailExpense" component={DetailExpense} />

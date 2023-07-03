@@ -229,7 +229,7 @@ console.log(itemId, 'itemId');
         <Text></Text>
       
 
-      <View style={styles.homeCard}>
+      
         
 
         
@@ -269,9 +269,9 @@ console.log(itemId, 'itemId');
     </View>
   </View>
 )}
-      </View>
+     
       <TouchableOpacity
-        style={{ borderRadius: 10, backgroundColor: 'red', width: 120, alignSelf: 'center', padding: 10, }}
+        style={{ borderRadius: 10, backgroundColor: 'red', width: 120, alignSelf: 'center', padding: 10, marginBottom: 40 }}
         onPress={() => handleDeleteExpense(detail.id, ide[ide.length-1])}
         
       >
@@ -291,11 +291,7 @@ export default DetailIncome;
       
       
   const styles = StyleSheet.create({
-    homeCard: {
     
-
-
-  },
 
   title: {
     color: 'white',

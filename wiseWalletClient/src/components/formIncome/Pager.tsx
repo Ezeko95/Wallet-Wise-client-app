@@ -8,6 +8,7 @@ import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { gettingUsers } from '../../redux/slices/getUsers';
 import { getMovements, getAccounts, getExpense, getIncome } from '../../redux/slices/allMovementsSlice';
 import { useNavigation } from '@react-navigation/native';
+import LoaderSuccess from '../Loader/LoaderSuccess';
 
  
 
@@ -149,9 +150,31 @@ const dataExpense: Expense[] = [
   },
 ]; 
 
-const Pager = () => {
+interface IncomeForm {
+  account: string;
+  type: string;
+  amount: number;
+  accountError?: string;
+  typeError?: string;
+  amountError?: string;
+  amountError2?: string;
+}
 
+interface ExpenseForm {
+  account: string;
+  category: string;
+  description: string,
+  amount: number;
+  accountError?: string;
+  descriptionError?: string;
+  categoryError?: string;
+  amountError?: string;
+  amountError2?: string;
+}
+const Pager = () => {
   
+  const [showLoader, setShowLoader] = useState(false);
+
   const dispatch = useAppDispatch()
   const { loading, error } = useAppSelector((state) => state.movement);
   const [type, setType] = useState('');
@@ -167,31 +190,129 @@ const Pager = () => {
   const aidi = selector.map(selector => selector.payload.user.id)
   const ide = idUser.map((idUser) => idUser.payload.user.id)
 
+  const [errorForm, setErrorForm] = useState<IncomeForm>({
+    account: '',
+    type: '',
+    amount: 0,
 
+  });
+
+  const [errorExpense, setErrorExpense] = useState<ExpenseForm>({
+    account: '',
+    description: '',
+    category: '',
+    amount: 0,
+
+  });
 
   const handlePostMovement = () => {
-
+    setShowLoader(true);
+    
+    
+    let accountError = '';
+    if (!account) {
+      accountError = '* Please select an account';
+    }
+    
+    let typeError = '';
+    if (!type) {
+      typeError = '* Please enter a description';
+    }
+    
+    
+    
+    let amountError = '';
+    if (!/^\d+$/.test(amount)) {
+      amountError = '* Only numbers are allowed';
+    }
+    
+    let amountError2 = '';
+    if (!amount) {
+      amountError2 = '* Please enter an amount';
+    }
+    
+    setErrorForm({
+      ...errorForm,
+      accountError: accountError,
+      typeError: typeError,
+      amountError: amountError,
+      amountError2: amountError2
+    });
+    
+    if(accountError || typeError || amountError || amountError){
+      setShowLoader(false);
+      return
+    }
+    
+    
     const data: MovementData = {
       type,
       account,
       amount: parseFloat(amount),
- 
+      
     };
-    if(!/^\d+$/.test(amount)) return Alert.alert('In amount only numbers are allowed')
+    if(!type || !account || !amount){
+      setShowLoader(false);
+    }
     if(!type || !account || !amount) return Alert.alert('Incomplete fields, please complete them all')
+    
+    if(!/^\d+$/.test(amount)){
+      setShowLoader(false);
+    }
     dispatch(postMovement(aidi[0],data));
     dispatch(getIncome(aidi[0]))
     dispatch(getMovements(aidi[0]))
     dispatch(getAccounts(aidi[0]))
     dispatch(getAccounts(ide[0]))
-
-    Alert.alert('Successfully created income')
     setType('');
     setAccount('');
     setAmount('');
   };
   
   const handlePostExpense = () => {
+    setShowLoader(true);
+
+    let accountError = '';
+    if (!paymentMethod) {
+      accountError = '* Please select an account';
+    }
+    
+    let descriptionError = '';
+    if (!description) {
+      descriptionError = '* Please enter a description';
+    }
+
+    let categoryError = '';
+    if (!category) {
+      categoryError = '* Please select a category';
+    }
+    
+    let amountError = '';
+    if (!/^\d+$/.test(amount)) {
+      amountError = '* Only numbers are allowed';
+    }
+    
+    let amountError2 = '';
+    if (!amount) {
+      amountError2 = '* Please enter an amount';
+    }
+    
+    setErrorExpense({
+      ...errorExpense,
+      accountError: accountError,
+      descriptionError: descriptionError,
+      categoryError: categoryError,
+      amountError: amountError,
+      amountError2: amountError2
+    });
+    
+    if(accountError || categoryError || amountError || amountError || descriptionError){
+      setShowLoader(false);
+      return
+    }
+
+
+
     const data: ExpenseData = {
       amount: parseFloat(amount),
       description,
@@ -200,13 +321,14 @@ const Pager = () => {
       
     };
     if(!amount || !category || !description || !paymentMethod ) return Alert.alert('Incomplete fields, please complete them all')
-    if(!/^\d+$/.test(amount)) return Alert.alert('Only numbers are allowed')
+    if(!/^\d+$/.test(amount)){
+      setShowLoader(false);
+    }
     dispatch(postExpense(aidi[0], data))
     dispatch(getIncome(aidi[0]))
     dispatch(getMovements(aidi[0]))
     dispatch(getAccounts(aidi[0]))
     dispatch(getAccounts(ide[0]))
-    Alert.alert('Successfully created expense')
     setAmount('');
     setDescription('');
     setCategory('');
@@ -219,11 +341,12 @@ const Pager = () => {
     dispatch(getExpense(ide[0]))
     dispatch(getAccounts(ide[0]))
   } 
-
-
+  
+  
   const onChange = (item: Data) => {
     setAccount(item.label);
-   
+    
+    
     console.log(item.value);
   }
   const onChange1 = (item: Expense) => {
@@ -244,7 +367,13 @@ const Pager = () => {
     dispatch(getExpense(aidi[0]))
   },[])
 
-  
+  useEffect(() => {
+    if (showLoader) {
+      setTimeout(() => {
+        setShowLoader(false);
+      }, 2000); // Duración de 3 segundos
+    }
+  }, [showLoader]);
   
 
   return (
@@ -287,7 +416,7 @@ const Pager = () => {
                 placeholder="Select Account"
                 onChange={onChange as (item: Data) => void}
                 />
-                
+                {errorForm.accountError && <Text style={styles.textError}>{errorForm.accountError}</Text>}
               <TextInput
                 value={type}
                 onChangeText={setType}
@@ -295,8 +424,7 @@ const Pager = () => {
                 placeholderTextColor="gray"
                 style={styles.input}
                 />
-              
-              
+                {errorForm.typeError && <Text style={styles.textError}>{errorForm.typeError}</Text>}
               <TextInput
                 value={amount} 
                 onChangeText={setAmount} 
@@ -305,10 +433,11 @@ const Pager = () => {
                 placeholderTextColor="gray"
                 style={styles.input}
                 />
-
+                {errorForm.amountError && <Text style={styles.textError}>{errorForm.amountError}</Text>}
+                {errorForm.amountError2 && <Text style={styles.textError}>{errorForm.amountError2}</Text>}
             </View>
 
-              <TouchableOpacity onPress={() => { handlePostMovement(); reload()}} disabled={loading}  style={styles.btn}>
+              <TouchableOpacity onPress={() => { handlePostMovement(); reload()}}  style={styles.btn}>
                 <Text style={styles.textBtn}>Add</Text>
               </TouchableOpacity>
             
@@ -337,7 +466,7 @@ const Pager = () => {
                 placeholder="Select Category"
                 onChange={onChange1 as (item: Expense) => void}
                 />
-              
+                {errorExpense.categoryError && <Text style={styles.textError}>{errorExpense.categoryError}</Text>}
               <SelectCountry<PaymentMethod>
                 style={styles.dropdown}
                 selectedTextStyle={styles.selectedTextStyle}
@@ -353,6 +482,7 @@ const Pager = () => {
                 placeholder="Select Account"
                 onChange={onChange2 as (item: PaymentMethod) => void}
                 />
+                {errorExpense.accountError && <Text style={styles.textError}>{errorExpense.accountError}</Text>}
             <TextInput
                 value={description}
                 onChangeText={setDescription}
@@ -360,6 +490,7 @@ const Pager = () => {
                 placeholderTextColor="gray"
                 style={styles.input}
                 />
+                {errorExpense.descriptionError && <Text style={styles.textError}>{errorExpense.descriptionError}</Text>}
               <TextInput
                 value={amount} 
                 onChangeText={setAmount} 
@@ -368,6 +499,7 @@ const Pager = () => {
                 placeholderTextColor="gray"
                 style={styles.input}
                 />
+                {errorExpense.amountError && <Text style={styles.textError}>{errorExpense.amountError}</Text>}
              </View>
               <TouchableOpacity onPress={() => { handlePostExpense(); reload()}} disabled={loading}  style={styles.btn}>
                 <Text style={styles.textBtn}>Add</Text>
@@ -378,6 +510,7 @@ const Pager = () => {
         </ScrollView>
         
       </PagerView>
+      {showLoader && <LoaderSuccess />}
     </View>
   );
 }
@@ -475,6 +608,12 @@ const styles = StyleSheet.create({
   iconStyle: {
     width: 20,
     height: 20,
+  },
+  textError: {
+    color: 'white',
+    textAlign: 'center',
+    marginLeft: 20,
+    marginRight: 20,
   },
   
 });
