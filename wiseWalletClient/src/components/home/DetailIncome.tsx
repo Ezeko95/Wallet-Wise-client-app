@@ -143,7 +143,7 @@ console.log(itemId, 'itemId');
   
   
   return (
-    <View style={{backgroundColor: '#1C1F3B'}}>
+    <View style={{backgroundColor: '#1C1F3B', height: '100%'}}>
   
     <ScrollView bounces={true}>
       <StatusBar barStyle="light-content" />
@@ -198,7 +198,7 @@ console.log(itemId, 'itemId');
       </TouchableOpacity>
       
 
-      <View style={styles.homeCard}>
+      
         
 
         
@@ -227,7 +227,7 @@ console.log(itemId, 'itemId');
     </View>
   </View>
 )}
-      </View>
+      
       <TouchableOpacity
         style={{ borderRadius: 10, backgroundColor: 'red', width: 120, alignSelf: 'center', padding: 10, marginBottom: 40}}
         onPress={() => handleDeleteIncome(detail.id, ide[ide.length-1])}
@@ -249,11 +249,6 @@ export default DetailIncome;
       
       
   const styles = StyleSheet.create({
-    homeCard: {
-    
-
-
-  },
 
   title: {
     color: 'white',
@@ -262,11 +257,7 @@ export default DetailIncome;
     top: -20
   },
 
-  chart: {
-    marginTop: 40,
-    height: 220,
-    width: 220,
-  },
+  
 
   text:{
     top: 230,

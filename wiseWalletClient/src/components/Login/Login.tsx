@@ -12,11 +12,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { gettingUsers } from '../../redux/slices/getUsers';
 import { useAppDispatch } from '../../redux/store';
+import Loader from '../Loader/Loader';
 
 interface LoginForm {
   email: string;
@@ -28,6 +29,7 @@ interface LoginForm {
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigation: any = useNavigation();
+  const [showLoader, setShowLoader] = useState(false);
 
   const [form, setForm] = useState<LoginForm>({
     email: '',
@@ -97,6 +99,11 @@ const Login: React.FC = () => {
     }
 
     try {
+      setShowLoader(true);
+
+      if (emailError || passwordError) {
+        setShowLoader(false);
+      }
       const response = await axios.post<{ accessToken: string }>(
         'http://10.0.2.2:3001/user/login',
         form,
@@ -107,7 +114,6 @@ const Login: React.FC = () => {
       await AsyncStorage.setItem('accessToken', accessToken);
       console.log(dispatch(gettingUsers()), 'este es DISPATCH DE LOGIN');
       navigation.navigate('MyDrawer');
-      setLogin(true);
     } catch (error) {
       console.log(error);
     }
@@ -158,13 +164,16 @@ const Login: React.FC = () => {
             disabled={isButtonDisabled}>
             <Text style={{ color: 'white', fontWeight: '700' }}>Sign In</Text>
           </TouchableOpacity>
+
           <View style={{ flexDirection: 'row' }}>
-            <Text style={{ top: 50, color: 'white', textAlign: 'center' }}>
+            <Text style={{ color: 'white', textAlign: 'center', top: 30 }}>
               You don't have an account yet? Sign up here!
             </Text>
           </View>
         </View>
       </KeyboardAvoidingView>
+
+      {showLoader && <Loader />}
     </ImageBackground>
   );
 };

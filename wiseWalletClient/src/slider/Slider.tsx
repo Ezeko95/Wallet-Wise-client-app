@@ -8,9 +8,11 @@ import { Colors } from "../enums/Colors";
 import { useAppSelector, useAppDispatch } from '../redux/store';
 import { postAccount, AccountData } from "../redux/slices/postAccount";
 import { gettingUsers } from "../redux/slices/getUsers";
+import Loader from "../components/Loader/Loader";
 
 
 const Slider = () => {
+  const [showLoader, setShowLoader] = useState(false);
   const ref: any = useRef()
   const dispatch = useAppDispatch()
   const navigation:(any) = useNavigation();
@@ -91,7 +93,7 @@ const Slider = () => {
   
   
   const submitAccount = () => {
-    
+    setShowLoader(true);
     
     const data: AccountData = {
       name,
@@ -170,7 +172,7 @@ const Slider = () => {
                 </TouchableOpacity>
               
               </View>
-
+              {showLoader && <Loader />}
       </ImageBackground>
   );
 }

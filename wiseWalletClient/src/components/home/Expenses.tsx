@@ -9,6 +9,7 @@ import { base_URL } from '../../redux/utils';
 import { getAccounts } from '../../redux/slices/allMovementsSlice';
 import { useNavigation } from '@react-navigation/native';
 import { IExpenses } from '../../redux/interfaces/Interface';
+import Loader from '../Loader/Loader';
 
 interface IUpdateStateInc {
   category: string;
@@ -18,6 +19,9 @@ interface IUpdateStateInc {
 interface Props {}
 
 const Incomes: React.FC<Props> = () => {
+
+  const [showLoader, setShowLoader] = useState(false);
+
   const navigation: any = useNavigation();
   const dispatch = useAppDispatch();
   const incomes = useAppSelector((state) => state.allMovements.incomes);
@@ -68,6 +72,14 @@ const Incomes: React.FC<Props> = () => {
     dispatch(getExpense(ide[ide.length-1]));
   }, []);
 
+  useEffect(() => {
+    if (showLoader) {
+      setTimeout(() => {
+        setShowLoader(false);
+      }, 2000); // Duración de 3 segundos
+    }
+  }, [showLoader]);
+
   return (
     <View>
       <ScrollView bounces={true}>
@@ -97,6 +109,7 @@ const Incomes: React.FC<Props> = () => {
                 <View style={{ flexDirection: 'row' }}>
                   <TouchableOpacity
                     onPress={() => {
+                      setShowLoader(true);
                       navigateToDetail(item);
                       dispatch(setItemId(item.id));
                       dispatch(getIncome(ide[ide.length-1]));
@@ -115,6 +128,7 @@ const Incomes: React.FC<Props> = () => {
           />
         </View>
       </ScrollView>
+      {showLoader && <Loader />}
     </View>
   );
 };
