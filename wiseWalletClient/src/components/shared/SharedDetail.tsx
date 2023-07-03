@@ -62,72 +62,72 @@ const SharedDetail: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('SharedList');
-          dispatch(getAllRooms(ide[ide.length - 1]));
-        }}>
-        <Text>Back</Text>
-      </TouchableOpacity>
-      <ScrollView>
-        <Text
-          style={{
-            backgroundColor: 'red',
-            justifyContent: 'space-around',
-            alignContent: 'center',
-            fontSize: 25,
-          }}>
-          Room {detail.name}
-        </Text>
 
+      <View style={{flexDirection: 'row', paddingBottom:15, paddingVertical:10}}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('SharedList');
+            dispatch(getAllRooms(ide[ide.length - 1]));
+          }}>
+          <Text style={styles.goBack}>{'<'}</Text>
+        </TouchableOpacity>
+        <View style={{borderWidth: 2, borderColor:"grey", flexDirection: 'row', width: "80%", alignContent:"center", borderRadius: 12}}>
+          <Text style={styles.roomTitle}>Room:  </Text>
+          <Text style={{fontSize: 25 ,color: "yellow", fontWeight: "bold"}}>"{detail.name}"</Text>
+        </View>
+      </View>
+
+      <ScrollView>
         <View
           style={{
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-around',
-            backgroundColor: 'darkblue',
-            width: 300,
+            backgroundColor: Colors.DETAIL_COLOR ,
+            padding:5,
+            width: "100%",
           }}>
-          <View>
-            <Text style={styles.titles}>Participants</Text>
-            <Text style={styles.subtitles}>
-              {+detail.participants.length + 1}
-            </Text>
-          </View>
-          <View>
-            <Text style={styles.titles}>Total</Text>
-            <Text style={styles.subtitles}>$ {detail.total}</Text>
-          </View>
-          <View>
-            <Text style={styles.titles}>P/Person</Text>
-            <Text style={styles.subtitles}>
-              $ {detail.total / (detail.participants.length + 1)}
-            </Text>
-          </View>
+              <View style={{width: "25%",}}>
+                <Text style={styles.titles}>Participants</Text>
+                <Text style={styles.subtitles}>
+                  {+detail.participants.length + 1}
+                </Text>
+              </View>
+              <View style={{width: "25%",}}>
+                <Text style={styles.titles}>Total</Text>
+                <Text style={styles.subtitles}>$ {detail.total}</Text>
+              </View>
+              <View style={{width: "45%",}}>
+                <Text style={styles.titles}>P/Person</Text>
+                <Text style={styles.subtitles}>
+                  $ {(detail.total / (detail.participants.length + 1)).toFixed(2)}
+                </Text>
+              </View>
         </View>
-      </ScrollView>
 
-      <View>
-        <View>
-          <Text>My expense</Text>
-          <Text>{detail.personalExpense}</Text>
-          <Text>
-            {detail.personalExpense -
-              detail.total / (detail.participants.length + 1)}
-          </Text>
-        </View>
-        {detail.participants.map((part, index) => {
-          return (
-            <View key={index}>
-              <Text>{part.name}</Text>
-              <Text>{part.expense}</Text>
+          <View>
+            <View>
+              <Text>My expense</Text>
+              <Text>{detail.personalExpense}</Text>
               <Text>
-                {part.expense - detail.total / (detail.participants.length + 1)}
+                {(detail.personalExpense -
+                  detail.total / (detail.participants.length + 1)).toFixed(2)}
               </Text>
             </View>
-          );
-        })}
-      </View>
+            {detail.participants.map((part, index) => {
+              return (
+                <View key={index}>
+                  <Text>{part.name}</Text>
+                  <Text>{part.expense}</Text>
+                  <Text>
+                    {(part.expense - detail.total / (detail.participants.length + 1)).toFixed(2)}
+                  </Text>
+                </View>
+              );
+            })}
+          </View>
+      </ScrollView>
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => {
@@ -175,22 +175,53 @@ export default SharedDetail;
 
 const styles = StyleSheet.create({
   titles: {
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderWidth: 2,
+    borderLeftColor: "grey",
+    borderRightColor: "grey",
+    borderTopColor: "grey",
     backgroundColor: Colors.BACKGROUND_COLOR,
     color: 'white',
     fontSize: 15,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   subtitles: {
     textAlign: 'center',
     fontSize: 25,
+    color: "black",
     backgroundColor: 'white',
+    borderBottomRightRadius:10,
+    borderBottomLeftRadius:10,
+  },
+  goBack: {
+    alignSelf: "flex-start",
+    color: 'black',
+    backgroundColor: 'yellow',
+    borderRadius: 10,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 25,
+    width: 40,
+    height: 40,
+    borderColor: '#FFF7AE',
+    borderWidth: 2,
+    marginHorizontal:10,
+  },
+  roomTitle:{
+    alignSelf: "center",
+    color: Colors.DETAIL_COLOR,
+    marginStart: 20,
+    fontSize: 25,
+    height: 40,
   },
   container: {
-    alignItems: 'center',
+    display:"flex",
     flex: 1,
     height: '100%',
     width: '100%',
-    backgroundColor: 'grey',
+    backgroundColor: Colors.BACKGROUND_COLOR,
   },
   buttonContainer: {
     display: 'flex',
@@ -199,17 +230,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textFinish: {
+    display: "flex",
     color: 'black',
     backgroundColor: 'yellow',
     borderRadius: 15,
-    width: 85,
+    width: 150,
+    height: 40,
     fontWeight: 'bold',
     textAlign: 'center',
-    padding: 8,
+    paddingHorizontal: 10,
     marginBottom: 15,
   },
   touchableOpacity: {
-    width: 100,
+    margin:5,
+    height: 50,
   },
   dropdown: {
     margin: 16,
