@@ -1,10 +1,45 @@
-import { Button , TouchableOpacity, Text, StyleSheet, View} from 'react-native';
+import { Button , TouchableOpacity, Text, StyleSheet, View, Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import axios from 'axios';
+import { base_URL } from '../../redux/utils';
+import { initPaymentSheet, presentPaymentSheet } from '@stripe/stripe-react-native';
 const LogoutButton = () => {
+  const navigation: any = useNavigation();
+
+    const onCheckout = async () => {
+        try {
+          //create payment intent
+          const { data } = await axios.post(`${base_URL}/payment/intent`, {
+            amount: Math.floor(10 * 100),
+          });
+          //initialize payment sheet
+          const initResponse = await initPaymentSheet({
+            merchantDisplayName: 'wiseWallet',
+            paymentIntentClientSecret: data.paymentIntent,
+            defaultBillingDetails: {
+              name: 'Fabian Garcia Test',
+            },
+          });
+          if (initResponse.error) {
+            Alert.alert('Something went wrong');
+            return;
+          }
     
-    const navigation:any = useNavigation()
+          //present payment sheet
+          const payment = await presentPaymentSheet();
+          if (payment.error) {
+            Alert.alert('Something went wrong');
+            return;
+          }
+          //logica para hacer premium al usuario
+    
+          navigation.navigate('Premium');
+        } catch (err) {
+          console.log('err intent', err);
+        }
+    }
     const onPress = async () => {
         try {
             await AsyncStorage.removeItem('accessToken');
@@ -22,7 +57,9 @@ const LogoutButton = () => {
         <TouchableOpacity onPress={onPress} style={styles.buton}>
             <Text style={{color: "white", textAlign: "center", fontSize: 25}}>Log Out </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buton}>
+        <TouchableOpacity style={styles.buton} onPress={()=>{
+            onCheckout()
+        }}>
         <Text style={{color: "white", textAlign: "center", fontSize: 25}}>Premium 👑</Text>
     </TouchableOpacity>
         </View>
