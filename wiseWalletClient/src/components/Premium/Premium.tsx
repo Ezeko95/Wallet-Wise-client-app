@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   View,
   ImageBackground,
@@ -13,6 +13,9 @@ import {
 } from 'react-native';
 import ButtonNext from '../Intro/ButtonNext';
 import Paginattor from '../Intro/Paginattor';
+import axios from 'axios';
+import { base_URL } from '../../redux/utils';
+import { useAppSelector } from '../../redux/store';
 
 interface Slide {
   image: number;
@@ -26,6 +29,13 @@ const slide: Slide[] = [
   },
 ];
 const Premium = () => {
+  const state = useAppSelector(state => state.user.user);
+  console.log(state);
+  const ide = state[state.length - 1];
+
+  const results = ide.payload.user.id;
+  console.log(results);
+
   const navigation: any = useNavigation();
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -50,6 +60,11 @@ const Premium = () => {
       slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
     }
   };
+
+  useEffect(() => {
+    axios.put(`${base_URL}/user/${results}`);
+    console.log('ESTE ES EL ID QUE PASO POR PARAMS', results);
+  }, []);
 
   return (
     <ImageBackground

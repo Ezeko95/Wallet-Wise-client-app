@@ -19,8 +19,6 @@ import { gettingUsers } from '../../redux/slices/getUsers';
 import { useAppDispatch } from '../../redux/store';
 import Loader from '../Loader/Loader';
 
-
-
 interface LoginForm {
   email: string;
   password: string;
@@ -32,7 +30,6 @@ const Login: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigation: any = useNavigation();
   const [showLoader, setShowLoader] = useState(false);
-
 
   const [form, setForm] = useState<LoginForm>({
     email: '',
@@ -100,72 +97,83 @@ const Login: React.FC = () => {
       setIsButtonDisabled(true);
       return;
     }
-    
+
     try {
       setShowLoader(true);
-      
-      if(emailError || passwordError){
+
+      if (emailError || passwordError) {
         setShowLoader(false);
       }
       const response = await axios.post<{ accessToken: string }>(
         'http://10.0.2.2:3001/user/login',
         form,
-        );
-        const { accessToken } = response.data;
-        console.log(response.data);
-        console.log('Login successful');
-        await AsyncStorage.setItem('accessToken', accessToken);
-        console.log(dispatch(gettingUsers()), 'este es DISPATCH DE LOGIN');
-        navigation.navigate('MyDrawer'); 
-      } catch (error) {
-        console.log(error);
-      }
-      
-    };
-    
-    
-    return (
-     
-      <ImageBackground source={require('./assets/signIn3.png')} 
-      >
-      
+      );
+      const { accessToken } = response.data;
+      console.log(response.data);
+      console.log('Login successful');
+      await AsyncStorage.setItem('accessToken', accessToken);
+      console.log(dispatch(gettingUsers()), 'este es DISPATCH DE LOGIN');
+      navigation.navigate('MyDrawer');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <ImageBackground source={require('./assets/signIn3.png')}>
       <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-    <View style={styles.container}>
-        <Image source={require("./assets/logo.png")} style={styles.image}/>
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <View style={styles.container}>
+          <Image source={require('./assets/logo.png')} style={styles.image} />
 
-      <TextInput
-        style={styles.input}
-        placeholder="*Email"
-        value={form.email}
-        onChangeText={value => { handleInputChange('email', value)}}
-        />
-        {error.emailError && <Text style={styles.textError}>{error.emailError}</Text>}
-      <TextInput
-        style={styles.input}
-        placeholder="* Password"
-        secureTextEntry
-        value={form.password}
-        onChangeText={value => { handleInputChange('password', value)}}
-        />
-        {error.passwordError && <Text style={styles.textError}>{error.passwordError}</Text>}
+          <TextInput
+            style={styles.input}
+            placeholder="*Email"
+            value={form.email}
+            onChangeText={value => {
+              handleInputChange('email', value);
+            }}
+          />
+          {error.emailError && (
+            <Text style={styles.textError}>{error.emailError}</Text>
+          )}
+          <TextInput
+            style={styles.input}
+            placeholder="* Password"
+            secureTextEntry
+            value={form.password}
+            onChangeText={value => {
+              handleInputChange('password', value);
+            }}
+          />
+          {error.passwordError && (
+            <Text style={styles.textError}>{error.passwordError}</Text>
+          )}
 
-        <TouchableOpacity  style={{padding: 12, marginTop: 10, backgroundColor: '#1b7ced', borderRadius: 10}} onPress={() => { handleSubmit()}} disabled={isButtonDisabled}>
-          <Text style={{color:'white', fontWeight:'700'}}>Sign In</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              padding: 12,
+              marginTop: 10,
+              backgroundColor: '#1b7ced',
+              borderRadius: 10,
+            }}
+            onPress={() => {
+              handleSubmit();
+            }}
+            disabled={isButtonDisabled}>
+            <Text style={{ color: 'white', fontWeight: '700' }}>Sign In</Text>
+          </TouchableOpacity>
 
-        <View style={{flexDirection: 'row'}}>
-        
-          <Text style={{ color: 'white', textAlign: 'center', top: 30}}>You don't have an account yet?  Sign up here!</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={{ color: 'white', textAlign: 'center', top: 30 }}>
+              You don't have an account yet? Sign up here!
+            </Text>
+          </View>
         </View>
-      </View>
       </KeyboardAvoidingView>
 
       {showLoader && <Loader />}
-
-      
     </ImageBackground>
   );
 };
@@ -214,7 +222,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
   },
- 
 });
 
 export default Login;
