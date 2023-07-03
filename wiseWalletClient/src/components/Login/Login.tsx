@@ -98,7 +98,7 @@ const Login: React.FC = () => {
 
     try {
       const response = await axios.post<{ accessToken: string }>(
-        'http://localhost:3001/user/login',
+        'http://10.0.2.2:3001/user/login',
         form,
       );
       const { accessToken } = response.data;

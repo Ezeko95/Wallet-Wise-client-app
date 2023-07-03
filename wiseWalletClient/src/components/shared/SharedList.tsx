@@ -82,7 +82,6 @@ const SharedList: React.FC = () => {
                       <View
                         style={{
                           alignSelf: 'flex-end',
-
                           backgroundColor: Colors.BACKGROUND_COLOR,
                           borderRadius: 15,
                           paddingHorizontal: 10,
