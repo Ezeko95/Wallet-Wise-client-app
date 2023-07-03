@@ -8,7 +8,7 @@ import { IExpenses } from "../interfaces/Interface";
 export interface participants {
     id:number
     name: string,
-    gasto:number
+    expense:number
 }
 
 export interface detailRoom {
@@ -75,7 +75,7 @@ export const getDetail=(id: number): AppThunk=>{
 
 export const getAllRooms=(id: number): AppThunk=>{
     return async (dispatch)=>{
-        const response= await axios.get(`${base_URL}/all/shared/${id}`)
+        const response= await axios.get(`${base_URL}/shared/all/${id}`)
         dispatch(setShared(response.data))
     }
 }

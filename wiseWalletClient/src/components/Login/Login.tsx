@@ -1,10 +1,23 @@
-import { Text, TextInput,View, Button, StyleSheet, ImageBackground , Image ,KeyboardAvoidingView, Platform, Alert, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  TextInput,
+  View,
+  Button,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useState,  } from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { gettingUsers } from '../../redux/slices/getUsers';
 import { useAppDispatch } from '../../redux/store';
+
 
 interface LoginForm {
   email: string;
@@ -14,8 +27,8 @@ interface LoginForm {
 }
 
 const Login: React.FC = () => {
-  const dispatch = useAppDispatch()
-  const navigation:(any) = useNavigation();
+  const dispatch = useAppDispatch();
+  const navigation: any = useNavigation();
 
   const [form, setForm] = useState<LoginForm>({
     email: '',
@@ -30,38 +43,34 @@ const Login: React.FC = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const handleInputChange = (name: keyof LoginForm, value: string) => {
-    setForm((prevState) => ({
+    setForm(prevState => ({
       ...prevState,
       [name]: value,
     }));
 
-    setError((prevError) => ({
+    setError(prevError => ({
       ...prevError,
       [name]: '',
     }));
 
     setIsButtonDisabled(false);
-    
   };
-  
-  const [storage, setStorage] = useState(false)
-  const [login , setLogin] = useState(false)
-  const local = async()=>{
+
+  const [storage, setStorage] = useState(false);
+  const [login, setLogin] = useState(false);
+  const local = async () => {
     try {
-      
-      const accesTokken = await  AsyncStorage.getItem("accessToken");
-  
-      if(accesTokken){
-        setStorage(true)
+      const accesTokken = await AsyncStorage.getItem('accessToken');
+
+      if (accesTokken) {
+        setStorage(true);
       }
     } catch (error) {
       console.log(error);
-      
     }
-  } 
-  
-  const handleSubmit = async () =>  {
+  };
 
+  const handleSubmit = async () => {
     if (error.emailError || error.passwordError) {
       Alert.alert('Error in login data, incorrect email or password');
       return;
@@ -69,14 +78,12 @@ const Login: React.FC = () => {
 
     let emailError = '';
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      emailError = '* Please enter a valid email address'
+      emailError = '* Please enter a valid email address';
     }
-    
 
     let passwordError = '';
     if (!/^\w{8,16}$/.test(form.password)) {
-        passwordError = '* The password must be between 8 and 16 characters'
-  
+      passwordError = '* The password must be between 8 and 16 characters';
     }
 
     setError({
@@ -94,14 +101,14 @@ const Login: React.FC = () => {
       const response = await axios.post<{ accessToken: string }>(
         'http://10.0.2.2:3001/user/login',
         form,
-        );
-        const { accessToken } = response.data;
-        console.log(response.data);
-        console.log('Login successful');
-        await AsyncStorage.setItem('accessToken', accessToken);
-        console.log(dispatch(gettingUsers()) ,"este es DISPATCH DE LOGIN")
-        navigation.navigate('MyDrawer')
-        setLogin(true)
+      );
+      const { accessToken } = response.data;
+      console.log(response.data);
+      console.log('Login successful');
+      await AsyncStorage.setItem('accessToken', accessToken);
+      console.log(dispatch(gettingUsers()), 'este es DISPATCH DE LOGIN');
+      navigation.navigate('MyDrawer');
+      setLogin(true);
     } catch (error) {
       console.log(error);
     }
@@ -109,7 +116,7 @@ const Login: React.FC = () => {
 
   return (
     
-      <ImageBackground source={require('./assets/signIn.png')} 
+      <ImageBackground source={require('./assets/signIn3.png')} 
 >
       <KeyboardAvoidingView
       style={styles.container}
@@ -141,41 +148,38 @@ const Login: React.FC = () => {
         <View style={{flexDirection: 'row'}}>
         
           <Text style={{top: 50, color: 'white', textAlign: 'center'}}>You don't have an account yet?  Sign up here!</Text>
-          
         </View>
-    </View>
       </KeyboardAvoidingView>
-</ImageBackground>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  image:{
-    height:400,
+  image: {
+    height: 400,
     width: 400,
     top: 90,
   },
-  input:{
-    backgroundColor:"white",
-    padding:10,
-    margin:15,
-    borderRadius:100,
-    width:300,
-    height:40,
-    color:"black",
-    fontSize:16,
-    fontWeight:"bold",
-    alignSelf:"center",
+  input: {
+    backgroundColor: 'white',
+    padding: 10,
+    margin: 15,
+    borderRadius: 100,
+    width: 300,
+    height: 40,
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
+    alignSelf: 'center',
   },
   container: {
-    height: "100%",
-    paddingBottom:90,
-    width: "100%",
+    height: '100%',
+    paddingBottom: 90,
+    width: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     top: -20,
-  
   },
   reg: {
     padding: 10,
@@ -183,17 +187,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     textAlign: 'center',
   },
-  text:{
-    color:"white",
-    fontSize:20,
-    fontWeight:"bold",
+  text: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
-  textError:{
-    color:"white",
+  textError: {
+    color: 'white',
     textAlign: 'center',
     marginLeft: 20,
-    marginRight: 20
-  }
+    marginRight: 20,
+  },
 });
 
 export default Login;

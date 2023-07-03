@@ -23,6 +23,13 @@ const Slider = () => {
     name: string,
     image: ImageSourcePropType
   };
+
+  interface AccountForm {
+    total: number,
+    name: string,
+    totalError?: string;
+    nameError?: string;
+  }
   
   const selector = useAppSelector((state) => state.user.user) 
   const ide = selector.map(selector => selector.payload.user.id)
@@ -73,40 +80,72 @@ const Slider = () => {
     },
   ];
 
+
+  const [error, setError] = useState<AccountForm>({
+    name: '',
+    total: 0
+  })
+  
+  
+  
+  
+  
   const submitAccount = () => {
+    
+    
     const data: AccountData = {
       name,
       total: parseFloat(total),
     };
     if (ide !== undefined) {
-      console.log(ide, "ATRODEn");
+      if(error.nameError || error.totalError){
+        Alert.alert('Error in post account, incorrect values')
+      }
+      
+      let totalError = '';
+      if(!/^\d+$/.test(total)) {
+        totalError= '* Only numbers are allowed'
+      }
+      
+      let nameError = '';
+      if(!name){
+        nameError = '* Please enter an account'
+      }
+      
+      setError({
+        ...error,
+        nameError: nameError,
+        totalError: totalError
+      })
+      
+      
+      if (nameError || totalError) {
+        
+        return;
+      }
       dispatch(postAccount(ide[(ide.length)-1], data))
       Alert.alert('Successfully created Account');
       setName('');
       setTotal('');
+      
       navigation.navigate("MyDrawer")
     }
   };
-
+  
   const onChange = (item: SelectAccounts) => {
     setName(item.label);
     console.log(item.value);
   }
-
+  
   
   useEffect(()=>{
     dispatch(gettingUsers())
   },[dispatch])
-
+  
   return (
-    <View style={styles.container}>
-      <ImageBackground style={{flex: 1, width: '100%'}} source={require('./assets/fondoCreateAccount.png')}>
-      <PagerView style={styles.pager} initialPage={0} onPageScroll={(e)=>  console.log(e)} onPageSelected={(e)=> console.log(e)} onPageScrollStateChanged={(e)=> console.log(e)} ref={ref}>
-      <View key="1" style={styles.inputContain}>
-    
-        <Text style={styles.text}>Create an account</Text>
-
-            <View style={styles.containerInput}>
+      <ImageBackground style={{width: '100%', height: '100%'}} source={require('./assets/fondoCreateAccount1.png')}>
+  
+            <View style={{ marginTop: 200, backgroundColor: '#696FE7', width: '80%', alignSelf: 'center', borderRadius: 30, height: 300, justifyContent: 'center'}}>
               {/* <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter your Account"></TextInput> */}
               <SelectCountry<SelectAccounts>
                   style={styles.dropdown}
@@ -123,27 +162,16 @@ const Slider = () => {
                   placeholder="Select Account"
                   onChange={onChange}
               />
-               <TextInput style={styles.input} value={total} onChangeText={setTotal} placeholder="Enter an Amount"></TextInput>
+              {error.nameError && <Text style={styles.textError}>{error.nameError}</Text>}
+               <TextInput style={styles.input} value={total} onChangeText={setTotal} keyboardType="numeric" placeholderTextColor={'white'} placeholder="Amount"></TextInput>
+               {error.totalError && <Text style={styles.textError}>{error.totalError}</Text>}
                 <TouchableOpacity style={styles.select} onPress={submitAccount}>
-                <Text style={{textAlign: "center", color: "white"}}>Crear</Text>
+                <Text style={{textAlign: "center", color: "#4D2FE4"}}>Create account</Text>
                 </TouchableOpacity>
-            
-              </View>
-               {/*<TouchableOpacity   onPress={()=>{
               
-              }
-              } 
-                style={styles.btnContinue}>
-                <Text style={{textAlign: "center", color: "white"}}>Continuar</Text>
-              </TouchableOpacity> */}
-              <Button title="Continue" onPress={()=>{
-                  ref.current?.setPage(1)
-                  navigation.navigate("MyDrawer")
-              }}/>
-          </View>
-        </PagerView>
+              </View>
+
       </ImageBackground>
-    </View>
   );
 }
 
@@ -151,96 +179,51 @@ const Slider = () => {
 export default Slider;
 
 const styles = StyleSheet.create({
-  inputContain:{
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems:"center"
-  },
+
   select:{
-    backgroundColor: "gray",
+    backgroundColor: "white",
     width: 150,
     height: 35,
-    alignItems: "center",
+    alignSelf: 'center',
     justifyContent: "center",
     padding: 5,
     margin: 15,
     borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#4D2FE4',
   },
+
+
   input:{
     width: 200,
-    height: 50,
-    backgroundColor: "white",
+    height: 40,
+    backgroundColor: "#4D2FE4",
+    color: 'white',
+    borderWidth: 1,
+    borderColor: 'white',
     margin: 10,
     borderRadius: 100,
+    alignSelf: 'center',
+    fontSize: 14
+    
     
   },
-  containerInput:{
-    marginBottom:100 ,
-    height: 200,
-    width: 300,
-    padding: 40,
-    borderRadius: 50,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  indicator:{
-    height: 2.5,
-    width: 15,
-    backgroundColor: "gray"
-  },
-  touchableOpacity: {
-   backgroundColor: "blue"
-  },  
-  activeTouchableOpacity: {
-    backgroundColor:"red  "
-  },
-  map:{
-    textAlign: "right",
-    display:"flex",
-    justifyContent:"space-around",
-    alignItems:"center",
-  },
-  text:{
-    color: "white",
-    fontSize: 22,
-    bottom: -50,
-  },
-  container: {
-    flex: 1,
-    height: "100%",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: Colors.BACKGROUND_COLOR,
-  },
-  slide: {
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  image: {
-    width: 150,
-    height: 150
-  },
-  pager: {
-    flex: 1,
-    alignSelf: "stretch",
-  },
-  btnContinue: {
-    backgroundColor: '#5E17EB',
-    padding: 5,
-    top: -50,
-    borderRadius: 15,
-    width: 150,
-    height: 35,
-  },
+  
+
   dropdown: {
     margin: 16,
     height: 40,
     width: 200,
-    backgroundColor: '#EEEEEE',
+    backgroundColor: '#4D2FE4',
     borderRadius: 22,
     paddingHorizontal: 8,
+    alignSelf: 'center',
+    borderWidth: 1,
+    borderColor: 'white',
+    
   },
+
+
   imageStyle: {
     width: 25,
     height: 25,
@@ -248,6 +231,7 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 12,
+    color: 'white'
   },
   selectedTextStyle: {
     fontSize: 14,
@@ -257,4 +241,10 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
+  textError:{
+    color:"white",
+    textAlign: 'center',
+    marginLeft: 20,
+    marginRight: 20
+  }
 });

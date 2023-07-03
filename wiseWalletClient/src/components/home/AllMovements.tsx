@@ -8,6 +8,8 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  ImageBackground,
+  Modal,
 } from 'react-native';
 import {
   VictoryPie,
@@ -54,7 +56,7 @@ const AllMovements: React.FC<Props> = () => {
 
   const ide = idUser.map(idUser => idUser.payload.user.id);
   const show: any[] = filter.filter(e => e.deletedExpense === false || e.deletedIncome === false);
-
+  const [openModal, setOpenModal] = useState(false)
   console.log('show', show);
 
   useEffect(() => {
@@ -89,94 +91,129 @@ const AllMovements: React.FC<Props> = () => {
   console.log(valueAlpha, "valueAlpha");
 
   return (
+   
+
+     
     <View style={styles.homeCard}>
       <ScrollView bounces={true}>
         <StatusBar barStyle="light-content" />
         <View style={styles.homeCard}>
-          <Text style={styles.title}>All</Text>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <Dropdown<AccountData>
-              style={styles.dropdown}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={data}
-              maxHeight={150}
-              valueField="value"
-              labelField="label"
-              placeholder="Filter by Account"
-              searchPlaceholder="Search..."
-              value={value}
-              onChange={item => {
-                setValue(item.value);
-                dispatch(filterBalanceAccount(item.value));
-              }}
-            />
-            <Dropdown<AccountData>
-              style={styles.dropdown}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={valuesOrders}
-              maxHeight={150}
-              valueField="value"
-              labelField="label"
-              placeholder="Filter by Amount"
-              value={valueOrder}
-              onChange={item => {
-                setValueOrder(item.value);
-                dispatch(orderByAmount(item.value));
-              }}
-            />
-          </View>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <Dropdown<AccountData>
-              style={styles.dropdown}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={valueOrderAlpha}
-              maxHeight={150}
-              valueField="value"
-              labelField="label"
-              placeholder="Select order alpha"
-              searchPlaceholder="Search..."
-              value={valueAlpha}
-              onChange={item => {
-                setValueAlpha(item.value);
-                dispatch(orderByAlpha(item.value));
-              }}
-            />
-            <Dropdown<AccountData>
-              style={styles.dropdown}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={data}
-              maxHeight={150}
-              valueField="value"
-              labelField="label"
-              placeholder="Filter by Account"
-              searchPlaceholder="Search..."
-              value={value}
-              onChange={item => {
-                setValue(item.value);
-                dispatch(filterBalanceAccount(item.value));
-              }}
-            />
-          </View>
           <View>
-            <Text style={styles.text}>${balance}</Text>
+          <Text style={styles.title}>All</Text>
+
+          <TouchableOpacity style={{marginBottom: -50}} onPress={() => setOpenModal(true)}>
+            <View style={{flexDirection: 'row', backgroundColor: '#1C1F3B', borderRadius: 10, padding: 10, borderWidth: 2, borderColor: 'white'}}>
+              <Text style={{color: 'white', fontSize: 20, margin: 5}}>Filter</Text>
+              <Image style={{width: 40, height: 40}} source={require('./assets/filter1.png')}/>
+            </View>
+
+        {
+          openModal &&
+          <View>
+              <Modal visible={openModal} animationType='slide' transparent={true}>
+                    
+                      <View style={{width: '100%', height: '40%', alignSelf: 'flex-end', backgroundColor: '#1C1F3B'}}>
+                        <Text style={{textAlign: 'center', color: 'white', fontSize: 30, top: 20, marginBottom: -20}}>Filters</Text>
+
+                    <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setOpenModal(false) }}>
+                        <Image style={{ width: 40, height: 40, alignItems: 'center', marginTop: 20, marginRight: 20 }} source={require('./assets/x.png')} />
+                      </TouchableOpacity>
+                      <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
+
+              <Dropdown<AccountData>
+                style={styles.dropdown}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={data}
+                maxHeight={150}
+                valueField="value"
+                labelField="label"
+                placeholder="By Account"
+                searchPlaceholder="Search..."
+                value={value}
+                onChange={item => {
+                  setValue(item.value);
+                  dispatch(filterBalanceAccount(item.value));
+                }}
+                />
+              <Dropdown<AccountData>
+                style={styles.dropdown}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={valuesOrders}
+                maxHeight={150}
+                valueField="value"
+                labelField="label"
+                placeholder="By Amount"
+                value={valueOrder}
+                onChange={item => {
+                  setValueOrder(item.value);
+                  dispatch(orderByAmount(item.value));
+                }}
+                />
+            
+              <Dropdown<AccountData>
+                style={styles.dropdown}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={valueOrderAlpha}
+                maxHeight={150}
+                valueField="value"
+                labelField="label"
+                placeholder="Order alpha"
+                searchPlaceholder="Search..."
+                value={valueAlpha}
+                onChange={item => {
+                  setValueAlpha(item.value);
+                  dispatch(orderByAlpha(item.value));
+                }}
+                />
+              <Dropdown<AccountData>
+                style={styles.dropdown}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={data}
+                maxHeight={150}
+                valueField="value"
+                labelField="label"
+                placeholder="By Account"
+                searchPlaceholder="Search..."
+                value={value}
+                onChange={item => {
+                  setValue(item.value);
+                  dispatch(filterBalanceAccount(item.value));
+                }}
+                />
+                </View>
+        </View>
+                   
+              </Modal>
+            </View>
+        }
+      </TouchableOpacity>
+          </View>
+          
+
+
+              
+           
+              <Text style={styles.text}>${balance}</Text>
             <VictoryPie
               style={{
                 labels: {
                   fill: '#FFFFFF',
+                  
                 },
               }}
+              
               innerRadius={110}
               colorScale={colors}
               data={show?.map(e => {
@@ -186,9 +223,11 @@ const AllMovements: React.FC<Props> = () => {
                   return { x: e.category, y: e.amount };
                 }
               })}
-            />
-          </View>
+              />
+        
 
+
+          <View >
           {show.map((mov, index) => {
             if (mov.type) {
               return (
@@ -208,21 +247,31 @@ const AllMovements: React.FC<Props> = () => {
               );
             }
           })}
+
+
+          </View>
+          
         </View>
       </ScrollView>
     </View>
+         
   );
 };
 
 const styles = StyleSheet.create({
   homeCard: {
     alignItems: 'center',
-    backgroundColor: Colors.BACKGROUND_COLOR,
-    height: '100%',
+    /* backgroundColor: Colors.BACKGROUND_COLOR,
+    height: '100%', */
   },
   title: {
     color: Colors.TITLE_COLOR,
     fontSize: 30,
+    fontWeight: 'bold',
+    marginTop: 10,
+    marginBottom: 40,
+    textAlign: 'center'
+    
   },
   chart: {
     marginTop: 40,
@@ -239,6 +288,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     justifyContent: 'center',
     alignSelf: 'center',
+    
   },
   text: {
     top: 230,
@@ -247,20 +297,25 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   dropdown: {
-    width: 180,
+    width: 130,
     margin: 10,
-    height: 50,
-    backgroundColor: 'white',
+    height: 40,
+    backgroundColor: '#4D2FE4',
     padding: 10,
     borderRadius: 15,
+    alignSelf: 'center',
+    marginTop: 40,
+    borderColor: 'white', 
+    borderWidth: 1
   },
-
+  
   placeholderStyle: {
     fontSize: 16,
-    color: 'black',
+    color: 'white',
   },
   selectedTextStyle: {
     fontSize: 16,
+    color: 'white',
   },
   iconStyle: {
     width: 20,

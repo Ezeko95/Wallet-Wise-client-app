@@ -62,7 +62,9 @@ const SharedScreen = () => {
     }
   };
   return (
-    <View style={styles.sharedCard}>
+   
+      <ImageBackground style={{height: '100%', width: '100%'}} source={require('./images/bgProfile.png')}>
+
       <View style={styles.perfiView}>
         {openModal && (
           <View>
@@ -115,7 +117,7 @@ const SharedScreen = () => {
           <Image
             source={{ uri: `${tp.payload.user.picture}` }}
             style={styles.image}
-          />
+            />
           <Text style={{ color: 'white', fontSize: 39 }}>
             {tp.payload.user.name}
           </Text>
@@ -123,16 +125,16 @@ const SharedScreen = () => {
             {tp.payload.user.email}
           </Text>
           {tp.payload.user.premium === false ? (
-            <Text style={{ color: 'white' }}>Cuenta Standard</Text>
-          ) : (
-            <Text style={{ color: 'black' }}>Cuenta premium</Text>
-          )}
+            <Text style={{ color: 'white', fontSize: 20, marginTop: 10 }}>Standard account</Text>
+            ) : (
+              <Text style={{ color: 'black', fontSize: 20, marginTop: 10 }}>Premium account</Text>
+              )}
         </View>
       </View>
       <View style={styles.stylesBtn}>
         <LogoutButton />
       </View>
-    </View>
+              </ImageBackground>
   );
 };
 export default SharedScreen;
@@ -152,23 +154,23 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 100,
+    borderWidth: 2,
+    borderColor: 'white'
   },
-  sharedCard: {
-    flex: 1,
-    justifyContent: 'space-around',
-    backgroundColor: '#131313',
-    alignSelf: 'center',
-  },
+  
   text: {
     color: 'white',
     padding: 12,
   },
   perfiView: {
-    height: 200,
-    width: 400,
+    height: 330,
+    width: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#4D2FE4',
+    borderBottomEndRadius: 60,
+    borderBottomStartRadius: 60
   },
   stylesBtn: {
     justifyContent: 'center',

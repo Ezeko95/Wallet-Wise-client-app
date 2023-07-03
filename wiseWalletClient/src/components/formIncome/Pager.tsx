@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet,Text, TextInput, View, TouchableOpacity, Alert, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet,Text, TextInput, View, TouchableOpacity, Alert, ScrollView, KeyboardAvoidingView, Image } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { SelectCountry } from 'react-native-element-dropdown';
 import { postMovement, MovementData } from '../../redux/slices/movementSlice';
@@ -7,7 +7,7 @@ import { ExpenseData, postExpense } from '../../redux/slices/expenseSlice';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { gettingUsers } from '../../redux/slices/getUsers';
 import { getMovements, getAccounts, getExpense, getIncome } from '../../redux/slices/allMovementsSlice';
-
+import { useNavigation } from '@react-navigation/native';
 
  
 
@@ -151,6 +151,7 @@ const dataExpense: Expense[] = [
 
 const Pager = () => {
 
+  
   const dispatch = useAppDispatch()
   const { loading, error } = useAppSelector((state) => state.movement);
   const [type, setType] = useState('');
@@ -159,12 +160,14 @@ const Pager = () => {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
-  
+  const navigation:(any) = useNavigation();
   const idUser = useAppSelector((state) => state.user.user)
   const selector = useAppSelector((state) => state.user.user) // esto e user enterito
   
   const aidi = selector.map(selector => selector.payload.user.id)
   const ide = idUser.map((idUser) => idUser.payload.user.id)
+
+
 
   const handlePostMovement = () => {
 
@@ -172,15 +175,15 @@ const Pager = () => {
       type,
       account,
       amount: parseFloat(amount),
+ 
     };
+    if(!/^\d+$/.test(amount)) return Alert.alert('In amount only numbers are allowed')
     if(!type || !account || !amount) return Alert.alert('Incomplete fields, please complete them all')
-    console.log(aidi[0])
     dispatch(postMovement(aidi[0],data));
     dispatch(getIncome(aidi[0]))
     dispatch(getMovements(aidi[0]))
     dispatch(getAccounts(aidi[0]))
     dispatch(getAccounts(ide[0]))
-
 
     Alert.alert('Successfully created income')
     setType('');
@@ -194,9 +197,10 @@ const Pager = () => {
       description,
       category,
       paymentMethod,
+      
     };
     if(!amount || !category || !description || !paymentMethod ) return Alert.alert('Incomplete fields, please complete them all')
-
+    if(!/^\d+$/.test(amount)) return Alert.alert('Only numbers are allowed')
     dispatch(postExpense(aidi[0], data))
     dispatch(getIncome(aidi[0]))
     dispatch(getMovements(aidi[0]))
@@ -219,6 +223,7 @@ const Pager = () => {
 
   const onChange = (item: Data) => {
     setAccount(item.label);
+   
     console.log(item.value);
   }
   const onChange1 = (item: Expense) => {
@@ -227,6 +232,7 @@ const Pager = () => {
   }
   const onChange2 = (item: PaymentMethod) => {
     setPaymentMethod(item.label);
+
     console.log(item.value);
   }
 
@@ -253,13 +259,15 @@ const Pager = () => {
         <TouchableOpacity style={styles.buttonsPages} onPress={() => ref.current?.setPage(1)}>
           <Text style={styles.textButton}>Add Expenses</Text>
         </TouchableOpacity>
-      </View>
+
+      
+     </View> 
       <PagerView style={styles.pager} ref={ref} initialPage={0}>
 
 
       <ScrollView>
         <View key="1">
-        <View>
+        <View style={{bottom: 30}}>
             <Text style={styles.textForm}>Add your Incomes here!</Text>
 
             <View style={styles.formContainer}>
@@ -283,7 +291,7 @@ const Pager = () => {
               <TextInput
                 value={type}
                 onChangeText={setType}
-                placeholder="Type"
+                placeholder="Desciption"
                 placeholderTextColor="gray"
                 style={styles.input}
                 />
@@ -310,7 +318,7 @@ const Pager = () => {
 
       <ScrollView>
         <View key="2">
-          <View>
+          <View style={{bottom: 30}}>
              <Text style={styles.textForm}>Add your Expenses here!</Text>
              
              <View style={styles.formContainer}>
@@ -394,8 +402,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 8,
     margin: 10,
-    marginBottom: -20,
-    top: 5,
+    
+    
   },
   textButton: {
     color: 'white',
@@ -436,7 +444,7 @@ const styles = StyleSheet.create({
     marginTop: 85,
     borderRadius: 20,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center', 
   },
   textForm: {
     color: 'white',
