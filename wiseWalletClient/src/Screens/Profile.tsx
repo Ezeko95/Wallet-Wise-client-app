@@ -20,7 +20,8 @@ import axios from 'axios';
 import { base_URL } from '../redux/utils';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native';
-const SharedScreen = () => {
+
+const Profile = () => {
   const [openModal, setOpenModal] = useState(true);
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const navigation: any = useNavigation();
@@ -153,7 +154,8 @@ const SharedScreen = () => {
     </ImageBackground>
   );
 };
-export default SharedScreen;
+export default Profile;
+
 const styles = StyleSheet.create({
   modalBi: {
     height: 300,
