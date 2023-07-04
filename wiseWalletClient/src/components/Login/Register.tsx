@@ -18,6 +18,8 @@ import axios from 'axios';
 import Upload from './Upload';
 import { useAppDispatch } from '../../redux/store';
 import { gettingUsers } from '../../redux/slices/getUsers';
+import Loader from '../Loader/Loader';
+
 
 interface RegisterForm {
   name: string;
@@ -26,6 +28,7 @@ interface RegisterForm {
 }
 
 const Register = () => {
+  const [showLoader, setShowLoader] = useState(false);
   const navigation: any = useNavigation();
   const dispatch = useAppDispatch();
   const [form, setForm] = useState<RegisterForm>({
@@ -79,6 +82,7 @@ const Register = () => {
     }
 
     try {
+      setShowLoader(true);
       const response = await axios.post<{ accessToken: string }>(
         'http://10.0.2.2:3001/user/register',
         form,
@@ -150,8 +154,9 @@ const Register = () => {
       </TouchableOpacity>
       <Text style={{top: 30, color: 'white', textAlign: 'center'}}>Do you already have an account?  Sign in here!</Text>
     </View>
-
+      
       </KeyboardAvoidingView>
+      {showLoader && <Loader />}
     </ImageBackground>
   );
 

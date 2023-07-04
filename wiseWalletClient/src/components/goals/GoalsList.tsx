@@ -49,9 +49,27 @@ const GoalList: React.FC = () => {
 
   return (
     <View style={styles.container}>
-           <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
-        <Text  style={styles.goBack}>{'<'}</Text>
-      </TouchableOpacity>
+      
+      <View style={{flexDirection: 'row', paddingBottom:15, paddingVertical:10}}>
+      
+        <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
+          <Text  style={styles.goBack}>{'<'}</Text>
+        </TouchableOpacity>
+        
+        <View style={{flexDirection: 'row', width: "80%", alignSelf:"center"}}>
+          <Text style={{
+              fontSize: 30,
+              color: 'white',
+              fontWeight: 'bold',
+              left: -15,
+              marginStart:70
+            }}>
+            My
+            <Text style={{ color: 'yellow' }}> Goals </Text>
+          </Text>
+        </View>
+      </View>
+
       <TouchableOpacity
         onPress={() => navigation.navigate('Goals')}
         style={styles.create}>
@@ -61,7 +79,7 @@ const GoalList: React.FC = () => {
         {showGoal.length > 0 &&
           showGoal?.map((goal, index) => {
             return (
-              <View key={index} style={styles.touchable}>
+              <View key={index} style={{}}>
                 <TouchableOpacity
                   style={styles.touchable}
                   onPress={() => {
@@ -77,9 +95,10 @@ const GoalList: React.FC = () => {
                       onPress={() => goalDelete(goal.id)}>
                       <Text
                         style={{
-                          color: 'white',
-                          backgroundColor: 'red',
+                          color: 'yellow',
                           borderRadius: 5,
+                          borderWidth: 2,
+                          borderColor: 'yellow'
                         }}>
                         Delete
                       </Text>
@@ -101,6 +120,14 @@ const GoalList: React.FC = () => {
 export default GoalList;
 
 const styles = StyleSheet.create({
+  roomTitle:{
+    alignSelf: "center",
+    color: "white",
+    marginStart: 20,
+    fontSize: 30,
+    height: 40,
+    fontWeight: "bold"
+  },
   container: {
     backgroundColor: Colors.BACKGROUND_COLOR,
     padding: 15,
@@ -117,12 +144,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'space-around',
     margin: 15,
-    backgroundColor: 'darkslateblue',
+    backgroundColor: '#3D2766',
     borderRadius: 15,
-    shadowColor: 'white',
+    borderColor: '#A16AE2',
+    borderWidth: 1,
+    padding: 12
   },
   create: {
-    backgroundColor: 'darkslateblue',
+    backgroundColor: /* 'darkslateblue' */ '#3D2766',
     borderRadius: 15,
     width: '100%',
     height: 45,
@@ -159,8 +188,9 @@ const styles = StyleSheet.create({
     marginTop: 60,
   },
   goBack: {
+    alignSelf: "flex-start",
     color: 'black',
-    backgroundColor: "yellow",
+    backgroundColor: 'yellow',
     borderRadius: 10,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -169,7 +199,6 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: '#FFF7AE',
     borderWidth: 2,
-    left: -165,
-    margin: 15
-}
+    marginHorizontal:10,
+  },
 });
