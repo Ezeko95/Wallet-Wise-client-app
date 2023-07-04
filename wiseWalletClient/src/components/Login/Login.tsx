@@ -105,7 +105,7 @@ const Login: React.FC = () => {
         setShowLoader(false);
       }
       const response = await axios.post<{ accessToken: string }>(
-        'http://10.0.2.2:3001/user/login',
+        'http://localhost:3001/user/login',
         form,
       );
       const { accessToken } = response.data;

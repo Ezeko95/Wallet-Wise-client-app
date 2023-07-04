@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Button, StyleSheet , TouchableOpacity, Text, Image, ScrollView} from 'react-native';
+import { View, StyleSheet , TouchableOpacity, Text, Image, ScrollView} from 'react-native';
 import Login from '../components/Login/Login';
 import Register from '../components/Login/Register';
 
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     borderRadius:10,
     height: 50 ,
     justifyContent: "center",
-    marginTop: 580
+    marginTop: 850
   }
 })
 

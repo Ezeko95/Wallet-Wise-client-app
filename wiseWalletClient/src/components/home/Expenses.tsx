@@ -97,7 +97,7 @@ const Incomes: React.FC<Props> = () => {
               }}
               innerRadius={110}
               colorScale={colors}
-              data={show.map((expense) => ({ x: expense.category, y: expense.amount }))}
+              data={show.map((expense) => ({ x: expense.id, y: expense.amount }))}
             />
           </View>
 
@@ -117,7 +117,7 @@ const Incomes: React.FC<Props> = () => {
                   >
                     <View style={styles.detail}>
                       <Text style={{ fontSize: 20, color: 'white', top: 5, marginLeft: 10 }}>
-                        {item.category}: {item.amount}
+                      {item.id} -  {item.category}: {item.amount}
                       </Text>
                     </View>
                   </TouchableOpacity>
