@@ -29,12 +29,11 @@ const slide: Slide[] = [
   },
 ];
 const Premium = () => {
+  const [premium , setPremium] = useState()
   const state = useAppSelector(state => state.user.user);
   console.log(state);
-  const ide = state[state.length - 1];
-
-  const results = ide.payload.user.id;
-  console.log(results);
+  const tp = state[state.length - 1];
+  const results = tp.payload.user.id;
 
   const navigation: any = useNavigation();
 
@@ -60,12 +59,11 @@ const Premium = () => {
       slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
     }
   };
-
-  useEffect(() => {
+ 
+  useEffect(()=>{
     axios.put(`${base_URL}/user/${results}`);
     console.log('ESTE ES EL ID QUE PASO POR PARAMS', results);
-  }, []);
-
+},[])
   return (
     <ImageBackground
       style={styles.img}
@@ -98,7 +96,7 @@ const Premium = () => {
       />
       <TouchableOpacity
         style={styles.btnSkip}
-        onPress={() => navigation.navigate('MyDrawer')}>
+        onPress={() => navigation.navigate('Login')}>
         <Text style={styles.skip}>Skip</Text>
       </TouchableOpacity>
     </ImageBackground>

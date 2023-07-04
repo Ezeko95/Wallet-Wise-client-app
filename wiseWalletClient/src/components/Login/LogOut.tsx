@@ -1,12 +1,17 @@
 import { Button , TouchableOpacity, Text, StyleSheet, View, Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { base_URL } from '../../redux/utils';
 import { initPaymentSheet, presentPaymentSheet } from '@stripe/stripe-react-native';
+import { useAppSelector } from '../../redux/store';
+import { ScrollView,Image } from 'react-native';
 const LogoutButton = () => {
   const navigation: any = useNavigation();
+  const state = useAppSelector(state => state.user.user);
+  const tp = state[state.length - 1];
+  const results = tp.payload.user.id;
 
     const onCheckout = async () => {
         try {
@@ -34,7 +39,7 @@ const LogoutButton = () => {
             return;
           }
           //logica para hacer premium al usuario
-    
+          
           navigation.navigate('Premium');
         } catch (err) {
           console.log('err intent', err);
@@ -49,22 +54,39 @@ const LogoutButton = () => {
             console.log('Error al eliminar el elemento de AsyncStorage:', error);
           }
     };
-
+   
     return(
-        <>
+
         <View style={{marginTop: 60, width: '90%', justifyContent: 'center'}}>
 
         <TouchableOpacity onPress={onPress} style={styles.buton}>
-            <Text style={{color: "white", textAlign: "center", fontSize: 25}}>Log Out </Text>
+           <Text style={{color: "white", textAlign: "center", fontSize: 25}}>LOGOUT</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buton} onPress={()=>{
+        {
+          tp.payload.user.premium === true
+          ?null :
+          <TouchableOpacity style={styles.buton} onPress={()=>{
             onCheckout()
         }}>
         <Text style={{color: "white", textAlign: "center", fontSize: 25}}>Premium 👑</Text>
-    </TouchableOpacity>
+        </TouchableOpacity>
+        }
+        {
+          tp.payload.user.premium
+          ?
+          <>
+          <TouchableOpacity onPress={onPress} style={styles.buton}>
+            <Text style={{color: "white", textAlign: "center", fontSize: 25}}>Shared Expenses</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onPress} style={styles.buton}>
+          <Text style={{color: "white", textAlign: "center", fontSize: 25}}>Goals</Text>
+          </TouchableOpacity>
+        </>
+          :
+          null
+        }
+       
         </View>
-    
-    </>
     )
 }
 export default LogoutButton;
@@ -75,7 +97,6 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: "center", alignItems:"center",
         margin: 6,
-        borderRadius: 20,
         marginTop: 15,
         borderWidth: 1,
         borderColor: 'white'
