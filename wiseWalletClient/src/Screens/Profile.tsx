@@ -24,12 +24,14 @@ const SharedScreen = () => {
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const navigation: any = useNavigation();
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(gettingUsers());
-  }, []);
   const state = useAppSelector(state => state.user.user);
   const tp = state[state.length - 1];
+
+  useEffect(() => {
+    dispatch(gettingUsers());
+  }, [tp.payload.user.premium]);
   console.log(tp);
+
   const onCheckout = async () => {
     try {
       //create payment intent
@@ -56,17 +58,18 @@ const SharedScreen = () => {
         return;
       }
       //logica para hacer premium al usuario
+
       navigation.navigate('Premium');
     } catch (err) {
       console.log('err intent', err);
     }
   };
   return (
-   
-      <ImageBackground style={{height: '100%', width: '100%'}} source={require('./images/bgProfile.png')}>
-
+    <ImageBackground
+      style={{ height: '100%', width: '100%' }}
+      source={require('./images/bgProfile.png')}>
       <View style={styles.perfiView}>
-        {openModal && (
+        {openModal && tp.payload.user.premium === false ? (
           <View>
             <Modal visible={openModal} animationType="slide" transparent={true}>
               <View style={styles.modal}>
@@ -112,12 +115,12 @@ const SharedScreen = () => {
               </View>
             </Modal>
           </View>
-        )}
+        ) : null}
         <View style={styles.perfiView} key={tp.payload.user.id}>
           <Image
             source={{ uri: `${tp.payload.user.picture}` }}
             style={styles.image}
-            />
+          />
           <Text style={{ color: 'white', fontSize: 39 }}>
             {tp.payload.user.name}
           </Text>
@@ -125,16 +128,20 @@ const SharedScreen = () => {
             {tp.payload.user.email}
           </Text>
           {tp.payload.user.premium === false ? (
-            <Text style={{ color: 'white', fontSize: 20, marginTop: 10 }}>Standard account</Text>
-            ) : (
-              <Text style={{ color: 'black', fontSize: 20, marginTop: 10 }}>Premium account</Text>
-              )}
+            <Text style={{ color: 'white', fontSize: 20, marginTop: 10 }}>
+              Standard account
+            </Text>
+          ) : (
+            <Text style={{ color: 'black', fontSize: 20, marginTop: 10 }}>
+              Premium account
+            </Text>
+          )}
         </View>
       </View>
       <View style={styles.stylesBtn}>
         <LogoutButton />
       </View>
-              </ImageBackground>
+    </ImageBackground>
   );
 };
 export default SharedScreen;
@@ -155,9 +162,9 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 100,
     borderWidth: 2,
-    borderColor: 'white'
+    borderColor: 'white',
   },
-  
+
   text: {
     color: 'white',
     padding: 12,
@@ -170,7 +177,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#4D2FE4',
     borderBottomEndRadius: 60,
-    borderBottomStartRadius: 60
+    borderBottomStartRadius: 60,
   },
   stylesBtn: {
     justifyContent: 'center',

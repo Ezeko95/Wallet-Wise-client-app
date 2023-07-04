@@ -19,8 +19,6 @@ import { gettingUsers } from '../../redux/slices/getUsers';
 import { useAppDispatch } from '../../redux/store';
 import Loader from '../Loader/Loader';
 
-
-
 interface LoginForm {
   email: string;
   password: string;
@@ -33,7 +31,9 @@ const Login: React.FC = () => {
   const navigation: any = useNavigation();
   const [showLoader, setShowLoader] = useState(false);
 
+
   const [errorr, setErrorr] = useState<string>('');
+
   const [form, setForm] = useState<LoginForm>({
     email: '',
     password: '',
@@ -101,16 +101,17 @@ const Login: React.FC = () => {
       setIsButtonDisabled(true);
       return;
     }
-    
+
     try {
       setShowLoader(true);
-      
-      if(emailError || passwordError){
+
+      if (emailError || passwordError) {
         setShowLoader(false);
       }
       const response = await axios.post<{ accessToken: string }>(
         'http://10.0.2.2:3001/user/login',
         form,
+
         );
         const { accessToken } = response.data;
         console.log(response.data);
@@ -171,12 +172,9 @@ const Login: React.FC = () => {
         
           <Text style={{ color: 'white', textAlign: 'center', top: 30}}>You don't have an account yet?  Sign up here!</Text>
         </View>
-      </View>
       </KeyboardAvoidingView>
 
       {showLoader && <Loader />}
-
-      
     </ImageBackground>
   );
 };
@@ -225,7 +223,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
   },
- 
 });
 
 export default Login;

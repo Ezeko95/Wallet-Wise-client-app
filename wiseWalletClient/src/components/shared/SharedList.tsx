@@ -28,9 +28,11 @@ const SharedList: React.FC = () => {
     <View style={styles.container}>
 
       <View style={{flexDirection: 'row', paddingBottom:15, paddingVertical:10}}>
+
         <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
           <Text style={styles.goBack}>{'<'}</Text>
         </TouchableOpacity>
+        
         <View style={{marginStart: 30,flexDirection: 'row', width: "80%", alignContent:"center"}}>
           <Text style={{
               fontSize: 30,
