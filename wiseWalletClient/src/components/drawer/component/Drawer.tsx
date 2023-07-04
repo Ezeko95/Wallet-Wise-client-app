@@ -21,7 +21,7 @@ const Drawer = ({ children }: DrawerProps) => {
   const navigation: any = useNavigation();
   const state = useAppSelector(state => state.user.user);
   const tp = state[state.length - 1];
-  const results = tp.payload.user.premium;
+  const results = tp?.payload.user.premium;
   const navigationView = () => (
     <View style={styles.container}>
           <TouchableOpacity

@@ -24,10 +24,12 @@ import {
   orderByAlpha,
   orderByDate,
 } from '../../redux/slices/allMovementsSlice';
+import LoaderChart from '../Loader/LoaderChart';
 
 export interface AccountData {
   label: string;
   value: string;
+  
 }
 
 interface Props {}
@@ -40,8 +42,10 @@ const AllMovements: React.FC<Props> = () => {
   const filter = useAppSelector(state => state.allMovements.filtered);
   const balance = useAppSelector(state => state.allMovements.balance);
 
-  console.log('FILTER', filter);
-  console.log('allmovements', allMovements);
+  const [showLoader, setShowLoader] = useState(false);
+  console.log('FILTER',filter);
+  console.log("allmovements",allMovements)
+
   console.log('Balance from redux', balance);
 
   account = [...account, 'All accounts'];
@@ -54,11 +58,22 @@ const AllMovements: React.FC<Props> = () => {
   console.log('show', show);
 
   useEffect(() => {
+    setShowLoader(true);
     dispatch(getAccounts(ide[ide.length - 1]));
     dispatch(getMovements(ide[ide.length - 1]));
     dispatch(getIncome(ide[ide.length - 1]));
     dispatch(getExpense(ide[ide.length - 1]));
   }, [dispatch]);
+
+  
+  useEffect(() => {
+    if (showLoader) {
+      setTimeout(() => {
+        setShowLoader(false);
+      }, 4000); // Duración de 3 segundos
+    }
+  }, [showLoader]);
+
 
   const data: AccountData[] = [];
 
@@ -250,6 +265,8 @@ const AllMovements: React.FC<Props> = () => {
             </TouchableOpacity>
           </View>
 
+
+
           <Text style={styles.text}>${balance}</Text>
           <VictoryPie
             style={{
@@ -261,9 +278,9 @@ const AllMovements: React.FC<Props> = () => {
             colorScale={colors}
             data={show?.map(e => {
               if (e.type) {
-                return { x: e.type, y: e.amount };
+                return { x: e.index, y: e.amount };
               } else {
-                return { x: e.category, y: e.amount };
+                return { x: e.index, y: e.amount };
               }
             })}
           />
@@ -274,7 +291,7 @@ const AllMovements: React.FC<Props> = () => {
                 return (
                   <View key={index}>
                     <Text style={styles.detail}>
-                      {mov.type}: {mov.amount}
+                      {index} - {mov.type}: {mov.amount}
                     </Text>
                   </View>
                 );
@@ -282,7 +299,7 @@ const AllMovements: React.FC<Props> = () => {
                 return (
                   <View key={index}>
                     <Text style={styles.detail}>
-                      {mov.category}: {mov.amount}
+                      {index} - {mov.category}: {mov.amount}
                     </Text>
                   </View>
                 );
@@ -291,6 +308,7 @@ const AllMovements: React.FC<Props> = () => {
           </View>
         </View>
       </ScrollView>
+      {showLoader && <LoaderChart />}
     </View>
   );
 };

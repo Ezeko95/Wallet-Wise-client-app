@@ -3,21 +3,24 @@ import { StyleSheet, Text, View } from "react-native";
 import LottieView from 'lottie-react-native'
 
 
-const Loader = () => {
+const LoaderChart = () => {
+     
+
     return(
+      
         <View style={[StyleSheet.absoluteFillObject, styles.container]}>
-            <LottieView source={require('./assets/loader2.json')} autoPlay={true} loop={true}/>
+            <LottieView source={require('./assets/chart3.json')} autoPlay={true} loop={true}/>
         </View>
     )
 }
 
-export default Loader;
+export default LoaderChart;
 
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignitems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.7)',
+        backgroundColor: '#1C1F3B',
         zIndex: 1,
         height: '100%'
     }

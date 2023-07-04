@@ -1,52 +1,16 @@
-import { Button , TouchableOpacity, Text, StyleSheet, View, Alert} from 'react-native';
+import { Button , TouchableOpacity, Text, StyleSheet, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect } from 'react';
-import axios from 'axios';
-import { base_URL } from '../../redux/utils';
-import { initPaymentSheet, presentPaymentSheet } from '@stripe/stripe-react-native';
-import { useAppSelector } from '../../redux/store';
-import { ScrollView,Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import Loader from '../Loader/Loader';
 const LogoutButton = () => {
-  const navigation: any = useNavigation();
-  const state = useAppSelector(state => state.user.user);
-  const tp = state[state.length - 1];
-  const results = tp.payload.user.id;
 
-    const onCheckout = async () => {
-        try {
-          //create payment intent
-          const { data } = await axios.post(`${base_URL}/payment/intent`, {
-            amount: Math.floor(10 * 100),
-          });
-          //initialize payment sheet
-          const initResponse = await initPaymentSheet({
-            merchantDisplayName: 'wiseWallet',
-            paymentIntentClientSecret: data.paymentIntent,
-            defaultBillingDetails: {
-              name: 'Fabian Garcia Test',
-            },
-          });
-          if (initResponse.error) {
-            Alert.alert('Something went wrong');
-            return;
-          }
+    const [showLoader, setShowLoader] = useState(false);
     
-          //present payment sheet
-          const payment = await presentPaymentSheet();
-          if (payment.error) {
-            Alert.alert('Something went wrong');
-            return;
-          }
-          //logica para hacer premium al usuario
-          
-          navigation.navigate('Premium');
-        } catch (err) {
-          console.log('err intent', err);
-        }
-    }
+    const navigation:any = useNavigation()
     const onPress = async () => {
         try {
+            setShowLoader(true);
             await AsyncStorage.removeItem('accessToken');
             console.log('Elemento eliminado de AsyncStorage');
             navigation.navigate('Login')
@@ -54,39 +18,30 @@ const LogoutButton = () => {
             console.log('Error al eliminar el elemento de AsyncStorage:', error);
           }
     };
-   
-    return(
 
+    useEffect(() => {
+        if (showLoader) {
+          setTimeout(() => {
+            setShowLoader(false);
+          }, 3000); // Duración de 3 segundos
+        }
+      }, [showLoader]);
+
+
+    return(
+        <>
         <View style={{marginTop: 60, width: '90%', justifyContent: 'center'}}>
 
         <TouchableOpacity onPress={onPress} style={styles.buton}>
-           <Text style={{color: "white", textAlign: "center", fontSize: 25}}>LOGOUT</Text>
+            <Text style={{color: "white", textAlign: "center", fontSize: 25}}>Log Out </Text>
         </TouchableOpacity>
-        {
-          tp.payload.user.premium === true
-          ?null :
-          <TouchableOpacity style={styles.buton} onPress={()=>{
-            onCheckout()
-        }}>
+        <TouchableOpacity style={styles.buton} onPress={()=>navigation.navigate("ToPremium")}>
         <Text style={{color: "white", textAlign: "center", fontSize: 25}}>Premium 👑</Text>
         </TouchableOpacity>
-        }
-        {
-          tp.payload.user.premium
-          ?
-          <>
-          <TouchableOpacity onPress={onPress} style={styles.buton}>
-            <Text style={{color: "white", textAlign: "center", fontSize: 25}}>Shared Expenses</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={onPress} style={styles.buton}>
-          <Text style={{color: "white", textAlign: "center", fontSize: 25}}>Goals</Text>
-          </TouchableOpacity>
-        </>
-          :
-          null
-        }
-       
         </View>
+        {showLoader && <Loader />}
+    
+    </>
     )
 }
 export default LogoutButton;
@@ -97,6 +52,7 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: "center", alignItems:"center",
         margin: 6,
+        borderRadius: 20,
         marginTop: 15,
         borderWidth: 1,
         borderColor: 'white'
