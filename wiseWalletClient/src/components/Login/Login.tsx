@@ -173,7 +173,9 @@ const Login: React.FC = () => {
         </View>
       </View>
       </KeyboardAvoidingView>
+
       {showLoader && <Loader />}
+
       
     </ImageBackground>
   );

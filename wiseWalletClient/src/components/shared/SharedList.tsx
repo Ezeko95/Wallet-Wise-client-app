@@ -26,20 +26,23 @@ const SharedList: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
-        <Text style={styles.goBack}>{'<'}</Text>
-      </TouchableOpacity>
-      <Text
-        style={{
-          fontSize: 30,
-          color: 'white',
-          fontWeight: 'bold',
-          left: -15,
-          textAlign: 'center',
-        }}>
-        Shared
-        <Text style={{ color: 'yellow' }}> Rooms</Text>
-      </Text>
+
+      <View style={{flexDirection: 'row', paddingBottom:15, paddingVertical:10}}>
+        <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
+          <Text style={styles.goBack}>{'<'}</Text>
+        </TouchableOpacity>
+        <View style={{marginStart: 30,flexDirection: 'row', width: "80%", alignContent:"center"}}>
+          <Text style={{
+              fontSize: 30,
+              color: 'white',
+              fontWeight: 'bold',
+              left: -15,
+            }}>
+            Shared
+            <Text style={{ color: 'yellow' }}> Rooms</Text>
+          </Text>
+        </View>
+      </View>
 
       <View style={styles.allItems}>
         <TouchableOpacity
@@ -132,7 +135,8 @@ const styles = StyleSheet.create({
     borderColor: '#A16AE2',
     borderWidth: 1,
     position: 'relative',
-    margin: 20,
+    margin: 5,
+    marginBottom: 20
   },
   allItems: {
     alignContent: 'center',
@@ -140,6 +144,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   goBack: {
+    alignSelf: "flex-start",
     color: 'black',
     backgroundColor: 'yellow',
     borderRadius: 10,
@@ -150,7 +155,6 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: '#FFF7AE',
     borderWidth: 2,
-    left: 10,
-    top: 10,
+    marginHorizontal:10,
   },
 });
