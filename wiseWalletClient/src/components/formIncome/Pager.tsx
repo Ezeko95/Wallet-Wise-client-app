@@ -9,9 +9,8 @@ import { gettingUsers } from '../../redux/slices/getUsers';
 import { getMovements, getAccounts, getExpense, getIncome } from '../../redux/slices/allMovementsSlice';
 import { useNavigation } from '@react-navigation/native';
 import LoaderSuccess from '../Loader/LoaderSuccess';
+import Drawer from '../drawer/component/Drawer';
 
-
- 
 
 interface Data {
   value: string;
@@ -187,7 +186,6 @@ const Pager = () => {
   const navigation:(any) = useNavigation();
   const idUser = useAppSelector((state) => state.user.user)
   const selector = useAppSelector((state) => state.user.user) // esto e user enterito
-  
   const aidi = selector.map(selector => selector.payload.user.id)
   const ide = idUser.map((idUser) => idUser.payload.user.id)
 
@@ -381,7 +379,9 @@ const Pager = () => {
     
    
     <View style={styles.container}>
-      
+       <View style={{ alignSelf: 'flex-start', left: -40 }}>
+        <Drawer />
+      </View>
       <View style={styles.btnContainer}>
         <TouchableOpacity style={styles.buttonsPages} onPress={() => ref.current?.setPage(0)}>
           <Text style={styles.textButton}>Add Income</Text>

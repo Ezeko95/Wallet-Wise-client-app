@@ -7,7 +7,7 @@ import Incomes from './Income';
 import Expenses from './Expenses';
 import { getMovements, getAccounts, getExpense, getIncome } from '../../redux/slices/allMovementsSlice';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
-
+import Drawer from '../drawer/component/Drawer';
 interface Props {}
 
 const Pager: React.FC<Props> = () => {
@@ -29,6 +29,9 @@ const Pager: React.FC<Props> = () => {
 
   return (
     <View style={styles.container}>
+      <View style={{ alignSelf: 'flex-start', left: -40 }}>
+        <Drawer />
+      </View>
       <PagerView
         style={styles.pager}
         ref={ref}

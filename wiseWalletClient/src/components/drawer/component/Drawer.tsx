@@ -1,110 +1,78 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Text,
   StyleSheet,
   View,
-  DrawerLayoutAndroid,
   TouchableOpacity,
   Image,
-  Button,
+  Modal,
 } from 'react-native';
 import { Colors } from '../../../enums/Colors';
 import { useNavigation } from '@react-navigation/native';
-import { useAppSelector } from '../../../redux/store';
 
 interface DrawerProps {
   children: React.ReactNode;
 }
 
-const Drawer = ({ children }: DrawerProps) => {
-  const drawer = useRef<DrawerLayoutAndroid>(null);
+const Drawer = () => {
   const navigation: any = useNavigation();
-  const state = useAppSelector(state => state.user.user);
-  const tp = state[state.length - 1];
-  const results = tp?.payload.user.premium;
-  const navigationView = () => (
-    <View style={styles.container}>
-          <TouchableOpacity
-            style={styles.x}
-            onPress={() => drawer.current?.closeDrawer()}>
-            <Image style={styles.burguerBtn} source={require('./closeX.png')}/>
-          </TouchableOpacity>
+  const [modal, setModal] = useState<boolean>(false);
 
-          <TouchableOpacity onPress={() =>{
-            drawer.current?.closeDrawer()
-            navigation.navigate('MyDrawer')
-          } 
-        }>
-            <Text style={styles.text}>Home</Text>
-          </TouchableOpacity>
-
-
-          <TouchableOpacity onPress={() =>{
-            drawer.current?.closeDrawer()
-            navigation.navigate('FormPager')
-          } 
-          }>
-
-            <Text style={styles.text}>Add+</Text>
-          </TouchableOpacity>
-
-          
-
-          <TouchableOpacity onPress={() =>{
-            drawer.current?.closeDrawer()
-            navigation.navigate('Profile')
-          } 
-        }>
-            <Text style={styles.text}>Profile</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => {
-            drawer.current?.closeDrawer()
-            navigation.navigate('Slider')
-          }
-        }>
-            <Text style={styles.text}>New Account</Text>
-          </TouchableOpacity>
-          {
-            results === false
-            ?
-            <>
-            <TouchableOpacity onPress={() => navigation.navigate('ToPremium')}>
-            <Text style={styles.text}>👑My Goals👑</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => navigation.navigate('ToPremium')}>
-            <Text style={styles.text}>👑Shared👑</Text>
-            </TouchableOpacity>
-            </>
-          : 
-          <>
-          <TouchableOpacity onPress={() => navigation.navigate('GoalsList')}>
-          <Text style={styles.text}>My Goals</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => navigation.navigate('SharedList')}>
-          <Text style={styles.text}>Shared</Text>
-          </TouchableOpacity>
-          </>
-          }
-        
-          
-    </View>
-  );
 
   return (
-    <DrawerLayoutAndroid
-      ref={drawer}
-      drawerWidth={250}
-      renderNavigationView={navigationView}>
-      <TouchableOpacity
-        style={styles.drawer}
-        onPress={() => drawer.current?.openDrawer()}>
-        <Image style={styles.burguerBtn} source={require('./burguerBtn.png')}/>
+    <View>
+    
+      <TouchableOpacity style={styles.drawer} onPress={() => setModal(true)}>
+        <Image style={styles.burguerBtn} source={require('./burguerBtn.png')} />
       </TouchableOpacity>
-      {children}
-    </DrawerLayoutAndroid>
+
+      {modal && (
+        <View>
+          <Modal visible={modal} animationType="fade" transparent={true}>
+            <View
+              style={{
+                backgroundColor: Colors.DETAIL_COLOR,
+                width: '50%',
+                height: '100%',
+              }}>
+              <TouchableOpacity
+                style={styles.x}
+                onPress={() => setModal(false)}>
+                <Image
+                  style={styles.burguerBtn}
+                  source={require('./closeX.png')}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Slider');
+                  setModal(false);
+                }}>
+                <Text style={styles.text}>New Account</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('GoalsList');
+                  setModal(false);
+                }}>
+                <Text style={styles.text}>My Goals</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('SharedList');
+                  setModal(false);
+                }}>
+                <Text style={styles.text}>Shared</Text>
+              </TouchableOpacity>
+            </View>
+          </Modal>
+        </View>
+      )}
+
+    </View>
   );
 };
 
@@ -117,12 +85,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.BACKGROUND_COLOR,
   },
   text: {
-    color: Colors.TITLE_COLOR,
+    color: Colors.BACKGROUND_COLOR,
     fontSize: 20,
     marginTop: 20,
     marginBottom: 20,
     padding: 8,
-    marginLeft: 20
+    marginLeft: 20,
   },
   drawer: {
     backgroundColor: Colors.BACKGROUND_COLOR,
@@ -130,15 +98,13 @@ const styles = StyleSheet.create({
   },
   burguerBtn: {
     top: 10,
-    height:40,
+    height: 40,
     width: 40,
     resizeMode: 'contain',
     left: 20,
   },
-  x:{
+  x: {
     marginBottom: 20,
-    marginTop: 20
-
-  }
-
+    marginTop: 20,
+  },
 });

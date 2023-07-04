@@ -41,6 +41,7 @@ const AllMovements: React.FC<Props> = () => {
   const allMovements = useAppSelector(state => state.allMovements.allMovements);
   const filter = useAppSelector(state => state.allMovements.filtered);
   const balance = useAppSelector(state => state.allMovements.balance);
+  
 
   const [showLoader, setShowLoader] = useState(false);
   console.log('FILTER',filter);
