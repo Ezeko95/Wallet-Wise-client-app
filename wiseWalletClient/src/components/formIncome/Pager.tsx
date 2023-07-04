@@ -10,6 +10,7 @@ import { getMovements, getAccounts, getExpense, getIncome } from '../../redux/sl
 import { useNavigation } from '@react-navigation/native';
 import LoaderSuccess from '../Loader/LoaderSuccess';
 
+
  
 
 interface Data {
@@ -511,6 +512,7 @@ const Pager = () => {
         
       </PagerView>
       {showLoader && <LoaderSuccess />}
+      
     </View>
   );
 }

@@ -1,12 +1,16 @@
 import { Button , TouchableOpacity, Text, StyleSheet, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Loader from '../Loader/Loader';
 const LogoutButton = () => {
+
+    const [showLoader, setShowLoader] = useState(false);
     
     const navigation:any = useNavigation()
     const onPress = async () => {
         try {
+            setShowLoader(true);
             await AsyncStorage.removeItem('accessToken');
             console.log('Elemento eliminado de AsyncStorage');
             navigation.navigate('Login')
@@ -14,6 +18,15 @@ const LogoutButton = () => {
             console.log('Error al eliminar el elemento de AsyncStorage:', error);
           }
     };
+
+    useEffect(() => {
+        if (showLoader) {
+          setTimeout(() => {
+            setShowLoader(false);
+          }, 3000); // Duración de 3 segundos
+        }
+      }, [showLoader]);
+
 
     return(
         <>
@@ -24,8 +37,9 @@ const LogoutButton = () => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.buton}>
         <Text style={{color: "white", textAlign: "center", fontSize: 25}}>Premium 👑</Text>
-    </TouchableOpacity>
+        </TouchableOpacity>
         </View>
+        {showLoader && <Loader />}
     
     </>
     )

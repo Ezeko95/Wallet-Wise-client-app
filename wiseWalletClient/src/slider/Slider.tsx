@@ -145,8 +145,10 @@ const Slider = () => {
   },[dispatch])
   
   return (
-      <ImageBackground style={{width: '100%', height: '100%'}} source={require('./assets/fondoCreateAccount1.png')}>
-  
+      <ImageBackground style={{width: '100%', height: '100%'}} source={require('./assets/fondoCreateAccount2.png')}>
+        <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
+                <Text style={styles.goBack}>{'<'}</Text>
+            </TouchableOpacity>
             <View style={{ marginTop: 200, backgroundColor: '#696FE7', width: '80%', alignSelf: 'center', borderRadius: 30, height: 300, justifyContent: 'center'}}>
               {/* <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter your Account"></TextInput> */}
               <SelectCountry<SelectAccounts>
@@ -248,5 +250,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginLeft: 20,
     marginRight: 20
-  }
+  },
+  goBack: {
+    color: '#4D2FE4',
+    backgroundColor: "white",
+    borderRadius: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 25,
+    width: 40,
+    height: 40,
+    borderColor: '#4D2FE4',
+    borderWidth: 2,
+    left: 30,
+    top: 40
+},
 });

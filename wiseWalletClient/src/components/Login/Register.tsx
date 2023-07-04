@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   TextInput,
@@ -55,6 +55,7 @@ const Register = () => {
   };
 
   const handleSubmit = async () => {
+    
     let nameError = '';
     if (!form.name) {
       nameError = '* Please enter a username';
@@ -102,6 +103,14 @@ const Register = () => {
     }
   };
 
+  useEffect(() => {
+    if (showLoader) {
+      setTimeout(() => {
+        setShowLoader(false);
+      }, 2000); // Duración de 3 segundos
+    }
+  }, [showLoader]);
+  
 
     return (
       
