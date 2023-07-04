@@ -96,7 +96,11 @@ const Register = () => {
       await AsyncStorage.setItem('accessToken', accessToken);
       console.log(dispatch(gettingUsers), 'ESTE ES EL DISPATCH DE REGISTER');
       navigation.navigate('Slider');
-
+      setForm({
+        name: '',
+        email: '',
+        password: '',
+      })
       // Call the onRegister function from props to handle the registration action
     } catch (error) {
       console.log(error);

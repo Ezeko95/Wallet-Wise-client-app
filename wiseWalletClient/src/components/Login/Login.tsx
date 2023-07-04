@@ -120,6 +120,7 @@ const Login: React.FC = () => {
         console.log(dispatch(gettingUsers()), 'este es DISPATCH DE LOGIN');
         navigation.navigate('MyDrawer'); 
       } catch (error) {
+        Alert.alert('Error in login data, incorrect email or password');
         console.log(error);
       }
       
