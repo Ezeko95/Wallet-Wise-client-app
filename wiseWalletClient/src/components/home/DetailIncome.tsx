@@ -9,6 +9,7 @@ import { base_URL } from '../../redux/utils';
 import { getAccounts } from '../../redux/slices/allMovementsSlice';
 import { useNavigation } from '@react-navigation/native';
 import { IIncome } from '../../redux/interfaces/Interface';
+import LoaderSuccess from '../Loader/LoaderSuccess';
 
 
 interface IUpdateStateInc {
@@ -20,7 +21,8 @@ interface IUpdateStateInc {
 
 const DetailIncome = () => {
   const navigation:(any) = useNavigation();
-  
+
+  const [showLoader, setShowLoader] = useState(false);
 
   const dispatch = useAppDispatch()
   const incomes = useAppSelector(state=> state.allMovements.incomes)
@@ -30,7 +32,7 @@ const DetailIncome = () => {
   const balance = useAppSelector((state)=> state.allMovements.balance)
   
   const itemId = useAppSelector((state)=> state.allMovements.itemId)
-console.log(itemId, 'itemId');
+  console.log(itemId, 'itemId');
 
   const show: any[] = filter; 
 
@@ -97,6 +99,7 @@ console.log(itemId, 'itemId');
   const inc: any = incomes?.find(e=> e.id===itemId)
 
   const handleUpdateIncome= async ()=>{
+    setShowLoader(true);
     const infoEdit: IUpdateStateInc = {
       type,
       amount: parseFloat(amount)
@@ -131,14 +134,20 @@ console.log(itemId, 'itemId');
   
   
   useEffect(() => {
-
+    
     dispatch(getIncome(ide[ide.length-1]))
     inc && setDetail(inc)
     
   }, [])
   
 
-  
+  useEffect(() => {
+    if (showLoader) {
+      setTimeout(() => {
+        setShowLoader(false);
+      }, 2000); // Duración de 3 segundos
+    }
+  }, [showLoader]);
   
   
   
@@ -192,6 +201,7 @@ console.log(itemId, 'itemId');
                     </ImageBackground>
                   </View>
                 </View>
+              {showLoader && <LoaderSuccess />}
               </Modal>
             </View>
         }
@@ -236,7 +246,6 @@ console.log(itemId, 'itemId');
         <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}>DELETE</Text>
       </TouchableOpacity>
     </ScrollView>
- 
 </View>
 
 
