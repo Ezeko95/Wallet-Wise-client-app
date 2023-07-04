@@ -237,6 +237,10 @@ const Pager = () => {
       amountError: amountError,
       amountError2: amountError2
     });
+
+    if(account !== account){
+      return Alert.alert('Error in selected account, please try again')
+    }
     
     if(accountError || typeError || amountError || amountError){
       setShowLoader(false);

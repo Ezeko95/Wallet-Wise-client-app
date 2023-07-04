@@ -18,8 +18,8 @@ const SharedList: React.FC = () => {
   const ide = idUser.map(idUser => idUser.payload.user.id);
 
   const showRoom = rooms.filter(e => e.deletedShared === false);
-  console.log(rooms, 'rooommsss');
-
+  console.log(ide[ide.length - 1], 'ide en sharedlist');
+ 
   useEffect(() => {
     dispatch(getAllRooms(ide[ide.length - 1]));
   }, []);
@@ -69,7 +69,7 @@ const SharedList: React.FC = () => {
       </View>
       {rooms.length > 0 && (
         <ScrollView bounces={true}>
-          <Text style={{ color: 'white' }}>entramos al room</Text>
+         
           {showRoom.length > 0 &&
             showRoom.map((room, index) => {
               return (

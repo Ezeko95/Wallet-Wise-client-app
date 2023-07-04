@@ -144,7 +144,7 @@ const Login: React.FC = () => {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <Text>{}</Text>
+        
     <View style={styles.container}>
         <Image source={require("./assets/logo.png")} style={styles.image}/>
 
