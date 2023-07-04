@@ -278,9 +278,9 @@ const AllMovements: React.FC<Props> = () => {
             colorScale={colors}
             data={show?.map(e => {
               if (e.type) {
-                return { x: e.type, y: e.amount };
+                return { x: e.index, y: e.amount };
               } else {
-                return { x: e.category, y: e.amount };
+                return { x: e.index, y: e.amount };
               }
             })}
           />
@@ -291,7 +291,7 @@ const AllMovements: React.FC<Props> = () => {
                 return (
                   <View key={index}>
                     <Text style={styles.detail}>
-                      {mov.type}: {mov.amount}
+                      {index} - {mov.type}: {mov.amount}
                     </Text>
                   </View>
                 );
@@ -299,7 +299,7 @@ const AllMovements: React.FC<Props> = () => {
                 return (
                   <View key={index}>
                     <Text style={styles.detail}>
-                      {mov.category}: {mov.amount}
+                      {index} - {mov.category}: {mov.amount}
                     </Text>
                   </View>
                 );

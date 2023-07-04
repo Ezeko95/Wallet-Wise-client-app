@@ -85,7 +85,7 @@ const Register = () => {
     try {
       setShowLoader(true);
       const response = await axios.post<{ accessToken: string }>(
-        'http://10.0.2.2:3001/user/register',
+        'http://localhost:3001/user/register',
         form,
       );
       const { accessToken } = response.data;
