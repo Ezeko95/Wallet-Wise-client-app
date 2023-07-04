@@ -106,12 +106,11 @@ const SharedDetail: React.FC = () => {
           paddingBottom: 15,
           paddingVertical: 10,
         }}>
-        <TouchableOpacity
-          onPress={() => {
+        <TouchableOpacity onPress={() => {
             navigation.navigate('SharedList');
             dispatch(getAllRooms(ide[ide.length - 1]));
           }}>
-          <Text>{'<'}</Text>
+          <Text style={styles.goBack}>{'<'}</Text>
         </TouchableOpacity>
 
         <View
@@ -296,45 +295,60 @@ const SharedDetail: React.FC = () => {
         </View>
       </ScrollView>
 
+
+
+
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() => {
-            setCloseShared(true);
-            dispatch(getAccounts(ide[ide.length - 1]));
-          }}
-          style={styles.touchableOpacity}>
-          <Text style={styles.textFinish}>Close & add expense on balance </Text>
-        </TouchableOpacity>
-        {closeShared && (
-          <View>
-            <SelectCountry<AccountData>
-              style={styles.dropdown}
-              selectedTextStyle={styles.selectedTextStyle}
-              placeholderStyle={styles.placeholderStyle}
-              imageStyle={styles.imageStyle}
-              iconStyle={styles.iconStyle}
-              maxHeight={200}
-              value={paymentMethod}
-              data={data}
-              valueField="value"
-              labelField="label"
-              imageField="image"
-              placeholder="Select Account"
-              onChange={value => setAccountShared(value.value)}
-            />
-            <TouchableOpacity onPress={() => handleSoftDelete()}>
-              <Text>Done</Text>
+
+          <View style={{flexDirection: 'column', justifyContent: 'center', width: "45%"}}>
+            <TouchableOpacity
+              onPress={() => {
+                setCloseShared(!closeShared);
+                dispatch(getAccounts(ide[ide.length - 1]));
+              }}
+              style={styles.touchableOpacity}>
+              <Text style={styles.textFinish}>Close & add expense</Text>
+            </TouchableOpacity>
+                {closeShared && (
+                  <View>
+                    <SelectCountry<AccountData>
+                      style={styles.dropdown}
+                      selectedTextStyle={styles.selectedTextStyle}
+                      placeholderStyle={styles.placeholderStyle}
+                      maxHeight={200}
+                      value={paymentMethod}
+                      data={data}
+                      valueField="value"
+                      labelField="label"
+                      imageField= ""
+                      placeholder="Select Account"
+                      onChange={value => setAccountShared(value.value)}
+                    />
+                    <TouchableOpacity onPress={() => handleSoftDelete()} style={{
+                          justifyContent: "center",
+                          alignSelf: "center",
+                          backgroundColor: 'yellow',
+                          width: "50%",
+                          borderRadius: 5,
+                          marginBottom: 50
+                    }}>
+                      <Text style={{fontWeight: 'bold', color: "black", fontSize: 15, textAlign: 'center',}}>Done</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+          </View>
+
+          <View style={{flexDirection: 'column', justifyContent: 'center', width: "45%"}}>
+            <TouchableOpacity
+              onPress={() => {handleDelete();}}
+              style={styles.touchableOpacityDelete}>
+              <Text style={styles.textFinishDelete}>Delete Permanently</Text>
             </TouchableOpacity>
           </View>
-        )}
-        <TouchableOpacity
-          onPress={() => {
-            handleDelete();
-          }}
-          style={styles.touchableOpacity}>
-          <Text style={styles.textFinish}>Close</Text>
-        </TouchableOpacity>
+
       </View>
+
+      
     </View>
   );
 };
@@ -342,6 +356,42 @@ const SharedDetail: React.FC = () => {
 export default SharedDetail;
 
 const styles = StyleSheet.create({
+  dropdown: {
+    margin: 10,
+    height: 40,
+    width: "90%",
+    backgroundColor: '#EEEEEE',
+    borderRadius: 8,
+    padding: 15,
+    justifyContent: "center",
+    alignSelf: "center",
+    marginBottom: 10
+  },
+  touchableOpacity: {
+    height: "50%",
+    width: "90%",
+    justifyContent: "center",
+    alignSelf: "center",
+    backgroundColor: 'yellow',
+    borderRadius: 8,
+    marginBottom: 7
+  },
+  textFinish: {
+    textAlign: 'center',
+    color: 'black',
+    fontWeight: 'bold',
+    padding: 5
+  },
+  buttonContainer: {
+  //  backgroundColor:"grey",
+
+    marginBottom: 0,
+    alignContent: "flex-end",
+    justifyContent: "center",
+    flexDirection: 'row',
+    height: '15%',
+    width: "100%"
+  },
   titles: {
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
@@ -354,6 +404,24 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  textFinishDelete: {
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+    padding: 5
+  },
+  touchableOpacityDelete: {
+    borderWidth: 1.5,
+    borderColor: "white",
+    height: "50%",
+    width: "90%",
+    justifyContent: "center",
+    alignSelf: "center",
+    backgroundColor: 'red',
+    borderRadius: 8,
+    
+    marginBottom: 7
   },
   subtitles: {
     textAlign: 'center',
@@ -391,36 +459,6 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     backgroundColor: Colors.BACKGROUND_COLOR,
-  },
-  buttonContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  textFinish: {
-    display: 'flex',
-    color: 'black',
-    backgroundColor: 'yellow',
-    borderRadius: 15,
-    width: 150,
-    height: 40,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    paddingHorizontal: 10,
-    marginBottom: 15,
-  },
-  touchableOpacity: {
-    margin: 5,
-    height: 50,
-  },
-  dropdown: {
-    margin: 16,
-    height: 40,
-    width: 200,
-    backgroundColor: '#EEEEEE',
-    borderRadius: 22,
-    padding: 15,
   },
   imageStyle: {
     width: 25,

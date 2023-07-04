@@ -41,7 +41,8 @@ const AllMovements: React.FC<Props> = () => {
   const allMovements = useAppSelector(state => state.allMovements.allMovements);
   const filter = useAppSelector(state => state.allMovements.filtered);
   const balance = useAppSelector(state => state.allMovements.balance);
-  
+  const incomes = useAppSelector((state) => state.allMovements.incomes)
+  const expenses = useAppSelector((state) => state.allMovements.expenses)
 
   const [showLoader, setShowLoader] = useState(false);
   console.log('FILTER',filter);
@@ -268,7 +269,13 @@ const AllMovements: React.FC<Props> = () => {
 
 
 
-          <Text style={styles.text}>${balance}</Text>
+                {
+                  incomes.length === 0 && expenses.length === 0 ?
+                  <Image style={{marginTop: 50}} source={require('./assets/noMovements.png')}/>
+                
+                  :<Text style={styles.text}>${balance}</Text>
+                }
+                
           <VictoryPie
             style={{
               labels: {

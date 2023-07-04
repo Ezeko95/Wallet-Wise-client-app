@@ -143,6 +143,11 @@ console.log(itemId, 'itemId');
     }
     else if (detail.category === 'technology') {
       return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 4}} source={require('./assets/logos/technology.jpg')} />;
+    }else if (detail.category === 'Shared') {
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 4}} source={require('./assets/logos/shared1.png')} />;
+    }
+    else if (detail.category === 'Goal') {
+      return <Image style={{width: 50, height: 50, borderRadius: 100, marginLeft: 5, marginTop: 4}} source={require('./assets/logos/goals.png')} />;
     }
     
   }
@@ -193,7 +198,7 @@ console.log(itemId, 'itemId');
         <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
                 <Text style={styles.goBack}>{'<'}</Text>
             </TouchableOpacity>
-                <Text style={styles.title}>Incomes details</Text>
+                <Text style={styles.title}>Expenses details</Text>
         </View>
 
         <View style={{marginTop: 30}}>
@@ -201,10 +206,13 @@ console.log(itemId, 'itemId');
           <Text style={{textAlign: 'center', color: 'white', fontSize: 25, fontWeight: 'bold'}}>$ {detail.amount}</Text>
         </View>
       </View>
-      <Image style={{alignSelf: 'center', top: 10}} source={require('./assets/line2.png')}/>
-      <TouchableOpacity onPress={() => setOpenModal(true)} style={{alignSelf: 'flex-end', top: -245, marginRight: 20}}>
+
+      {
+      detail.category === 'Shared' || detail.category === 'Goal' ? null 
+      :
+       <TouchableOpacity onPress={() => setOpenModal(true)} style={{alignSelf: 'flex-end',bottom: 200, marginRight: 20}}>
         <View style={{ padding: 8, borderRadius: 20 }}>
-          <Image style={{ width: 40, height: 40 }} source={require('./assets/edit.png')} />
+          <Image style={{ width: 45, height: 45 }} source={require('./assets/edit.png')} />
         </View>
 
         {
@@ -236,7 +244,8 @@ console.log(itemId, 'itemId');
             </View>
         }
       </TouchableOpacity>
-        <Text></Text>
+    } 
+     
       
 
       
@@ -245,7 +254,7 @@ console.log(itemId, 'itemId');
         
         {!detail.deletedExpense && (
   <View>
-    <View style={{ alignSelf: 'center' ,width:'90%', top: -20 }}>
+    <View style={{ alignSelf: 'center' ,width:'90%', marginTop: 50 }}>
       
 
       <View style={{backgroundColor: '#4D2FE4', width:'100%', top: -40, borderRadius: 40, height: 500}}>
@@ -280,13 +289,19 @@ console.log(itemId, 'itemId');
   </View>
 )}
      
-      <TouchableOpacity
-        style={{ borderRadius: 10, backgroundColor: 'red', width: 120, alignSelf: 'center', padding: 10, marginBottom: 40 }}
-        onPress={() => handleDeleteExpense(detail.id, ide[ide.length-1])}
-        
-      >
-        <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}>DELETE</Text>
-      </TouchableOpacity>
+     {
+      
+      detail.category === 'Shared' || detail.category === 'Goal' ? null 
+      :
+     <TouchableOpacity
+     style={{ borderRadius: 10, backgroundColor: 'red', width: 120, alignSelf: 'center', padding: 10, marginBottom: 40 }}
+     onPress={() => handleDeleteExpense(detail.id, ide[ide.length-1])}
+     
+     >
+      <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}>DELETE</Text>
+    </TouchableOpacity>
+    
+    } 
     </ScrollView>
  
 </View>
