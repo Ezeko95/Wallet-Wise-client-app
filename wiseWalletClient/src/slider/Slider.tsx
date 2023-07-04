@@ -9,6 +9,7 @@ import { useAppSelector, useAppDispatch } from '../redux/store';
 import { postAccount, AccountData } from "../redux/slices/postAccount";
 import { gettingUsers } from "../redux/slices/getUsers";
 import Loader from "../components/Loader/Loader";
+import Drawer from "../components/drawer/component/Drawer";
 
 
 const Slider = () => {
@@ -162,6 +163,9 @@ const Slider = () => {
   
   return (
       <ImageBackground style={{width: '100%', height: '100%'}} source={require('./assets/fondoCreateAccount2.png')}>
+         <View style={{ alignSelf: 'flex-start', left: -40 }}>
+          <Drawer />
+        </View>
         <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
                 <Text style={styles.goBack}>{'<'}</Text>
             </TouchableOpacity>

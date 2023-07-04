@@ -121,6 +121,9 @@ const SharedScreen = () => {
             </Modal>
           </View>
         ) : null}
+         <View style={{ alignSelf: 'flex-start', right: '1%', bottom: '1%' }}>
+          <Drawer />
+        </View>
         <View style={styles.perfiView} key={tp.payload.user.id}>
           <Image
             source={{ uri: `${tp.payload.user.picture}` }}

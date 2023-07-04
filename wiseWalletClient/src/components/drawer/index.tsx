@@ -7,9 +7,9 @@ import Expenses from '../home/Expenses';
 const MyDrawer = () => {
 
   return (
-      <Drawer>
+      
         <MyTabs/>
-      </Drawer>
+      
   );
 };
 
