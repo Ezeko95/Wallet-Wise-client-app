@@ -33,7 +33,7 @@ const Login: React.FC = () => {
   const navigation: any = useNavigation();
   const [showLoader, setShowLoader] = useState(false);
 
-
+  const [errorr, setErrorr] = useState<string>('');
   const [form, setForm] = useState<LoginForm>({
     email: '',
     password: '',
@@ -70,6 +70,7 @@ const Login: React.FC = () => {
         setStorage(true);
       }
     } catch (error) {
+      setErrorr('Invalid email or password');
       console.log(error);
     }
   };
@@ -122,6 +123,14 @@ const Login: React.FC = () => {
       }
       
     };
+    useEffect(() => {
+      if (showLoader) {
+        setTimeout(() => {
+          setShowLoader(false);
+        }, 2000); // Duración de 3 segundos
+      }
+    }, [showLoader]);
+    
     
     
     return (
@@ -133,10 +142,11 @@ const Login: React.FC = () => {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
+        <Text>{}</Text>
     <View style={styles.container}>
         <Image source={require("./assets/logo.png")} style={styles.image}/>
 
-
+        {errorr && <Text>{errorr}</Text>}
       <TextInput
         style={styles.input}
         placeholder="*Email"

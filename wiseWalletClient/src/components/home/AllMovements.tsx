@@ -32,10 +32,12 @@ import {
   orderByAmount,
   orderByAlpha,
 } from '../../redux/slices/allMovementsSlice';
+import LoaderChart from '../Loader/LoaderChart';
 
 export interface AccountData {
   label: string;
   value: string;
+  
 }
 
 
@@ -48,7 +50,7 @@ const AllMovements: React.FC<Props> = () => {
   const allMovements = useAppSelector(state => state.allMovements.allMovements);
   const filter = useAppSelector(state => state.allMovements.filtered);
   const balance = useAppSelector(state => state.allMovements.balance);
-
+  const [showLoader, setShowLoader] = useState(false);
   console.log('FILTER',filter);
   console.log("allmovements",allMovements)
   console.log('Balance from redux', balance);
@@ -61,11 +63,22 @@ const AllMovements: React.FC<Props> = () => {
   console.log('show', show);
 
   useEffect(() => {
+    setShowLoader(true);
     dispatch(getAccounts(ide[ide.length - 1]));
     dispatch(getMovements(ide[ide.length - 1]));
     dispatch(getIncome(ide[ide.length - 1]));
     dispatch(getExpense(ide[ide.length - 1]));
   }, [dispatch]);
+
+  
+  useEffect(() => {
+    if (showLoader) {
+      setTimeout(() => {
+        setShowLoader(false);
+      }, 4000); // Duración de 3 segundos
+    }
+  }, [showLoader]);
+
 
   const data: AccountData[] = [];
 
@@ -208,14 +221,15 @@ const AllMovements: React.FC<Props> = () => {
            
               <Text style={styles.text}>${balance}</Text>
             <VictoryPie
-              style={{
+               style={{
                 labels: {
-                  fill: '#FFFFFF',
-                  
-                },
+                  fontSize: 14, 
+                  fill: "white",
+                }
               }}
               
-              innerRadius={110}
+              padding={70}
+              innerRadius={90}
               colorScale={colors}
               data={show?.map(e => {
                 if (e.type) {
@@ -254,6 +268,7 @@ const AllMovements: React.FC<Props> = () => {
           
         </View>
       </ScrollView>
+      {showLoader && <LoaderChart />}
     </View>
          
   );
