@@ -19,6 +19,7 @@ import { useStripe } from '@stripe/stripe-react-native';
 import axios from 'axios';
 import { base_URL } from '../redux/utils';
 import { useNavigation } from '@react-navigation/native';
+import { ScrollView } from 'react-native';
 const SharedScreen = () => {
   const [openModal, setOpenModal] = useState(true);
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
@@ -26,6 +27,7 @@ const SharedScreen = () => {
   const dispatch = useAppDispatch();
   const state = useAppSelector(state => state.user.user);
   const tp = state[state.length - 1];
+  const results = tp.payload.user.id;
 
   useEffect(() => {
     dispatch(gettingUsers());
@@ -45,6 +47,7 @@ const SharedScreen = () => {
         defaultBillingDetails: {
           name: 'Fabian Garcia Test',
         },
+        
       });
       if (initResponse.error) {
         Alert.alert('Something went wrong');
@@ -58,16 +61,18 @@ const SharedScreen = () => {
         return;
       }
       //logica para hacer premium al usuario
-
       navigation.navigate('Premium');
     } catch (err) {
       console.log('err intent', err);
     }
   };
+ 
   return (
     <ImageBackground
       style={{ height: '100%', width: '100%' }}
       source={require('./images/bgProfile.png')}>
+        <ScrollView>
+
       <View style={styles.perfiView}>
         {openModal && tp.payload.user.premium === false ? (
           <View>
@@ -120,7 +125,7 @@ const SharedScreen = () => {
           <Image
             source={{ uri: `${tp.payload.user.picture}` }}
             style={styles.image}
-          />
+            />
           <Text style={{ color: 'white', fontSize: 39 }}>
             {tp.payload.user.name}
           </Text>
@@ -132,8 +137,8 @@ const SharedScreen = () => {
               Standard account
             </Text>
           ) : (
-            <Text style={{ color: 'black', fontSize: 20, marginTop: 10 }}>
-              Premium account
+            <Text style={{ color: 'white', fontSize: 20, marginTop: 10 }}>
+              👑Premium account👑
             </Text>
           )}
         </View>
@@ -141,6 +146,7 @@ const SharedScreen = () => {
       <View style={styles.stylesBtn}>
         <LogoutButton />
       </View>
+          </ScrollView>
     </ImageBackground>
   );
 };
@@ -182,5 +188,6 @@ const styles = StyleSheet.create({
   stylesBtn: {
     justifyContent: 'center',
     alignItems: 'center',
+    width:430
   },
 });

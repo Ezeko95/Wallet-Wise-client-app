@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Colors } from '../../../enums/Colors';
 import { useNavigation } from '@react-navigation/native';
+import { useAppSelector } from '../../../redux/store';
 
 interface DrawerProps {
   children: React.ReactNode;
@@ -18,7 +19,9 @@ interface DrawerProps {
 const Drawer = ({ children }: DrawerProps) => {
   const drawer = useRef<DrawerLayoutAndroid>(null);
   const navigation: any = useNavigation();
-
+  const state = useAppSelector(state => state.user.user);
+  const tp = state[state.length - 1];
+  const results = tp?.payload.user.premium;
   const navigationView = () => (
     <View style={styles.container}>
           <TouchableOpacity
@@ -27,32 +30,65 @@ const Drawer = ({ children }: DrawerProps) => {
             <Image style={styles.burguerBtn} source={require('./closeX.png')}/>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
+          <TouchableOpacity onPress={() =>{
+            drawer.current?.closeDrawer()
+            navigation.navigate('MyDrawer')
+          } 
+        }>
             <Text style={styles.text}>Home</Text>
           </TouchableOpacity>
 
 
-          <TouchableOpacity onPress={() => navigation.navigate('FormPager')}>
+          <TouchableOpacity onPress={() =>{
+            drawer.current?.closeDrawer()
+            navigation.navigate('FormPager')
+          } 
+          }>
+
             <Text style={styles.text}>Add+</Text>
           </TouchableOpacity>
 
           
 
-          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+          <TouchableOpacity onPress={() =>{
+            drawer.current?.closeDrawer()
+            navigation.navigate('Profile')
+          } 
+        }>
             <Text style={styles.text}>Profile</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Slider')}>
+          <TouchableOpacity onPress={() => {
+            drawer.current?.closeDrawer()
+            navigation.navigate('Slider')
+          }
+        }>
             <Text style={styles.text}>New Account</Text>
           </TouchableOpacity>
+          {
+            results === false
+            ?
+            <>
+            <TouchableOpacity onPress={() => navigation.navigate('ToPremium')}>
+            <Text style={styles.text}>👑My Goals👑</Text>
+            </TouchableOpacity>
 
+            <TouchableOpacity onPress={() => navigation.navigate('ToPremium')}>
+            <Text style={styles.text}>👑Shared👑</Text>
+            </TouchableOpacity>
+            </>
+          : 
+          <>
           <TouchableOpacity onPress={() => navigation.navigate('GoalsList')}>
-            <Text style={styles.text}>My Goals</Text>
+          <Text style={styles.text}>My Goals</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => navigation.navigate('SharedList')}>
-            <Text style={styles.text}>Shared</Text>
+          <Text style={styles.text}>Shared</Text>
           </TouchableOpacity>
+          </>
+          }
+        
           
     </View>
   );

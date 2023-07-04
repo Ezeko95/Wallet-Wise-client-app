@@ -9,6 +9,7 @@ import { base_URL } from '../../redux/utils';
 import { getAccounts } from '../../redux/slices/allMovementsSlice';
 import { useNavigation } from '@react-navigation/native';
 import { IExpenses } from '../../redux/interfaces/Interface';
+import LoaderSuccess from '../Loader/LoaderSuccess';
 
 
 interface IUpdateStateInc {
@@ -19,7 +20,7 @@ interface IUpdateStateInc {
 
 const DetailIncome = () => {
   const navigation:(any) = useNavigation();
-  
+  const [showLoader, setShowLoader] = useState(false);
 
   const dispatch = useAppDispatch()
   const expense = useAppSelector(state=> state.allMovements.expenses)
@@ -64,9 +65,9 @@ console.log(itemId, 'itemId');
     const response = await axios.delete(`${base_URL}/movement/expense/${idinc}`);
     if (response.status === 200) {
       dispatch(getExpense(ide));
-
       dispatch(getAccounts(ide));
       dispatch(getMovements(ide))
+      navigation.navigate('MyDrawer')
       setDetail({
         id: 0,
         amount: 0,
@@ -93,6 +94,7 @@ console.log(itemId, 'itemId');
     const inc: any = expense?.find(e=> e.id===itemId)
 
   const handleUpdateExpense = async ()=>{
+    setShowLoader(true);
     const infoEdit: IUpdateStateInc = {
       description,
       amount: parseFloat(amount)
@@ -170,6 +172,13 @@ console.log(itemId, 'itemId');
   
   }, [])
   
+  useEffect(() => {
+    if (showLoader) {
+      setTimeout(() => {
+        setShowLoader(false);
+      }, 2000); // Duración de 3 segundos
+    }
+  }, [showLoader]);
 
 
 
@@ -222,6 +231,7 @@ console.log(itemId, 'itemId');
                     </ImageBackground>
                   </View>
                 </View>
+                {showLoader && <LoaderSuccess />}
               </Modal>
             </View>
         }

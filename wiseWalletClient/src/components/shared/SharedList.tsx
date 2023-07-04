@@ -17,24 +17,36 @@ const SharedList: React.FC = () => {
   const idUser = useAppSelector(state => state.user.user);
   const ide = idUser.map(idUser => idUser.payload.user.id);
 
-  const showRoom = rooms.filter(e => !e.deletedShared);
+  const showRoom = rooms.filter(e => e.deletedShared === false);
   console.log(rooms, 'rooommsss');
 
   useEffect(() => {
     dispatch(getAllRooms(ide[ide.length - 1]));
   }, []);
 
+  console.log('ROOMS', rooms);
+  console.log('SHOW ROOM', showRoom);
+
   return (
     <View style={styles.container}>
-
-      <View style={{flexDirection: 'row', paddingBottom:15, paddingVertical:10}}>
-
+      <View
+        style={{
+          flexDirection: 'row',
+          paddingBottom: 15,
+          paddingVertical: 10,
+        }}>
         <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
           <Text style={styles.goBack}>{'<'}</Text>
         </TouchableOpacity>
-        
-        <View style={{marginStart: 30,flexDirection: 'row', width: "80%", alignContent:"center"}}>
-          <Text style={{
+        <View
+          style={{
+            marginStart: 30,
+            flexDirection: 'row',
+            width: '80%',
+            alignContent: 'center',
+          }}>
+          <Text
+            style={{
               fontSize: 30,
               color: 'white',
               fontWeight: 'bold',
@@ -57,7 +69,8 @@ const SharedList: React.FC = () => {
       </View>
       {rooms.length > 0 && (
         <ScrollView bounces={true}>
-          {showRoom.length &&
+          <Text style={{ color: 'white' }}>entramos al room</Text>
+          {showRoom.length > 0 &&
             showRoom.map((room, index) => {
               return (
                 <View key={index} style={{ alignItems: 'center' }}>
@@ -94,7 +107,7 @@ const SharedList: React.FC = () => {
                           marginTop: 3.5,
                         }}>
                         <Text style={{ textAlign: 'center', color: 'yellow' }}>
-                          Participants{' '}
+                          Participants
                         </Text>
                         <Text style={{ textAlign: 'center', color: 'yellow' }}>
                           {+room.participants.length + 1}
@@ -138,7 +151,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     position: 'relative',
     margin: 5,
-    marginBottom: 20
+    marginBottom: 20,
   },
   allItems: {
     alignContent: 'center',
@@ -146,7 +159,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   goBack: {
-    alignSelf: "flex-start",
+    alignSelf: 'flex-start',
     color: 'black',
     backgroundColor: 'yellow',
     borderRadius: 10,
@@ -157,6 +170,6 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: '#FFF7AE',
     borderWidth: 2,
-    marginHorizontal:10,
+    marginHorizontal: 10,
   },
 });

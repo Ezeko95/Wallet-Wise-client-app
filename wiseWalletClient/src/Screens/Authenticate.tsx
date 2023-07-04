@@ -15,7 +15,7 @@ const AuthView: React.FC = () => {
         <TouchableOpacity onPress={handleToggleView} style={styles.botonRegister}>
           {isLoginView ? <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20, textAlign: 'center'}}>Sign In</Text> : <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20, textAlign: 'center'}}>Sign Up</Text>}
         </TouchableOpacity>
-      
+
     </View>
   );
 };
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     borderRadius:10,
     height: 50 ,
     justifyContent: "center",
-    marginTop: 850
+    top: "90%"
   }
 })
 

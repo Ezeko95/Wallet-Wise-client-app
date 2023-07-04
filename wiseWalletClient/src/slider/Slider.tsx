@@ -114,6 +114,14 @@ const Slider = () => {
         nameError = '* Please enter an account'
       }
       
+      if(nameError || totalError || !name || !total){
+        setShowLoader(false);
+      }
+      if(!name || !total){
+        setShowLoader(false);
+        Alert.alert('Error in post account, please complete all fields')
+      }
+      
       setError({
         ...error,
         nameError: nameError,
@@ -143,6 +151,14 @@ const Slider = () => {
   useEffect(()=>{
     dispatch(gettingUsers())
   },[dispatch])
+
+  useEffect(() => {
+    if (showLoader) {
+      setTimeout(() => {
+        setShowLoader(false);
+      }, 3000); // Duración de 3 segundos
+    }
+  }, [showLoader]);
   
   return (
       <ImageBackground style={{width: '100%', height: '100%'}} source={require('./assets/fondoCreateAccount2.png')}>

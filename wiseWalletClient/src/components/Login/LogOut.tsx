@@ -35,7 +35,7 @@ const LogoutButton = () => {
         <TouchableOpacity onPress={onPress} style={styles.buton}>
             <Text style={{color: "white", textAlign: "center", fontSize: 25}}>Log Out </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buton}>
+        <TouchableOpacity style={styles.buton} onPress={()=>navigation.navigate("ToPremium")}>
         <Text style={{color: "white", textAlign: "center", fontSize: 25}}>Premium 👑</Text>
         </TouchableOpacity>
         </View>

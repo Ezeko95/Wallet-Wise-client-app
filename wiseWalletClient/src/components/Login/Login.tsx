@@ -109,7 +109,7 @@ const Login: React.FC = () => {
         setShowLoader(false);
       }
       const response = await axios.post<{ accessToken: string }>(
-        'http://localhost:3001/user/login',
+        'http://10.0.2.2:3001/user/login',
         form,
 
         );
@@ -120,6 +120,7 @@ const Login: React.FC = () => {
         console.log(dispatch(gettingUsers()), 'este es DISPATCH DE LOGIN');
         navigation.navigate('MyDrawer'); 
       } catch (error) {
+        Alert.alert('Error in login data, incorrect email or password');
         console.log(error);
       }
       
@@ -172,6 +173,7 @@ const Login: React.FC = () => {
         
           <Text style={{ color: 'white', textAlign: 'center', top: 30}}>You don't have an account yet?  Sign up here!</Text>
         </View>
+    </View>
       </KeyboardAvoidingView>
 
       {showLoader && <Loader />}

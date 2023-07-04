@@ -14,6 +14,7 @@ import SharedList from '../components/shared/SharedList';
 import NewShared from '../components/shared/NewShared';
 import Premium from '../components/Premium/Premium';
 import SharedDetail from '../components/shared/SharedDetail';
+import ToPremium from '../components/Premium/ToPremium';
 
 
 type RootStackParamList = {
@@ -30,7 +31,7 @@ type RootStackParamList = {
   NewShared: undefined;
 
   Premium: undefined;
-
+  ToPremium: undefined
   SharedDetail: undefined;
 };
 
@@ -50,9 +51,11 @@ const Navigate = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        
         <Stack.Screen name="Intro" component={Intro} />
         <Stack.Screen name="Login" component={AuthView} />
         <Stack.Screen name="Premium" component={Premium} />
+        <Stack.Screen name="ToPremium" component={ToPremium} />
         <Stack.Screen name="Slider" component={Slider} />
         <Stack.Screen name="MyDrawer" component={MyDrawer} />
         <Stack.Screen name="DetailIncome" component={DetailIncome} />

@@ -16,6 +16,7 @@ import {
   getDetail,
   setDetail,
   setRoomId,
+  getAllRooms,
 } from '../../redux/slices/sharedSlice';
 
 const NewShared: React.FC = () => {
@@ -82,6 +83,7 @@ const NewShared: React.FC = () => {
     setRoom('');
     dispatch(setRoomId(response.data.id));
     dispatch(getDetail(response.data.id));
+    dispatch(getAllRooms(ide[ide.length - 1]));
     navigation.navigate('SharedDetail');
   };
 

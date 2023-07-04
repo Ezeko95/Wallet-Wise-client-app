@@ -85,7 +85,7 @@ const Register = () => {
     try {
       setShowLoader(true);
       const response = await axios.post<{ accessToken: string }>(
-        'http://localhost:3001/user/register',
+        'http://10.0.2.2:3001/user/register',
         form,
       );
       const { accessToken } = response.data;
@@ -96,7 +96,11 @@ const Register = () => {
       await AsyncStorage.setItem('accessToken', accessToken);
       console.log(dispatch(gettingUsers), 'ESTE ES EL DISPATCH DE REGISTER');
       navigation.navigate('Slider');
-
+      setForm({
+        name: '',
+        email: '',
+        password: '',
+      })
       // Call the onRegister function from props to handle the registration action
     } catch (error) {
       console.log(error);
