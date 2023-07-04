@@ -81,7 +81,7 @@ const Intro = () => {
     if (accesToken) {
       return navigation.navigate('MyDrawer');
     }
-  }, []);
+  }, [accesToken]);
 
   return (
     <>
