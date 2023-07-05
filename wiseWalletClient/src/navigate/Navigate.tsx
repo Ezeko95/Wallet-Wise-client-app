@@ -32,7 +32,7 @@ type RootStackParamList = {
   NewShared: undefined;
   Profile: undefined;
   Premium: undefined;
-  ToPremium: undefined
+  ToPremium: undefined;
   SharedDetail: undefined;
   Home:undefined;
 };
