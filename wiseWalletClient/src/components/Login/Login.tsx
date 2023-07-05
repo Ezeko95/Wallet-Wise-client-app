@@ -111,7 +111,7 @@ const Login: React.FC = () => {
         setShowLoader(false);
       }
       const response = await axios.post<{ accessToken: string }>(
-        'http://10.0.2.2:3001/user/login',
+        'https://wallet-wise-server.onrender.com/user/login',
         form,
 
         );
