@@ -54,8 +54,8 @@ const ToPremium = () => {
   return (
     <ScrollView>
     <View style={{justifyContent:"center", alignItems:"center"}}>
-      <Image source={require("./assets/fondoTo1.png")}/>
-      <Image source={require("./assets/fondoTo2.png")}/>
+      <Image source={require("./assets/premium.png")}/>
+      <Image source={require("./assets/premium2.png")}/>
       <TouchableOpacity style={style.botonOferta} onPress={()=>{
         onCheckout()
       }}>
