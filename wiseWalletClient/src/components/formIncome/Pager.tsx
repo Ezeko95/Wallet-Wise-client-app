@@ -8,8 +8,15 @@ import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { gettingUsers } from '../../redux/slices/getUsers';
 import { getMovements, getAccounts, getExpense, getIncome } from '../../redux/slices/allMovementsSlice';
 import { useNavigation } from '@react-navigation/native';
+import { Dropdown } from 'react-native-element-dropdown';
 import LoaderSuccess from '../Loader/LoaderSuccess';
 import Drawer from '../drawer/component/Drawer';
+
+export interface AccountData {
+  label: string;
+  value: string;
+  
+}
 
 
 interface Data {
@@ -188,6 +195,14 @@ const Pager = () => {
   const selector = useAppSelector((state) => state.user.user) // esto e user enterito
   const aidi = selector.map(selector => selector.payload.user.id)
   const ide = idUser.map((idUser) => idUser.payload.user.id)
+  let accounts = useAppSelector(state => state.allMovements.accounts);
+  
+  
+  const datac: AccountData[] = [];
+
+  accounts.forEach((a: string) => {
+    datac.push({ label: a, value: a });
+  });
 
   const [errorForm, setErrorForm] = useState<IncomeForm>({
     account: '',
@@ -219,7 +234,6 @@ const Pager = () => {
     }
     
     
-    
     let amountError = '';
     if (!/^\d+$/.test(amount)) {
       amountError = '* Only numbers are allowed';
@@ -238,7 +252,15 @@ const Pager = () => {
       amountError2: amountError2
     });
 
-    if(account !== account){
+    const accountExists = accounts.includes(account);
+
+    if (!accountExists) {
+      setShowLoader(false);
+      return Alert.alert('The selected account does not existe in your profile');
+    }
+
+
+    if(account.length !== account.length){
       return Alert.alert('Error in selected account, please try again')
     }
     
@@ -308,6 +330,13 @@ const Pager = () => {
       amountError: amountError,
       amountError2: amountError2
     });
+
+    const accountExists = accounts.includes(account);
+
+    if (!accountExists) {
+      setShowLoader(false);
+      return Alert.alert('The selected account does not existe in your profile');
+    }
     
     if(accountError || categoryError || amountError || amountError || descriptionError){
       setShowLoader(false);
@@ -348,8 +377,6 @@ const Pager = () => {
   
   const onChange = (item: Data) => {
     setAccount(item.label);
-    
-    
     console.log(item.value);
   }
   const onChange1 = (item: Expense) => {
@@ -377,8 +404,10 @@ const Pager = () => {
       }, 2000); // Duración de 3 segundos
     }
   }, [showLoader]);
-  
 
+
+ 
+  
   return (
     
    
@@ -418,7 +447,7 @@ const Pager = () => {
                 valueField="value"
                 labelField="label"
                 imageField="image"
-                placeholder="Select Account"
+                placeholder={account ? account : "Select Account"}
                 onChange={onChange as (item: Data) => void}
                 />
                 {errorForm.accountError && <Text style={styles.textError}>{errorForm.accountError}</Text>}
@@ -484,7 +513,7 @@ const Pager = () => {
                 valueField="value"
                 labelField="label"
                 imageField="image"
-                placeholder="Select Account"
+                placeholder={paymentMethod ? paymentMethod : "Select Account"}
                 onChange={onChange2 as (item: PaymentMethod) => void}
                 />
                 {errorExpense.accountError && <Text style={styles.textError}>{errorExpense.accountError}</Text>}

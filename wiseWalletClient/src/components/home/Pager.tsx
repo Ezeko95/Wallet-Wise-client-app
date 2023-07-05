@@ -16,7 +16,7 @@ const Pager: React.FC<Props> = () => {
   const selector = useAppSelector((state) => state.user.user) // esto e user enterito
   const ide = idUser.map((idUser) => idUser.payload.user.id)
   const aidi = selector.map(selector => selector.payload.user.id)
-
+  
   const reload = () => {
     dispatch(getMovements(ide[0]))
     dispatch(getAccounts(ide[0]))
