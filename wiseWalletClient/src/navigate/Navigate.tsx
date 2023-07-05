@@ -31,7 +31,7 @@ type RootStackParamList = {
   NewShared: undefined;
   Profile: undefined;
   Premium: undefined;
-  ToPremium: undefined
+  ToPremium: undefined;
   SharedDetail: undefined;
 };
 
@@ -58,7 +58,6 @@ const Navigate = () => {
         <Stack.Screen name="Slider" component={Slider} />
         <Stack.Screen name="MyDrawer" component={MyDrawer} />
         <Stack.Screen name="Profile" component={Profile} />
-
         <Stack.Screen name="DetailIncome" component={DetailIncome} />
         <Stack.Screen name="DetailExpense" component={DetailExpense} />
         <Stack.Screen name="Goals" component={CloudinaryComponent} />

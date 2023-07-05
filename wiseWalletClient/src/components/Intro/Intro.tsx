@@ -16,6 +16,7 @@ import Paginattor from './Paginattor';
 import ButtonNext from './ButtonNext';
 import Login from '../Login/Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoaderChart from '../Loader/LoaderChart';
 
 interface Slide {
   image: number;
@@ -41,7 +42,7 @@ const slide: Slide[] = [
 
 const Intro = () => {
   const navigation: any = useNavigation();
-
+  const [showLoader, setShowLoader] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const slidesRef = useRef<FlatList<Slide> | null>(null);
@@ -68,6 +69,7 @@ const Intro = () => {
   const [accesToken, setAccessToken] = useState<boolean | null>(false);
   useEffect(() => {
     const fetchAccesToken = async () => {
+      setShowLoader(true);
       try {
         const token = await AsyncStorage.getItem('accessToken');
         if (token) {
@@ -82,6 +84,14 @@ const Intro = () => {
       return navigation.navigate('MyDrawer');
     }
   }, [accesToken]);
+
+  useEffect(() => {
+    if (showLoader) {
+      setTimeout(() => {
+        setShowLoader(false);
+      }, 4000);
+    }
+  }, [showLoader]);
 
   return (
     <>
@@ -119,6 +129,7 @@ const Intro = () => {
           onPress={() => navigation.navigate('Login')}>
           <Text style={styles.skip}>Skip</Text>
         </TouchableOpacity>
+        {showLoader && <LoaderChart />}
       </ImageBackground>
     </>
   );
