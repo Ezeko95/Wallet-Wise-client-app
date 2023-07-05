@@ -21,7 +21,6 @@ const Drawer = () => {
   const state = useAppSelector(state => state.user.user);
   const tp = state[state.length - 1];
 
-
   return (
     <View>
     

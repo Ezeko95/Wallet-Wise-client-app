@@ -16,7 +16,7 @@ const Pager: React.FC<Props> = () => {
   const selector = useAppSelector((state) => state.user.user) // esto e user enterito
   const ide = idUser.map((idUser) => idUser.payload.user.id)
   const aidi = selector.map(selector => selector.payload.user.id)
-
+  
   const reload = () => {
     dispatch(getMovements(ide[0]))
     dispatch(getAccounts(ide[0]))
@@ -29,7 +29,7 @@ const Pager: React.FC<Props> = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ alignSelf: 'flex-start', left: -40 }}>
+      <View style={{ alignSelf: 'flex-start' }}>
         <Drawer />
       </View>
       <PagerView
