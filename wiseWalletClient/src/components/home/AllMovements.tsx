@@ -269,11 +269,10 @@ const AllMovements: React.FC<Props> = () => {
 
 
 
-                {
-                  incomes.length === 0 && expenses.length === 0 ?
+                { incomes.length === 0 && expenses.length === 0 ?
                   <Image style={{marginTop: 50}} source={require('./assets/noMovements.png')}/>
-                
-                  :<Text style={styles.text}>${balance}</Text>
+                  :
+                  <Text style={styles.text}>${balance}</Text>
                 }
                 
           <VictoryPie

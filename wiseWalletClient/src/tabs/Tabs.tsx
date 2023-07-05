@@ -30,6 +30,7 @@ const MyTabs = () => {
       }}
       >
         <Tab.Screen 
+          
           name="Add" 
           component={FormIncome} 
           options={{

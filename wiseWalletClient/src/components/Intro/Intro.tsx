@@ -66,24 +66,24 @@ const Intro = () => {
     }
   };
 
-  const [accesToken, setAccessToken] = useState<boolean | null>(false);
-  useEffect(() => {
-    const fetchAccesToken = async () => {
-      setShowLoader(true);
-      try {
-        const token = await AsyncStorage.getItem('accessToken');
-        if (token) {
-          setAccessToken(true);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchAccesToken();
-    if (accesToken) {
-      return navigation.navigate('MyDrawer');
-    }
-  }, [accesToken]);
+  // const [accesToken, setAccessToken] = useState<boolean | null>(false);
+  // useEffect(() => {
+  //   const fetchAccesToken = async () => {
+  //     setShowLoader(true);
+  //     try {
+  //       const token = await AsyncStorage.getItem('accessToken');
+  //       if (token) {
+  //         setAccessToken(true);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchAccesToken();
+  //   if (accesToken) {
+  //     return navigation.navigate('MyDrawer');
+  //   }
+  // }, [accesToken]);
 
   useEffect(() => {
     if (showLoader) {
