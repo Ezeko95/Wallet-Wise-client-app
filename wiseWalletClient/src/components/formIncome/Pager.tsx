@@ -380,10 +380,9 @@ const Pager = () => {
   
 
   return (
-    
-   
     <View style={styles.container}>
-       <View style={{ alignSelf: 'flex-start', left: -40 }}>
+    
+      <View style={{ alignSelf: 'flex-start',bottom:20.5, right:38.5}}>
         <Drawer />
       </View>
       <View style={styles.btnContainer}>
@@ -518,6 +517,7 @@ const Pager = () => {
       {showLoader && <LoaderSuccess />}
       
     </View>
+    
   );
 }
 

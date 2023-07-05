@@ -3,6 +3,7 @@ import FormPager from './Pager';
 import { Colors } from '../../enums/Colors';
 import React from 'react';
 import Pager from './Pager';
+
 const Home = () => {
   return (
     <View style={styles.containter}>

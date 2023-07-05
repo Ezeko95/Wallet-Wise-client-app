@@ -72,6 +72,9 @@ const Profile = () => {
     <ImageBackground
       style={{ height: '100%', width: '100%' }}
       source={require('./images/bgProfile.png')}>
+                          <View style={{ alignSelf: 'flex-start'}}>
+                            <Drawer />
+                          </View>
         <ScrollView>
 
       <View style={styles.perfiView}>
@@ -122,9 +125,6 @@ const Profile = () => {
             </Modal>
           </View>
         ) : null}
-         <View style={{ alignSelf: 'flex-start', right: '1%', bottom: '1%' }}>
-          <Drawer />
-        </View>
         <View style={styles.perfiView} key={tp.payload.user.id}>
           <Image
             source={{ uri: `${tp.payload.user.picture}` }}
