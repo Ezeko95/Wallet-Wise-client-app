@@ -56,14 +56,27 @@ const sharedSlice = createSlice ({
         setRoomId:(state, action: PayloadAction<number>)=>{
             state.roomId= action.payload
         },
-        
-        
+        cleanShared: (state)=>{
+            return{
+                ...state,
+                allRooms : [],
+                loading:false,
+                error: null,
+                roomId: 0, 
+                detail:{
+                    id:0,
+                    participants:[],
+                    personalExpense:0,
+                    total:0,
+                    name:'',
+                    deletedShared: false
+                }
+            }
+        }
     },
-
-    
 })
 
-export const {setShared, setDetail, setRoomId} = sharedSlice.actions;
+export const {setShared, setDetail, setRoomId, cleanShared} = sharedSlice.actions;
 
 export const getDetail=(id: number): AppThunk=>{
     return async (dispatch)=>{

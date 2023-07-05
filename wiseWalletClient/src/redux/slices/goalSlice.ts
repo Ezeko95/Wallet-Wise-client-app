@@ -71,12 +71,30 @@ const goalSlice= createSlice({
           ...state,
           allGoals: action.payload
         }
+      },
+      cleanGoals: (state)=>{
+        return{
+          ...state,
+          detail: {
+            name: '',
+            description: '',
+            total: 0,
+            saved : 0,
+            picture: '',
+            id:0,
+            deletedGoal: false
+        },
+        goalId: 0,
+        allGoals:[],
+        loading: false,
+        error: null
+        }
       }
     
     }
 })
 
-export const {setDetail, clearDetail, goalError, setGoalId, allGoals} = goalSlice.actions
+export const {setDetail, clearDetail, goalError, setGoalId, allGoals, cleanGoals} = goalSlice.actions
 export default goalSlice.reducer;
 
 export const getDetail = (id : number): AppThunk=>{

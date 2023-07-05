@@ -26,7 +26,7 @@ export const onBoardingSlice = createSlice({
     reducers: {
         getOnboarding:(state, action)=>{
             state.Onboarding = action.payload
-        }
+        },
     }
 })
 

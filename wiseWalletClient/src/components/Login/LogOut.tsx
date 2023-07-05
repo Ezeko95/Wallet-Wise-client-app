@@ -3,36 +3,36 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import Loader from '../Loader/Loader';
+import { cleanAllMovements } from '../../redux/slices/allMovementsSlice';
+import { useAppDispatch } from '../../redux/store';
+import { cleanMovement } from '../../redux/slices/movementSlice';
+import { cleanUser } from '../../redux/slices/getUsers';
+import { cleanGoals } from '../../redux/slices/goalSlice';
+import { cleanShared } from '../../redux/slices/sharedSlice';
+
+
 const LogoutButton = () => {
   const [showLoader, setShowLoader] = useState(false);
-  const [accesToken, setAccessToken] = useState<boolean>(false);
+  const dispatch = useAppDispatch()
 
   const navigation: any = useNavigation();
+  
   const onPress = async () => {
     try {
       setShowLoader(true);
       await AsyncStorage.removeItem('accessToken');
-      console.log('Elemento eliminado de AsyncStorage');
+      await AsyncStorage.removeItem("account");
+      // dispatch(cleanAllMovements())
+      // dispatch(cleanMovement())
+      // dispatch(cleanUser())
+      // dispatch(cleanGoals())
+      // dispatch(cleanShared())
+      // console.log('Elemento eliminado de AsyncStorage');
       navigation.navigate('Login');
     } catch (error) {
       console.log('Error al eliminar el elemento de AsyncStorage:', error);
     }
-  };
-
-  // useEffect(() => {
-  //   const fetchAccesToken = async () => {
-  //     try {
-  //       const token = await AsyncStorage.getItem('accessToken');
-  //       if (token) {
-  //         setAccessToken(true);
-  //       } else {
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchAccesToken();
-  // }, [accesToken]);
+};
 
   // useEffect(() => {
   //   if (showLoader) {

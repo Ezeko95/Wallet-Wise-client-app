@@ -18,6 +18,7 @@ import axios from 'axios';
 import { gettingUsers } from '../../redux/slices/getUsers';
 import { useAppDispatch } from '../../redux/store';
 import Loader from '../Loader/Loader';
+import { base_URL } from '../../redux/utils';
 
 
 
@@ -32,7 +33,6 @@ const Login: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigation: any = useNavigation();
   const [showLoader, setShowLoader] = useState(false);
-
 
   const [errorr, setErrorr] = useState<string>('');
 
@@ -64,25 +64,34 @@ const Login: React.FC = () => {
 
   const [storage, setStorage] = useState(false);
   const [login, setLogin] = useState(false);
-  const local = async () => {
-    try {
-      const accesTokken = await AsyncStorage.getItem('accessToken');
+  // const [accessToken, setAccessToken] = useState<boolean | null>(false);
 
-      if (accesTokken) {
-        setStorage(true);
-      }
-    } catch (error) {
-      setErrorr('Invalid email or password');
-      console.log(error);
-    }
-  };
+  // useEffect(() => {
+  //   const fetchAccesToken = async () => {
+  //     try {
+  //       const token = await AsyncStorage.getItem('accessToken');
+  //       if (token) {
+  //         setAccessToken(true);
+  //       }
+  //       console.log("token usefect", token)
+  //     } catch (error) {
+    //       console.log(error);
+    //     }
+  //   };
+  //   fetchAccesToken();
+  //   if (accessToken) {
+  //     console.log('HOLA');
+  //     return navigation.navigate('MyDrawer');
+  //   }
+  // }, []);
+  // console.log("acces token",accessToken)
 
   const handleSubmit = async () => {
     if (error.emailError || error.passwordError) {
       Alert.alert('Error in login data, incorrect email or password');
       return;
     }
-
+    
     let emailError = '';
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       emailError = '* Please enter a valid email address';
@@ -91,7 +100,30 @@ const Login: React.FC = () => {
     let passwordError = '';
     if (!/^\w{8,16}$/.test(form.password)) {
       passwordError = '* The password must be between 8 and 16 characters';
+      
     }
+    try {
+      setShowLoader(true);
+      console.log("emailError y Password error" , emailError, passwordError)
+      if (emailError || passwordError) {
+        setShowLoader(false);
+      }
+      console.log("form del login", form)
+      const response = await axios.post<{ accessToken: string }>(
+        (base_URL + '/user/login'),
+        form,
+        );
+        const { accessToken } = response.data;
+        console.log("accessToken", response.data);
+        console.log('Login successful');
+        await AsyncStorage.setItem('accessToken', accessToken);
+        console.log(dispatch(gettingUsers()), 'este es DISPATCH DE LOGIN');
+        navigation.navigate('Slider');
+        
+      } catch (error) {
+        Alert.alert('Error in login data, incorrect email or password');
+        console.log(error);
+      }
 
     setError({
       ...error,
@@ -103,30 +135,9 @@ const Login: React.FC = () => {
       setIsButtonDisabled(true);
       return;
     }
-
-    try {
-      setShowLoader(true);
-
-      if (emailError || passwordError) {
-        setShowLoader(false);
-      }
-      const response = await axios.post<{ accessToken: string }>(
-        'http://10.0.2.2:3001/user/login',
-        form,
-
-        );
-        const { accessToken } = response.data;
-        console.log(response.data);
-        console.log('Login successful');
-        await AsyncStorage.setItem('accessToken', accessToken);
-        console.log(dispatch(gettingUsers()), 'este es DISPATCH DE LOGIN');
-        navigation.navigate('Slider');
-      } catch (error) {
-        Alert.alert('Error in login data, incorrect email or password');
-        console.log(error);
-      }
-      
     };
+
+    
     useEffect(() => {
       if (showLoader) {
         setTimeout(() => {
@@ -134,8 +145,6 @@ const Login: React.FC = () => {
         }, 2000); // Duración de 3 segundos
       }
     }, [showLoader]);
-    
-    
     
     return (
      

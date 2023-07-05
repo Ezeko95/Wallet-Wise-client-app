@@ -11,7 +11,7 @@ import { gettingUsers } from "../redux/slices/getUsers";
 import Loader from "../components/Loader/Loader";
 import Drawer from "../components/drawer/component/Drawer";
 import { getAccounts } from "../redux/slices/allMovementsSlice";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Slider = () => {
   const [showLoader, setShowLoader] = useState(false);
@@ -21,6 +21,8 @@ const Slider = () => {
   const [name, setName] = useState('');
   const [total, setTotal] = useState('');
   const accounts = useAppSelector(state => state.allMovements.accounts);
+  const [accountExist, setAccountExist] = useState<string>("false")
+  
   
   interface Buttons{
     id:number,
@@ -126,9 +128,7 @@ const Slider = () => {
         totalError: totalError
       })
       
-      
       if (nameError || totalError) {
-        
         return;
       }
       dispatch(postAccount(ide[(ide.length)-1], data))
@@ -136,10 +136,19 @@ const Slider = () => {
       Alert.alert('Successfully created Account');
       setName('');
       setTotal('');
-      
+
+      setAccountExist("true")
+      console.log("acount exist dentro del submit",accountExist)
+      AsyncStorage.setItem("account", accountExist)
       navigation.navigate("MyDrawer")
     }
   };
+
+  const functionnn = async () => {
+    const item = await AsyncStorage.getItem("account")
+    console.log(item, "Esto es la cuenta")
+  }
+  functionnn()
   
   const onChange = (item: SelectAccounts) => {
     setName(item.label);
@@ -175,7 +184,7 @@ const Slider = () => {
           <Drawer />
         </View>
 
-        { accounts.length === 0 ?
+        { accountExist === "true" || accountExist === null ?
         <Text style={{color: "white", fontSize:25}}>You need to create an account</Text>
           :
         <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>

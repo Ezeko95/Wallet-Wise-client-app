@@ -19,6 +19,7 @@ import Upload from './Upload';
 import { useAppDispatch } from '../../redux/store';
 import { gettingUsers } from '../../redux/slices/getUsers';
 import Loader from '../Loader/Loader';
+import { base_URL } from "../../redux/utils/"
 
 
 interface RegisterForm {
@@ -84,15 +85,15 @@ const Register = () => {
 
     try {
       setShowLoader(true);
+      console.log("form del register", form)
       const response = await axios.post<{ accessToken: string }>(
-        'http://10.0.2.2:3001/user/register',
+        (base_URL + '/user/register'),
         form,
       );
       const { accessToken } = response.data;
       console.log(response.data, 'register');
       console.log(response.data, 'register');
       console.log('Register successful');
-      // Save the access token in AsyncStorage or a secure storage
       await AsyncStorage.setItem('accessToken', accessToken);
       console.log(dispatch(gettingUsers), 'ESTE ES EL DISPATCH DE REGISTER');
       navigation.navigate('Slider');
@@ -101,7 +102,6 @@ const Register = () => {
         email: '',
         password: '',
       })
-      // Call the onRegister function from props to handle the registration action
     } catch (error) {
       console.log(error);
     }

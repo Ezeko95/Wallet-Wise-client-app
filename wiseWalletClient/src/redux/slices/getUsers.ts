@@ -38,13 +38,19 @@ export const usersSlice = createSlice({
         },
         getUri: (state,action)=>{
           state.user = action.payload
+        },
+        cleanUser:(state)=>{
+          return{
+            ...state,
+            user:[]
+          }
         }
     }
 })
 
 
 
-export const {getUserTokken,getUri } = usersSlice.actions;
+export const {getUserTokken,getUri , cleanUser} = usersSlice.actions;
 
 export const gettingUsers = (): ThunkAction <void, RootState, unknown, AnyAction>=> async (dispatch: Dispatch) => {
     try {

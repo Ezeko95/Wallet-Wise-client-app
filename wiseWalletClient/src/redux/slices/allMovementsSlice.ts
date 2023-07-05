@@ -160,21 +160,36 @@ const getMovementsSlicer = createSlice({
     },
     orderByDate: (state, action: PayloadAction<string>) => {
       const results = (action.payload.toLowerCase() === 'asc') ?
-      [...state.filtered].sort((a: any, b: any) => {
-        if (a.createdAt > b.createdAt) { return 1 }
-        if (a.createdAt< b.createdAt) {return -1}
-        return 0;
-      })
-      : [...state.filtered].sort((a: any, b: any) => {
-        if (a.createdAt> b.createdAt) {return -1}
-        if (a.createdAt< b.createdAt) {return 1}
-        return 0;
-      });
-    return {
-    ...state,
-    filtered: results,
-    };
+          [...state.filtered].sort((a: any, b: any) => {
+            if (a.createdAt > b.createdAt) { return 1 }
+            if (a.createdAt< b.createdAt) {return -1}
+            return 0;
+          })
+        :  
+          [...state.filtered].sort((a: any, b: any) => {
+            if (a.createdAt> b.createdAt) {return -1}
+            if (a.createdAt< b.createdAt) {return 1}
+            return 0;
+          });
+      return {
+      ...state,
+      filtered: results,
+      };
     },
+    cleanAllMovements: (state)=>{
+      return{
+        ...state,
+        allMovements: [],
+        incomes: [],
+        expenses: [],
+        loading: false,
+        error: null,
+        accounts: [],
+        filtered: [],
+        balance: 0,
+        itemId: 0,
+      }
+    }
     },
   },
 );
@@ -192,7 +207,8 @@ export const {
   cleanItemId,
   orderByAmount,
   orderByAlpha,
-  orderByDate
+  orderByDate,
+  cleanAllMovements
 } = getMovementsSlicer.actions;
 
 export default getMovementsSlicer.reducer;
@@ -274,4 +290,7 @@ export const getAccounts = (id: number): AppThunk => {
     }
   };
 };
+
+
+
 

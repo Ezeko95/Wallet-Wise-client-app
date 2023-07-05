@@ -36,10 +36,17 @@ const movementSlice = createSlice({
       state.loading = false;
       state.error = action.payload.message;
     },
+    cleanMovement: (state)=>{
+      return{
+        ...state,
+        loading: false,
+        error: null,
+      }
+    }
   },
 });
 
-export const { postMovementStart, postMovementSuccess, postMovementFailure } = movementSlice.actions;
+export const { postMovementStart, postMovementSuccess, postMovementFailure, cleanMovement } = movementSlice.actions;
 
 export const postMovement= (id: number, data: MovementData): AppThunk=>{
   return async (dispatch)=>{

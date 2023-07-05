@@ -17,6 +17,8 @@ import ButtonNext from './ButtonNext';
 import Login from '../Login/Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoaderChart from '../Loader/LoaderChart';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { getAccounts } from '../../redux/slices/allMovementsSlice';
 
 interface Slide {
   image: number;
@@ -42,10 +44,15 @@ const slide: Slide[] = [
 
 const Intro = () => {
   const navigation: any = useNavigation();
+  const dispatch= useAppDispatch()
   const [showLoader, setShowLoader] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const slidesRef = useRef<FlatList<Slide> | null>(null);
+  const accounts = useAppSelector(state=> state.allMovements.accounts)
+  const [account, setAccount] = useState<boolean | null>(false);
+  const idUser = useAppSelector(state => state.user.user);
+  const ide = idUser.map(idUser => idUser.payload.user.id);
 
   const viewableItemsChanged = useRef(({ viewableItems }: any) => {
     setCurrentIndex(viewableItems[0].index);
@@ -53,6 +60,8 @@ const Intro = () => {
       navigation.navigate('Login');
     }
   }).current;
+
+  
 
   /* const viewConfig = useRef({viewAreaCoveragePercentThresHold: 50}).current; */
 
@@ -66,24 +75,40 @@ const Intro = () => {
     }
   };
 
-  // const [accesToken, setAccessToken] = useState<boolean | null>(false);
-  // useEffect(() => {
-  //   const fetchAccesToken = async () => {
-  //     setShowLoader(true);
-  //     try {
-  //       const token = await AsyncStorage.getItem('accessToken');
-  //       if (token) {
-  //         setAccessToken(true);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchAccesToken();
-  //   if (accesToken) {
-  //     return navigation.navigate('MyDrawer');
-  //   }
-  // }, [accesToken]);
+
+  const [accesToken, setAccessToken] = useState<boolean | null>(false);
+
+  useEffect(() => {
+    //dispatch(getAccounts(ide[ide.length-1]))
+    const fetchAccesToken = async () => {
+      setShowLoader(true);
+      try {
+        const token = await AsyncStorage.getItem('accessToken');
+        
+
+        if (token) {
+          setAccessToken(true);
+        }
+        
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchAccesToken();
+    const fetchAccounts= async ()=>{
+      const accountToken = await AsyncStorage.getItem('account')
+      if (accesToken && accountToken ==='true') {
+        console.log(accountToken)
+        return navigation.navigate('MyDrawer');
+      }
+      if (accesToken && accountToken === 'false') { 
+        console.log(accountToken)
+        return navigation.navigate("Slider")
+      }
+    }
+    fetchAccounts()
+
+  }, [accesToken]);
 
   useEffect(() => {
     if (showLoader) {

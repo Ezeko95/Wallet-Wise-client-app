@@ -339,3 +339,5 @@ const styles = StyleSheet.create({
   },
 });
 export default NewShared;
+
+//aca quiero probar esto para el 
