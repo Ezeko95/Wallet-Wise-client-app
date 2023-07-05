@@ -49,32 +49,46 @@ const GoalList: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      
-      <View style={{flexDirection: 'row', paddingBottom:15, paddingVertical:10}}>
-      
+      <View
+        style={{
+          flexDirection: 'row',
+          paddingBottom: 15,
+          paddingVertical: 10,
+        }}>
         <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
-          <Text  style={styles.goBack}>{'<'}</Text>
+          <Text style={styles.goBack}>{'<'}</Text>
         </TouchableOpacity>
         
-        <View style={{flexDirection: 'row', width: "80%", alignSelf:"center"}}>
-          <Text style={{
+        <View
+          style={{
+            marginStart: 30,
+            flexDirection: 'row',
+            width: '80%',
+            alignContent: 'center',
+          }}>
+          <Text
+            style={{
               fontSize: 30,
               color: 'white',
               fontWeight: 'bold',
-              left: -15,
-              marginStart:70
+              left: 35
             }}>
             My
-            <Text style={{ color: 'yellow' }}> Goals </Text>
+            <Text style={{ color: 'yellow' }}> Goals</Text>
           </Text>
         </View>
       </View>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Goals')}
-        style={styles.create}>
-        <Text style={styles.text}>+</Text>
-      </TouchableOpacity>
+
+            <View style={styles.allItems}>
+            <TouchableOpacity
+              style={styles.create}
+              onPress={() => navigation.navigate('Goals')}>
+              <Text style={{ color: '#A16AE2', fontSize: 30, fontWeight: 'bold' }}>
+                +
+              </Text>
+            </TouchableOpacity>
+          </View>
       <ScrollView bounces={true}>
         {showGoal.length > 0 &&
           showGoal?.map((goal, index) => {
@@ -128,15 +142,6 @@ const styles = StyleSheet.create({
     height: 40,
     fontWeight: "bold"
   },
-  container: {
-    backgroundColor: Colors.BACKGROUND_COLOR,
-    padding: 15,
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-  },
   touchable: {
     width: '90%',
     alignItems: 'center',
@@ -149,17 +154,6 @@ const styles = StyleSheet.create({
     borderColor: '#A16AE2',
     borderWidth: 1,
     padding: 12
-  },
-  create: {
-    backgroundColor: /* 'darkslateblue' */ '#3D2766',
-    borderRadius: 15,
-    width: '100%',
-    height: 45,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: '#A16AE2',
-    borderWidth: 1,
-    position: 'relative',
   },
   text: {
     fontSize: 30,
@@ -186,6 +180,30 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: 50,
     marginTop: 60,
+  },
+  allItems: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  container: {
+    backgroundColor: Colors.BACKGROUND_COLOR,
+    flex: 1,
+    height: '100%',
+    width: '100%',
+  },
+  create: {
+    backgroundColor: 'darkslateblue',
+    borderRadius: 15,
+    width: '95%',
+    height: 45,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: '#A16AE2',
+    borderWidth: 1,
+    position: 'relative',
+    margin: 5,
+    marginBottom: 20,
   },
   goBack: {
     alignSelf: "flex-start",

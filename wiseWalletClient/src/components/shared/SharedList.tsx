@@ -19,7 +19,7 @@ const SharedList: React.FC = () => {
 
   const showRoom = rooms.filter(e => e.deletedShared === false);
   console.log(ide[ide.length - 1], 'ide en sharedlist');
- 
+
   useEffect(() => {
     dispatch(getAllRooms(ide[ide.length - 1]));
   }, []);
@@ -38,6 +38,7 @@ const SharedList: React.FC = () => {
         <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
           <Text style={styles.goBack}>{'<'}</Text>
         </TouchableOpacity>
+        
         <View
           style={{
             marginStart: 30,
@@ -50,7 +51,6 @@ const SharedList: React.FC = () => {
               fontSize: 30,
               color: 'white',
               fontWeight: 'bold',
-              left: -15,
             }}>
             Shared
             <Text style={{ color: 'yellow' }}> Rooms</Text>
@@ -134,6 +134,11 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 50,
   },
+  allItems: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   container: {
     backgroundColor: Colors.BACKGROUND_COLOR,
     flex: 1,
@@ -153,13 +158,8 @@ const styles = StyleSheet.create({
     margin: 5,
     marginBottom: 20,
   },
-  allItems: {
-    alignContent: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   goBack: {
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     color: 'black',
     backgroundColor: 'yellow',
     borderRadius: 10,
@@ -170,6 +170,6 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: '#FFF7AE',
     borderWidth: 2,
-    marginHorizontal: 10,
+    marginHorizontal:10,
   },
 });
