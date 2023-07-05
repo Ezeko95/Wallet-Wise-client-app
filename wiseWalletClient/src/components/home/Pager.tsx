@@ -29,7 +29,7 @@ const Pager: React.FC<Props> = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ alignSelf: 'flex-start', left: -40 }}>
+      <View style={{ alignSelf: 'flex-start' }}>
         <Drawer />
       </View>
       <PagerView
