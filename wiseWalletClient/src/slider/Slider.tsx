@@ -164,10 +164,12 @@ const Slider = () => {
   return (
     
       <ImageBackground style={{width: '100%', height: '100%'}} source={require('./assets/fondoCreateAccount2.png')}>
+
               <ScrollView>
 
               <KeyboardAvoidingView>
-         <View style={{ alignSelf: 'flex-start', left: -40 }}>
+        <View style={{ alignSelf: 'flex-start'}}>
+
           <Drawer />
         </View>
         <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>

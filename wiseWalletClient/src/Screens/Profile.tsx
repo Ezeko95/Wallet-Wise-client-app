@@ -20,7 +20,8 @@ import axios from 'axios';
 import { base_URL } from '../redux/utils';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native';
-const SharedScreen = () => {
+
+const Profile = () => {
   const [openModal, setOpenModal] = useState(true);
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const navigation: any = useNavigation();
@@ -71,6 +72,9 @@ const SharedScreen = () => {
     <ImageBackground
       style={{ height: '100%', width: '100%' }}
       source={require('./images/bgProfile.png')}>
+                          <View style={{ alignSelf: 'flex-start'}}>
+                            <Drawer />
+                          </View>
         <ScrollView>
 
       <View style={styles.perfiView}>
@@ -121,9 +125,6 @@ const SharedScreen = () => {
             </Modal>
           </View>
         ) : null}
-         <View style={{ alignSelf: 'flex-start', right: '1%', bottom: '1%' }}>
-          <Drawer />
-        </View>
         <View style={styles.perfiView} key={tp.payload.user.id}>
           <Image
             source={{ uri: `${tp.payload.user.picture}` }}
@@ -153,7 +154,8 @@ const SharedScreen = () => {
     </ImageBackground>
   );
 };
-export default SharedScreen;
+export default Profile;
+
 const styles = StyleSheet.create({
   modalBi: {
     height: 300,

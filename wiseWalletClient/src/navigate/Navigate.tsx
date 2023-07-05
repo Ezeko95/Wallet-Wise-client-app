@@ -15,7 +15,8 @@ import NewShared from '../components/shared/NewShared';
 import Premium from '../components/Premium/Premium';
 import SharedDetail from '../components/shared/SharedDetail';
 import ToPremium from '../components/Premium/ToPremium';
-
+import Profile from '../Screens/Profile';
+import Home from '../components/home/Home';
 
 type RootStackParamList = {
   Intro: undefined;
@@ -29,10 +30,11 @@ type RootStackParamList = {
   GoalDetail: undefined;
   SharedList: undefined;
   NewShared: undefined;
-
+  Profile: undefined;
   Premium: undefined;
   ToPremium: undefined
   SharedDetail: undefined;
+  Home:undefined;
 };
 
 type SliderScreenRouteProp = RouteProp<RootStackParamList, 'Slider'>;
@@ -57,6 +59,8 @@ const Navigate = () => {
         <Stack.Screen name="ToPremium" component={ToPremium} /> */}
         <Stack.Screen name="Slider" component={Slider} />
         <Stack.Screen name="MyDrawer" component={MyDrawer} />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="DetailIncome" component={DetailIncome} />
         <Stack.Screen name="DetailExpense" component={DetailExpense} />
         <Stack.Screen name="Goals" component={CloudinaryComponent} />
