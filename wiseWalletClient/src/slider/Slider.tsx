@@ -1,6 +1,6 @@
 import React from "react";
 import { useRef , useState, useEffect} from "react";
-import { View, StyleSheet, Text, Image , TouchableOpacity, ImageSourcePropType, Button, TextInput, Alert, ImageBackground} from "react-native";
+import { View, StyleSheet, Text, Image , TouchableOpacity, ImageSourcePropType, Button, TextInput, Alert, ImageBackground, ScrollView, KeyboardAvoidingView} from "react-native";
 import PagerView from "react-native-pager-view";
 import { SelectCountry } from 'react-native-element-dropdown';
 import {useNavigation} from "@react-navigation/native";
@@ -162,8 +162,14 @@ const Slider = () => {
   }, [showLoader]);
   
   return (
+    
       <ImageBackground style={{width: '100%', height: '100%'}} source={require('./assets/fondoCreateAccount2.png')}>
+
+              <ScrollView>
+
+              <KeyboardAvoidingView>
         <View style={{ alignSelf: 'flex-start'}}>
+
           <Drawer />
         </View>
         <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
@@ -172,20 +178,20 @@ const Slider = () => {
             <View style={{ marginTop: 200, backgroundColor: '#696FE7', width: '80%', alignSelf: 'center', borderRadius: 30, height: 300, justifyContent: 'center'}}>
               {/* <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter your Account"></TextInput> */}
               <SelectCountry<SelectAccounts>
-                  style={styles.dropdown}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  placeholderStyle={styles.placeholderStyle}
-                  imageStyle={styles.imageStyle}
-                  iconStyle={styles.iconStyle}
-                  maxHeight={200}
-                  value={name}
-                  data={data}
-                  valueField="value"
-                  labelField="label"
-                  imageField="image"
-                  placeholder="Select Account"
-                  onChange={onChange}
-              />
+                style={styles.dropdown}
+                selectedTextStyle={styles.selectedTextStyle}
+                placeholderStyle={styles.placeholderStyle}
+                imageStyle={styles.imageStyle}
+                iconStyle={styles.iconStyle}
+                maxHeight={200}
+                value={name}
+                data={data}
+                valueField="value"
+                labelField="label"
+                imageField="image"
+                placeholder={name ? name : "Select Account"}
+                onChange={onChange}
+                />
               {error.nameError && <Text style={styles.textError}>{error.nameError}</Text>}
                <TextInput style={styles.input} value={total} onChangeText={setTotal} keyboardType="numeric" placeholderTextColor={'white'} placeholder="Amount"></TextInput>
                {error.totalError && <Text style={styles.textError}>{error.totalError}</Text>}
@@ -195,7 +201,12 @@ const Slider = () => {
               
               </View>
               {showLoader && <Loader />}
+              </KeyboardAvoidingView>
+                </ScrollView>
       </ImageBackground>
+
+    
+
   );
 }
 
@@ -203,7 +214,7 @@ const Slider = () => {
 export default Slider;
 
 const styles = StyleSheet.create({
-
+  
   select:{
     backgroundColor: "white",
     width: 150,
