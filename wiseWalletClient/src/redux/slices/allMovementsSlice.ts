@@ -265,7 +265,8 @@ export const getAccounts = (id: number): AppThunk => {
         accounts.push(account.name);
       });
       const total = response.data.total;
-      console.log('accounts de get accounts ', accounts);
+      console.log(accounts, 'slice get accounts');
+      
       dispatch(chargeBalance(total));
       dispatch(getAccountSuccess(accounts));
     } catch (error) {

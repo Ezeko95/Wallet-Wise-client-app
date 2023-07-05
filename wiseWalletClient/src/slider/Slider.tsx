@@ -10,6 +10,7 @@ import { postAccount, AccountData } from "../redux/slices/postAccount";
 import { gettingUsers } from "../redux/slices/getUsers";
 import Loader from "../components/Loader/Loader";
 import Drawer from "../components/drawer/component/Drawer";
+import { getAccounts } from "../redux/slices/allMovementsSlice";
 
 
 const Slider = () => {
@@ -19,7 +20,7 @@ const Slider = () => {
   const navigation:(any) = useNavigation();
   const [name, setName] = useState('');
   const [total, setTotal] = useState('');
-
+  const accounts = useAppSelector(state => state.allMovements.accounts);
   
   interface Buttons{
     id:number,
@@ -89,10 +90,6 @@ const Slider = () => {
     total: 0
   })
   
-  
-  
-  
-  
   const submitAccount = () => {
     setShowLoader(true);
     
@@ -135,6 +132,7 @@ const Slider = () => {
         return;
       }
       dispatch(postAccount(ide[(ide.length)-1], data))
+      dispatch(getAccounts(ide[(ide.length)-1]))
       Alert.alert('Successfully created Account');
       setName('');
       setTotal('');
@@ -151,6 +149,7 @@ const Slider = () => {
   
   useEffect(()=>{
     dispatch(gettingUsers())
+
   },[dispatch])
 
   useEffect(() => {
@@ -160,21 +159,29 @@ const Slider = () => {
       }, 3000); // Duración de 3 segundos
     }
   }, [showLoader]);
+
+  useEffect(()=>{
+    dispatch(getAccounts(ide[(ide.length)-1]))
+  },[])
   
   return (
     
       <ImageBackground style={{width: '100%', height: '100%'}} source={require('./assets/fondoCreateAccount2.png')}>
 
-              <ScrollView>
-
+        <ScrollView>
               <KeyboardAvoidingView>
         <View style={{ alignSelf: 'flex-start'}}>
 
           <Drawer />
         </View>
+
+        { accounts.length === 0 ?
+        <Text style={{color: "white", fontSize:25}}>You need to create an account</Text>
+          :
         <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
                 <Text style={styles.goBack}>{'<'}</Text>
             </TouchableOpacity>
+        }
             <View style={{ marginTop: 200, backgroundColor: '#696FE7', width: '80%', alignSelf: 'center', borderRadius: 30, height: 300, justifyContent: 'center'}}>
               {/* <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter your Account"></TextInput> */}
               <SelectCountry<SelectAccounts>
@@ -297,3 +304,5 @@ const styles = StyleSheet.create({
     top: 40
 },
 });
+
+

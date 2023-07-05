@@ -18,7 +18,6 @@ export interface AccountData {
   
 }
 
-
 interface Data {
   value: string;
   label: string;
@@ -191,24 +190,24 @@ const Pager = () => {
   const [category, setCategory] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
   const navigation:(any) = useNavigation();
-  const idUser = useAppSelector((state) => state.user.user)
+  //const idUser = useAppSelector((state) => state.user.user)
   const selector = useAppSelector((state) => state.user.user) // esto e user enterito
   const aidi = selector.map(selector => selector.payload.user.id)
-  const ide = idUser.map((idUser) => idUser.payload.user.id)
-  let accounts = useAppSelector(state => state.allMovements.accounts);
-  
-  
-  const datac: AccountData[] = [];
+  //const ide = idUser.map((idUser) => idUser.payload.user.id)
+  const accounts = useAppSelector(state => state.allMovements.accounts);
 
-  accounts.forEach((a: string) => {
-    datac.push({ label: a, value: a });
-  });
+  
+  
+  //const datac: AccountData[] = [];
+
+  // accounts.forEach((a: string) => {
+  //   datac.push({ label: a, value: a });
+  // });
 
   const [errorForm, setErrorForm] = useState<IncomeForm>({
     account: '',
     type: '',
     amount: 0,
-
   });
 
   const [errorExpense, setErrorExpense] = useState<ExpenseForm>({
@@ -216,13 +215,19 @@ const Pager = () => {
     description: '',
     category: '',
     amount: 0,
-
   });
-
+  
   const handlePostMovement = () => {
     setShowLoader(true);
+
+    dispatch(getAccounts(aidi[aidi.length -1]))
     
-    
+    const data: MovementData = {
+      type,
+      account,
+      amount: parseFloat(amount),
+    };
+
     let accountError = '';
     if (!account) {
       accountError = '* Please select an account';
@@ -232,7 +237,6 @@ const Pager = () => {
     if (!type) {
       typeError = '* Please enter a description';
     }
-    
     
     let amountError = '';
     if (!/^\d+$/.test(amount)) {
@@ -252,13 +256,13 @@ const Pager = () => {
       amountError2: amountError2
     });
 
-    const accountExists = accounts.includes(account);
+     const accountExists = accounts.includes(account);
+
 
     if (!accountExists) {
       setShowLoader(false);
       return Alert.alert('The selected account does not existe in your profile');
-    }
-
+     }
 
     if(account.length !== account.length){
       return Alert.alert('Error in selected account, please try again')
@@ -269,13 +273,6 @@ const Pager = () => {
       return
     }
     
-    
-    const data: MovementData = {
-      type,
-      account,
-      amount: parseFloat(amount),
-      
-    };
     if(!type || !account || !amount){
       setShowLoader(false);
     }
@@ -284,11 +281,12 @@ const Pager = () => {
     if(!/^\d+$/.test(amount)){
       setShowLoader(false);
     }
-    dispatch(postMovement(aidi[0],data));
-    dispatch(getIncome(aidi[0]))
-    dispatch(getMovements(aidi[0]))
-    dispatch(getAccounts(aidi[0]))
-    dispatch(getAccounts(ide[0]))
+
+    dispatch(postMovement(aidi[aidi.length -1],data));
+    dispatch(getIncome(aidi[aidi.length -1]))
+    dispatch(getMovements(aidi[aidi.length -1]))
+    
+    
     setType('');
     setAccount('');
     setAmount('');
@@ -296,7 +294,8 @@ const Pager = () => {
   
   const handlePostExpense = () => {
     setShowLoader(true);
-
+    dispatch(getAccounts(aidi[aidi.length-1]))
+    
     let accountError = '';
     if (!paymentMethod) {
       accountError = '* Please select an account';
@@ -331,8 +330,9 @@ const Pager = () => {
       amountError2: amountError2
     });
 
-    const accountExists = accounts.includes(account);
+     const accountExists = accounts.includes(paymentMethod);
 
+    
     if (!accountExists) {
       setShowLoader(false);
       return Alert.alert('The selected account does not existe in your profile');
@@ -342,8 +342,6 @@ const Pager = () => {
       setShowLoader(false);
       return
     }
-
-
 
     const data: ExpenseData = {
       amount: parseFloat(amount),
@@ -356,11 +354,9 @@ const Pager = () => {
     if(!/^\d+$/.test(amount)){
       setShowLoader(false);
     }
-    dispatch(postExpense(aidi[0], data))
-    dispatch(getIncome(aidi[0]))
-    dispatch(getMovements(aidi[0]))
-    dispatch(getAccounts(aidi[0]))
-    dispatch(getAccounts(ide[0]))
+    dispatch(postExpense(aidi[aidi.length-1], data))
+    dispatch(getIncome(aidi[aidi.length-1]))
+    dispatch(getMovements(aidi[aidi.length-1]))
     setAmount('');
     setDescription('');
     setCategory('');
@@ -368,33 +364,31 @@ const Pager = () => {
   };
   
   const reload = () => {
-    dispatch(getIncome(aidi[0]))
-    dispatch(getMovements(aidi[0]))
-    dispatch(getExpense(ide[0]))
-    dispatch(getAccounts(ide[0]))
+    dispatch(getIncome(aidi[aidi.length-1]))
+    dispatch(getMovements(aidi[aidi.length-1]))
+    dispatch(getExpense(aidi[aidi.length-1]))
+    dispatch(getAccounts(aidi[aidi.length-1]))
   } 
   
   
   const onChange = (item: Data) => {
     setAccount(item.label);
-    console.log(item.value);
   }
   const onChange1 = (item: Expense) => {
     setCategory(item.value);
-    console.log(item.value);
   }
   const onChange2 = (item: PaymentMethod) => {
     setPaymentMethod(item.label);
-
-    console.log(item.value);
   }
 
-   const ref = React.useRef<PagerView>(null);
+  const ref = React.useRef<PagerView>(null);
 
   useEffect(()=>{
     dispatch(gettingUsers())
-    dispatch(getMovements(aidi[0]))
-    dispatch(getExpense(aidi[0]))
+    dispatch(getMovements(aidi[aidi.length -1]))
+    dispatch(getExpense(aidi[aidi.length -1]))
+    dispatch(getAccounts(aidi[aidi.length -1]))
+    
   },[])
 
   useEffect(() => {
@@ -405,9 +399,6 @@ const Pager = () => {
     }
   }, [showLoader]);
 
-
- 
-  
   return (
     <View style={styles.container}>
     

@@ -120,7 +120,7 @@ const Login: React.FC = () => {
         console.log('Login successful');
         await AsyncStorage.setItem('accessToken', accessToken);
         console.log(dispatch(gettingUsers()), 'este es DISPATCH DE LOGIN');
-        navigation.navigate('MyDrawer'); 
+        navigation.navigate('Slider');
       } catch (error) {
         Alert.alert('Error in login data, incorrect email or password');
         console.log(error);
