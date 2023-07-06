@@ -54,12 +54,12 @@ const ToPremium = () => {
   return (
     <ScrollView>
     <View style={{justifyContent:"center", alignItems:"center"}}>
-      <Image source={require("./assets/premium.png")}/>
-      <Image source={require("./assets/premium2.png")}/>
+      <Image style={{width: '100%'}} source={require("./assets/premium.png")}/>
+      <Image style={{width: '100%'}} source={require("./assets/premium2.png")}/>
       <TouchableOpacity style={style.botonOferta} onPress={()=>{
         onCheckout()
       }}>
-        <Image source={require("./assets/GOPREMIUM.png")} style={{borderRadius:20}}/>
+        <Text  style={{ color: 'black', fontWeight: 'bold', fontSize: 20, textAlign: 'center', width: 500}}>Go Premium!</Text>
       </TouchableOpacity>
     </View>
     </ScrollView>
@@ -68,14 +68,11 @@ const ToPremium = () => {
 
 const style = StyleSheet.create({
   botonOferta:{
-    width:250,
-    height:50,
-    backgroundColor:"white",
-    position:"absolute",
-    bottom:10,
-    alignItems:"center",
-    justifyContent:"center",
-    borderRadius:20
+    borderRadius: 10,
+    height: 50,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    backgroundColor: '#F1CC7A',
   }
 });
 

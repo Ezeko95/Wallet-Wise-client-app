@@ -589,6 +589,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: 'white',
     marginTop: 20,
+    color: 'black'
   },
   textBtn: {
     textAlign: 'center',
@@ -626,10 +627,12 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 12,
+    color: 'black'
   },
   selectedTextStyle: {
     fontSize: 14,
     marginLeft: 8,
+    color: 'black'
   },
   iconStyle: {
     width: 20,
