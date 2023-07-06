@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    top: 230,
+    top: 270,
     color: 'white',
     fontSize: 40,
     textAlign: 'center',

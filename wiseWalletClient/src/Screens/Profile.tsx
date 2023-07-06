@@ -82,45 +82,29 @@ const Profile = () => {
           <View>
             <Modal visible={openModal} animationType="slide" transparent={true}>
               <View style={styles.modal}>
-                <ImageBackground source={require('./images/GoPremium.png')}>
-                  <View style={styles.modalBi}>
+                 
+                  <View>
                     <TouchableOpacity
-                      style={{ height: 40, width: 39 }}
+                      style={{ height: 40, width: '70%', alignSelf: 'center', backgroundColor: 'white', borderRadius: 10, bottom: '15%', borderWidth: 2, borderColor: '#C0944D'}}
                       onPress={() => setOpenModal(false)}>
-                      <Text
-                        style={{
-                          color: 'white',
-                          right: 20,
-                          bottom: 40,
-                          fontSize: 30,
-                        }}>
-                        X
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{
-                        height: 40,
-                        width: 200,
-                        backgroundColor: '#0e2235f6',
-                        top: 200,
-                        left: 50,
-                        borderRadius: 10,
-                        justifyContent: 'center',
-                      }}
-                      onPress={() => {
-                        onCheckout();
-                      }}>
-                      <Text
-                        style={{
-                          color: 'white',
-                          fontSize: 20,
-                          textAlign: 'center',
-                        }}>
-                        Go Premium
-                      </Text>
+                      <Text style={{ color: '#C0944D', fontSize: 30, fontWeight: 'bold', textAlign: 'center', bottom: 3 }}> X </Text>
                     </TouchableOpacity>
                   </View>
-                </ImageBackground>
+                <Image style={{alignItems: 'center', alignSelf: 'center', borderRadius: 10}} source={require('./images/GoPremium1.png')} />
+
+                    <View style={{}}>
+                      <TouchableOpacity style={{ padding: 10, backgroundColor: '#C0944D', borderRadius: 10, justifyContent: 'center', width: '70%', alignSelf: 'center', top: '15%', borderWidth: 2, borderColor: 'white'}}
+                        onPress={() => {
+                          onCheckout();
+                        }}>
+
+                        <Text style={{ color: 'white', fontSize: 20, textAlign: 'center', fontWeight: 'bold' }}>
+                          Go Premium
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                
+                
               </View>
             </Modal>
           </View>
@@ -157,16 +141,15 @@ const Profile = () => {
 export default Profile;
 
 const styles = StyleSheet.create({
-  modalBi: {
-    height: 300,
-    width: 300,
-    borderRadius: 20,
-  },
   modal: {
     backgroundColor: '#0e2235c1',
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    width: '100%'
+    
+   
+   
+   
   },
   image: {
     width: 150,
@@ -193,6 +176,7 @@ const styles = StyleSheet.create({
   stylesBtn: {
     justifyContent: 'center',
     alignItems: 'center',
-    width:430
+    
+    
   },
 });

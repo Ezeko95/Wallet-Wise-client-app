@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   text: {
-    top: 230,
+    top: 265,
     color: 'white',
     fontSize: 40,
     textAlign: 'center',
@@ -383,7 +383,7 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
-    backgroundColor: '#eaeaea',
+    backgroundColor: 'white',
     borderRadius: 15,
   },
   imageStyle: {

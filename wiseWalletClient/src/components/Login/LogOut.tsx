@@ -48,20 +48,24 @@ const LogoutButton = () => {
 
   return (
     <>
-      <View style={{ marginTop: 60, width: '90%', justifyContent: 'center' }}>
+      <View style={{ alignSelf: 'center', width: '50%', marginTop: 50}}>
+        
+
         <TouchableOpacity onPress={() => onPress()} style={styles.buton}>
-          <Text style={{ color: 'white', textAlign: 'center', fontSize: 25 }}>
+          <Text style={{ color: 'white', fontSize: 25 }}>
             Log Out{' '}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buton}
           onPress={() => navigation.navigate('ToPremium')}>
-          <Text style={{ color: 'white', textAlign: 'center', fontSize: 25 }}>
-            Premium 👑
+          <Text style={{ color: 'white', fontSize: 25 }}>
+            Premium 
           </Text>
+          
         </TouchableOpacity>
-      </View>
+        </View>
+      
       {showLoader && <Loader />}
     </>
   );
@@ -71,13 +75,12 @@ export default LogoutButton;
 const styles = StyleSheet.create({
   buton: {
     backgroundColor: '#31316d',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 6,
-    borderRadius: 20,
-    marginTop: 15,
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 20,
     borderWidth: 1,
     borderColor: 'white',
+    alignItems: 'center',
+    
   },
 });

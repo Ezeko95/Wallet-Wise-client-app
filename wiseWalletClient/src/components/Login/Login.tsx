@@ -18,7 +18,7 @@ import axios from 'axios';
 import { gettingUsers } from '../../redux/slices/getUsers';
 import { useAppDispatch } from '../../redux/store';
 import Loader from '../Loader/Loader';
-
+import { base_URL } from '../../redux/utils';
 
 
 interface LoginForm {
@@ -111,7 +111,8 @@ const Login: React.FC = () => {
         setShowLoader(false);
       }
       const response = await axios.post<{ accessToken: string }>(
-        'https://wallet-wise-server.onrender.com/user/login',
+        (base_URL+ "/user/login"),
+      //  'https://wallet-wise-server.onrender.com/user/login',
         form,
 
         );
@@ -119,7 +120,7 @@ const Login: React.FC = () => {
         console.log(response.data);
         console.log('Login successful');
         await AsyncStorage.setItem('accessToken', accessToken);
-        console.log(dispatch(gettingUsers()), 'este es DISPATCH DE LOGIN');
+        (dispatch(gettingUsers()), 'este es DISPATCH DE LOGIN');
         navigation.navigate('Slider');
       } catch (error) {
         Alert.alert('Error in login data, incorrect email or password');
@@ -134,9 +135,7 @@ const Login: React.FC = () => {
         }, 2000); // Duración de 3 segundos
       }
     }, [showLoader]);
-    
-    
-    
+ 
     return (
      
       <ImageBackground source={require('./assets/signIn3.png')} 

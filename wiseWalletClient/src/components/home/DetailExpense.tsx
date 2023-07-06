@@ -188,7 +188,7 @@ console.log(itemId, 'itemId');
 
 
   return (
-    <View style={{backgroundColor: '#1C1F3B'}}>
+    <View style={{backgroundColor: '#1C1F3B', width: '100%', height: '100%'}}>
   
     <ScrollView bounces={true}>
       <StatusBar barStyle="light-content" />

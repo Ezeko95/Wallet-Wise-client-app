@@ -30,33 +30,35 @@ const initialState: UserState = {
 }
 
 export const usersSlice = createSlice({
-    name: 'users',
-    initialState,
-    reducers: {
-        getUserTokken: (state, action)=>{
-          state.user.push(action.payload)
-        },
-        getUri: (state,action)=>{
-          state.user = action.payload
-        }
-    }
+  name: 'users',
+  initialState,
+  reducers: {
+      getUserTokken: (state, action)=>{
+        state.user.push(action.payload)
+      },
+      getUri: (state,action)=>{
+        state.user = action.payload
+      }
+  }
 })
 
 
 
 export const {getUserTokken,getUri } = usersSlice.actions;
 
-export const gettingUsers = (): ThunkAction <void, RootState, unknown, AnyAction>=> async (dispatch: Dispatch) => {
-    try {
-      const accesTokken = await  AsyncStorage.getItem("accessToken");
-      if (accesTokken) {
-        const decodedToken = jwtDecode(accesTokken);
-        dispatch(getUserTokken({payload: decodedToken}))
-        console.log("usuario registado REDUX", decodedToken)
-      }
-    } catch (error) {
-      console.log(error);
+export const gettingUsers = (): AppThunk => {
+return async dispatch => {
+  try {
+    const accesTokken = await  AsyncStorage.getItem("accessToken");
+    if (accesTokken) {
+      const decodedToken = await jwtDecode(accesTokken);
+      dispatch(getUserTokken({payload: decodedToken}))
+      console.log("usuario registado REDUX", decodedToken)
+      dispatch(getAccounts(decodedToken.user.user.id3))
     }
-  };
-
+  } catch (error) {
+    console.log(error);
+  }
+}
+}
 export default usersSlice.reducer;

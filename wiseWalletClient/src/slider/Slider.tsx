@@ -1,42 +1,54 @@
-import React from "react";
-import { useRef , useState, useEffect} from "react";
-import { View, StyleSheet, Text, Image , TouchableOpacity, ImageSourcePropType, Button, TextInput, Alert, ImageBackground, ScrollView, KeyboardAvoidingView} from "react-native";
-import PagerView from "react-native-pager-view";
+import React from 'react';
+import { useRef, useState, useEffect } from 'react';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+  ImageSourcePropType,
+  Button,
+  TextInput,
+  Alert,
+  ImageBackground,
+  ScrollView,
+  KeyboardAvoidingView,
+} from 'react-native';
+import PagerView from 'react-native-pager-view';
 import { SelectCountry } from 'react-native-element-dropdown';
-import {useNavigation} from "@react-navigation/native";
-import { Colors } from "../enums/Colors";
+import { useNavigation } from '@react-navigation/native';
+import { Colors } from '../enums/Colors';
 import { useAppSelector, useAppDispatch } from '../redux/store';
-import { postAccount, AccountData } from "../redux/slices/postAccount";
-import { gettingUsers } from "../redux/slices/getUsers";
-import Loader from "../components/Loader/Loader";
-import Drawer from "../components/drawer/component/Drawer";
-import { getAccounts } from "../redux/slices/allMovementsSlice";
-
+import { postAccount, AccountData } from '../redux/slices/postAccount';
+import { gettingUsers } from '../redux/slices/getUsers';
+import Loader from '../components/Loader/Loader';
+import Drawer from '../components/drawer/component/Drawer';
+import { getAccounts } from '../redux/slices/allMovementsSlice';
 
 const Slider = () => {
   const [showLoader, setShowLoader] = useState(false);
-  const ref: any = useRef()
-  const dispatch = useAppDispatch()
-  const navigation:(any) = useNavigation();
+  const ref: any = useRef();
+  const dispatch = useAppDispatch();
+  const navigation: any = useNavigation();
   const [name, setName] = useState('');
   const [total, setTotal] = useState('');
   const accounts = useAppSelector(state => state.allMovements.accounts);
-  
-  interface Buttons{
-    id:number,
-    name: string,
-    image: ImageSourcePropType
-  };
+
+  interface Buttons {
+    id: number;
+    name: string;
+    image: ImageSourcePropType;
+  }
 
   interface AccountForm {
-    total: number,
-    name: string,
+    total: number;
+    name: string;
     totalError?: string;
     nameError?: string;
   }
-  
-  const selector = useAppSelector((state) => state.user.user) 
-  const ide = selector.map(selector => selector.payload.user.id)
+
+  const selector = useAppSelector(state => state.user.user);
+  const ide = selector.map(selector => selector.payload.user.id);
 
   interface SelectAccounts {
     value: string;
@@ -84,73 +96,68 @@ const Slider = () => {
     },
   ];
 
-
   const [error, setError] = useState<AccountForm>({
     name: '',
-    total: 0
-  })
-  
+    total: 0,
+  });
+
   const submitAccount = () => {
     setShowLoader(true);
-    
+
     const data: AccountData = {
       name,
       total: parseFloat(total),
     };
     if (ide !== undefined) {
-      if(error.nameError || error.totalError){
-        Alert.alert('Error in post account, incorrect values')
+      if (error.nameError || error.totalError) {
+        Alert.alert('Error in post account, incorrect values');
       }
-      
+
       let totalError = '';
-      if(!/^\d+$/.test(total)) {
-        totalError= '* Only numbers are allowed'
+      if (!/^\d+$/.test(total)) {
+        totalError = '* Only numbers are allowed';
       }
-      
+
       let nameError = '';
-      if(!name){
-        nameError = '* Please enter an account'
+      if (!name) {
+        nameError = '* Please enter an account';
       }
-      
-      if(nameError || totalError || !name || !total){
+
+      if (nameError || totalError || !name || !total) {
         setShowLoader(false);
       }
-      if(!name || !total){
+      if (!name || !total) {
         setShowLoader(false);
-        Alert.alert('Error in post account, please complete all fields')
+        Alert.alert('Error in post account, please complete all fields');
       }
-      
+
       setError({
         ...error,
         nameError: nameError,
-        totalError: totalError
-      })
-      
-      
+        totalError: totalError,
+      });
+
       if (nameError || totalError) {
-        
         return;
       }
-      dispatch(postAccount(ide[(ide.length)-1], data))
-      dispatch(getAccounts(ide[(ide.length)-1]))
+      dispatch(postAccount(ide[ide.length - 1], data));
+      dispatch(getAccounts(ide[ide.length - 1]));
       Alert.alert('Successfully created Account');
       setName('');
       setTotal('');
-      
-      navigation.navigate("MyDrawer")
+
+      navigation.navigate('MyDrawer');
     }
   };
-  
+
   const onChange = (item: SelectAccounts) => {
     setName(item.label);
     console.log(item.value);
-  }
-  
-  
-  useEffect(()=>{
-    dispatch(gettingUsers())
+  };
 
-  },[dispatch])
+  useEffect(() => {
+    dispatch(gettingUsers());
+  }, [dispatch]);
 
   useEffect(() => {
     if (showLoader) {
@@ -160,74 +167,90 @@ const Slider = () => {
     }
   }, [showLoader]);
 
-  useEffect(()=>{
-    dispatch(getAccounts(ide[(ide.length)-1]))
-  },[])
-  
+  useEffect(() => {
+    dispatch(getAccounts(ide[ide.length - 1]));
+  }, []);
+
   return (
-    
-      <ImageBackground style={{width: '100%', height: '100%'}} source={require('./assets/fondoCreateAccount2.png')}>
+    <ImageBackground
+      style={{ width: '100%', height: '100%' }}
+      source={require('./assets/fondoCreateAccount2.png')}>
+      <ScrollView>
+        <KeyboardAvoidingView>
+          <View style={{ alignSelf: 'flex-start', left: -7 }}>
+            <Drawer />
+          </View>
 
-        <ScrollView>
-              <KeyboardAvoidingView>
-        <View style={{ alignSelf: 'flex-start'}}>
-
-          <Drawer />
-        </View>
-
-        { accounts.length === 0 ?
-        <Text style={{color: "white", fontSize:25}}>You need to create an account</Text>
-          :
-        <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
-                <Text style={styles.goBack}>{'<'}</Text>
+          {accounts.length === 0 ? (
+            <Text style={{ color: 'white', fontSize: 25, textAlign: 'center' }}>
+              You need to create an account
+            </Text>
+          ) : (
+            <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
+              <Text style={styles.goBack}>{'<'}</Text>
             </TouchableOpacity>
-        }
-            <View style={{ marginTop: 200, backgroundColor: '#696FE7', width: '80%', alignSelf: 'center', borderRadius: 30, height: 300, justifyContent: 'center'}}>
-              {/* <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter your Account"></TextInput> */}
-              <SelectCountry<SelectAccounts>
-                style={styles.dropdown}
-                selectedTextStyle={styles.selectedTextStyle}
-                placeholderStyle={styles.placeholderStyle}
-                imageStyle={styles.imageStyle}
-                iconStyle={styles.iconStyle}
-                maxHeight={200}
-                value={name}
-                data={data}
-                valueField="value"
-                labelField="label"
-                imageField="image"
-                placeholder={name ? name : "Select Account"}
-                onChange={onChange}
-                />
-              {error.nameError && <Text style={styles.textError}>{error.nameError}</Text>}
-               <TextInput style={styles.input} value={total} onChangeText={setTotal} keyboardType="numeric" placeholderTextColor={'white'} placeholder="Amount"></TextInput>
-               {error.totalError && <Text style={styles.textError}>{error.totalError}</Text>}
-                <TouchableOpacity style={styles.select} onPress={submitAccount}>
-                <Text style={{textAlign: "center", color: "#4D2FE4"}}>Create account</Text>
-                </TouchableOpacity>
-              
-              </View>
-              {showLoader && <Loader />}
-              </KeyboardAvoidingView>
-                </ScrollView>
-      </ImageBackground>
-
-    
-
+          )}
+          <View
+            style={{
+              marginTop: 200,
+              backgroundColor: '#696FE7',
+              width: '80%',
+              alignSelf: 'center',
+              borderRadius: 30,
+              height: 300,
+              justifyContent: 'center',
+            }}>
+            {/* <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter your Account"></TextInput> */}
+            <SelectCountry<SelectAccounts>
+              style={styles.dropdown}
+              selectedTextStyle={styles.selectedTextStyle}
+              placeholderStyle={styles.placeholderStyle}
+              imageStyle={styles.imageStyle}
+              iconStyle={styles.iconStyle}
+              maxHeight={200}
+              value={name}
+              data={data}
+              valueField="value"
+              labelField="label"
+              imageField="image"
+              placeholder={name ? name : 'Select Account'}
+              onChange={onChange}
+            />
+            {error.nameError && (
+              <Text style={styles.textError}>{error.nameError}</Text>
+            )}
+            <TextInput
+              style={styles.input}
+              value={total}
+              onChangeText={setTotal}
+              keyboardType="numeric"
+              placeholderTextColor={'white'}
+              placeholder="Amount"></TextInput>
+            {error.totalError && (
+              <Text style={styles.textError}>{error.totalError}</Text>
+            )}
+            <TouchableOpacity style={styles.select} onPress={submitAccount}>
+              <Text style={{ textAlign: 'center', color: '#4D2FE4' }}>
+                Create account
+              </Text>
+            </TouchableOpacity>
+          </View>
+          {showLoader && <Loader />}
+        </KeyboardAvoidingView>
+      </ScrollView>
+    </ImageBackground>
   );
-}
-
+};
 
 export default Slider;
 
 const styles = StyleSheet.create({
-  
-  select:{
-    backgroundColor: "white",
+  select: {
+    backgroundColor: 'white',
     width: 150,
     height: 35,
     alignSelf: 'center',
-    justifyContent: "center",
+    justifyContent: 'center',
     padding: 5,
     margin: 15,
     borderRadius: 15,
@@ -235,22 +258,18 @@ const styles = StyleSheet.create({
     borderColor: '#4D2FE4',
   },
 
-
-  input:{
+  input: {
     width: 200,
     height: 40,
-    backgroundColor: "#4D2FE4",
+    backgroundColor: '#4D2FE4',
     color: 'white',
     borderWidth: 1,
     borderColor: 'white',
     margin: 10,
     borderRadius: 100,
     alignSelf: 'center',
-    fontSize: 14
-    
-    
+    fontSize: 14,
   },
-  
 
   dropdown: {
     margin: 16,
@@ -262,9 +281,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderWidth: 1,
     borderColor: 'white',
-    
   },
-
 
   imageStyle: {
     width: 25,
@@ -273,25 +290,26 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 12,
-    color: 'white'
+    color: 'white',
   },
   selectedTextStyle: {
     fontSize: 14,
     marginLeft: 8,
+    color: 'black'
   },
   iconStyle: {
     width: 20,
     height: 20,
   },
-  textError:{
-    color:"white",
+  textError: {
+    color: 'white',
     textAlign: 'center',
     marginLeft: 20,
-    marginRight: 20
+    marginRight: 20,
   },
   goBack: {
     color: '#4D2FE4',
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 15,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -301,8 +319,6 @@ const styles = StyleSheet.create({
     borderColor: '#4D2FE4',
     borderWidth: 2,
     left: 30,
-    top: 40
-},
+    top: 40,
+  },
 });
-
-

@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   Image,
@@ -14,10 +14,14 @@ import {
 } from 'react-native';
 import { base_URL } from '../../redux/utils';
 import { initPaymentSheet, presentPaymentSheet } from '@stripe/stripe-react-native';
+import LoaderGoals from '../Loader/LoaderGoals';
+import LoaderShared from '../Loader/LoaderShared';
+
 
 const ToPremium = () => {
   const navigation: any = useNavigation();
-
+  const [showLoader, setShowLoader] = useState(true);
+  
   const onCheckout = async () => {
     try {
       //create payment intent
@@ -53,13 +57,25 @@ const ToPremium = () => {
  
   return (
     <ScrollView>
-    <View style={{justifyContent:"center", alignItems:"center"}}>
-      <Image source={require("./assets/premium.png")}/>
-      <Image source={require("./assets/premium2.png")}/>
+    <View style={{justifyContent:"center", alignItems:"center", backgroundColor: '#1C1F3B'}}>
+      <Image style={{width: '100%'}} source={require("./assets/premium.png")}/>
+
+      <View style={{width: '80%', height: 900}}>
+          <View style={{height: '100%'}}>
+          {showLoader && <LoaderGoals />}
+          
+          
+          
+          {showLoader && <LoaderShared />}
+
+          </View>
+          
+      </View>
+
       <TouchableOpacity style={style.botonOferta} onPress={()=>{
         onCheckout()
       }}>
-        <Image source={require("./assets/GOPREMIUM.png")} style={{borderRadius:20}}/>
+        <Text  style={{ color: 'black', fontWeight: 'bold', fontSize: 20, textAlign: 'center', width: 500}}>Go Premium!</Text>
       </TouchableOpacity>
     </View>
     </ScrollView>
@@ -68,14 +84,11 @@ const ToPremium = () => {
 
 const style = StyleSheet.create({
   botonOferta:{
-    width:250,
-    height:50,
-    backgroundColor:"white",
-    position:"absolute",
-    bottom:10,
-    alignItems:"center",
-    justifyContent:"center",
-    borderRadius:20
+    borderRadius: 10,
+    height: 50,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    backgroundColor: '#F1CC7A',
   }
 });
 

@@ -19,6 +19,7 @@ import Upload from './Upload';
 import { useAppDispatch } from '../../redux/store';
 import { gettingUsers } from '../../redux/slices/getUsers';
 import Loader from '../Loader/Loader';
+import { base_URL } from '../../redux/utils';
 
 
 interface RegisterForm {
@@ -85,7 +86,8 @@ const Register = () => {
     try {
       setShowLoader(true);
       const response = await axios.post<{ accessToken: string }>(
-        'https://wallet-wise-server.onrender.com/user/register',
+        (base_URL+ "/user/register"),
+      //  'https://wallet-wise-server.onrender.com/user/register',
         form,
       );
       const { accessToken } = response.data;

@@ -116,20 +116,22 @@ const NewShared: React.FC = () => {
           value={room}
           onChangeText={value => onChangeRoom(value)}
           style={styles.input}
-          placeholder="roomName..."
+          placeholder="Room name..."
+          placeholderTextColor={Colors.DETAIL_COLOR}
         />
       </View>
 
       <View style={styles.inputContainer}>
         <View style={styles.addSelfExpense}>
-          <TextInput
-            keyboardType="numeric"
-            editable={editableInput}
-            style={styles.inputAddParticipant}
-            value={selfExpense}
-            onChangeText={value => setSelfExpense(value)}
-            placeholder="Add self expense..."
-          />
+            <TextInput
+              keyboardType="numeric"
+              editable={editableInput}
+              style={styles.inputAddParticipant}
+              value={selfExpense}
+              onChangeText={value => setSelfExpense(value)}
+              placeholder="Add self expense..."
+              placeholderTextColor='black'
+            />
           <TouchableOpacity
             onPress={() => {
               handleSelf();
@@ -145,6 +147,7 @@ const NewShared: React.FC = () => {
             onChangeText={value => setName(value)}
             style={styles.inputAddParticipant}
             placeholder="Add Participant..."
+            placeholderTextColor={Colors.DETAIL_COLOR}
           />
           <TextInput
             keyboardType="numeric"
@@ -152,6 +155,7 @@ const NewShared: React.FC = () => {
             onChangeText={value => setExpense(value)}
             style={styles.inputExpenseParticipant}
             placeholder="Amount"
+            placeholderTextColor={Colors.DETAIL_COLOR}
           />
         </View>
 
@@ -288,26 +292,31 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    right: 15,
+    color: 'black',
+    right: 20,
+    marginLeft: 50,
+    marginHorizontal: 25
   },
   inputSelfExpense: {
     width: 150,
     backgroundColor: 'white',
     borderRadius: 15,
     height: 50,
-    margin: 15,
+    color: 'black',
   },
   inputExpenseParticipant: {
     width: '30%',
     backgroundColor: 'white',
     borderRadius: 15,
     margin: 15,
+    color: 'black',
   },
   inputAddParticipant: {
     width: '60%',
     backgroundColor: 'white',
     borderRadius: 15,
     margin: 15,
+    color: 'black',
   },
   addParticipantContainer: {
     flexDirection: 'row',
@@ -317,14 +326,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 30,
     borderRadius: 15,
-    width: '100%',
+    width: '124%',
     textAlign: 'center',
     color: 'black',
-    height: '52%',
+    height: '50%',
+    left: 15
   },
   containerButtonAdd: {
-    width: '30%',
-    left: 15,
+    width: '29%',
+    right: 16
   },
   containerAllDetails: {},
   textFinish: {
@@ -337,5 +347,14 @@ const styles = StyleSheet.create({
     padding: 8,
     marginBottom: 15,
   },
+  addSelfExpenseInput: {
+    width: 215,
+    backgroundColor: 'white',
+    borderRadius: 15,
+    height: 50,
+    color: 'black',
+    margin: 25,
+    right: 7
+  }
 });
 export default NewShared;
