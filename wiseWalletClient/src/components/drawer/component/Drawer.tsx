@@ -23,7 +23,6 @@ const Drawer = () => {
 
   return (
     <View>
-    
       <TouchableOpacity style={styles.drawer} onPress={() => setModal(true)}>
         <Image style={styles.burguerBtn} source={require('./burguerBtn.png')} />
       </TouchableOpacity>
@@ -39,7 +38,7 @@ const Drawer = () => {
                 borderTopEndRadius: 15,
                 borderBottomEndRadius: 15,
                 borderWidth: 1.5,
-                borderColor: Colors.BACKGROUND_COLOR
+                borderColor: Colors.BACKGROUND_COLOR,
               }}>
               <TouchableOpacity
                 style={styles.x}
@@ -51,8 +50,16 @@ const Drawer = () => {
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={() => {navigation.navigate('Profile')}}>
-                <View style={{flexDirection: "row", backgroundColor:Colors.BACKGROUND_COLOR, marginHorizontal:"3%", borderRadius:5}}>  
+                onPress={() => {
+                  navigation.navigate('Profile');
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    backgroundColor: Colors.BACKGROUND_COLOR,
+                    marginHorizontal: '3%',
+                    borderRadius: 5,
+                  }}>
                   <Image
                     source={{ uri: `${tp.payload.user.picture}` }}
                     style={styles.image}
@@ -68,51 +75,47 @@ const Drawer = () => {
                 }}>
                 <Text style={styles.text}>New Account</Text>
               </TouchableOpacity>
-                {
-                  tp.payload.user.premium === false
-                  ?
-                  <>
+              {tp.payload.user.premium === false ? (
+                <>
                   <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('ToPremium');
-                  setModal(false);
-                }}>
-                <Text style={styles.text}>My Goals</Text>
-              </TouchableOpacity>
+                    onPress={() => {
+                      navigation.navigate('ToPremium');
+                      setModal(false);
+                    }}>
+                    <Text style={styles.text}>My Goals</Text>
+                  </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('ToPremium');
-                  setModal(false);
-                }}>
-                <Text style={styles.text}>Shared</Text>
-              </TouchableOpacity>
-                  </>
-                  :
-                  <>
                   <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('GoalsList');
-                  setModal(false);
-                }}>
-                <Text style={styles.text}>My Goals</Text>
-              </TouchableOpacity>
+                    onPress={() => {
+                      navigation.navigate('ToPremium');
+                      setModal(false);
+                    }}>
+                    <Text style={styles.text}>Shared</Text>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <>
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate('GoalsList');
+                      setModal(false);
+                    }}>
+                    <Text style={styles.text}>My Goals</Text>
+                  </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('SharedList');
-                  setModal(false);
-                }}>
-                <Text style={styles.text}>Shared</Text>
-              </TouchableOpacity>
-                  </>
-                }
-              
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate('SharedList');
+                      setModal(false);
+                    }}>
+                    <Text style={styles.text}>Shared</Text>
+                  </TouchableOpacity>
+                </>
+              )}
             </View>
           </Modal>
         </View>
       )}
-
     </View>
   );
 };
@@ -133,14 +136,14 @@ const styles = StyleSheet.create({
     padding: 8,
     marginLeft: 15,
   },
-  textUser:{
-    color: "white",
+  textUser: {
+    color: 'white',
     fontSize: 20,
     marginTop: 17,
     marginBottom: 17,
     padding: 8,
     marginLeft: 10,
-    fontWeight:'bold'
+    fontWeight: 'bold',
   },
   drawer: {
     backgroundColor: Colors.BACKGROUND_COLOR,
