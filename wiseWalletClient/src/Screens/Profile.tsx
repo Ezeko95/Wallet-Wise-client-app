@@ -85,7 +85,7 @@ const Profile = () => {
                 <ImageBackground source={require('./images/GoPremium.png')}>
                   <View style={styles.modalBi}>
                     <TouchableOpacity
-                      style={{ height: 40, width: 39 }}
+                      style={{ height: 40, width: 50 }}
                       onPress={() => setOpenModal(false)}>
                       <Text
                         style={{
@@ -161,6 +161,9 @@ const styles = StyleSheet.create({
     height: 300,
     width: 300,
     borderRadius: 20,
+    alignContent: 'center',
+    justifyContent: 'center',
+    left: 40
   },
   modal: {
     backgroundColor: '#0e2235c1',
@@ -193,6 +196,7 @@ const styles = StyleSheet.create({
   stylesBtn: {
     justifyContent: 'center',
     alignItems: 'center',
-    width:430
+    width:430,
+    left: 30
   },
 });
