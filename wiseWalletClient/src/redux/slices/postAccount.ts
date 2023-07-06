@@ -43,9 +43,6 @@ const AccountSlice = createSlice({
 
 export const { postAccountStart, postAccountSuccess, postAccountFailure } = AccountSlice.actions;
 
-
-
-
 export const postAccount= (id: number, data: AccountData): AppThunk=>{
   return async (dispatch: AppDispatch)=>{
     try {
