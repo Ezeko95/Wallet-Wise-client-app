@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   Image,
@@ -14,10 +14,14 @@ import {
 } from 'react-native';
 import { base_URL } from '../../redux/utils';
 import { initPaymentSheet, presentPaymentSheet } from '@stripe/stripe-react-native';
+import LoaderGoals from '../Loader/LoaderGoals';
+import LoaderShared from '../Loader/LoaderShared';
+
 
 const ToPremium = () => {
   const navigation: any = useNavigation();
-
+  const [showLoader, setShowLoader] = useState(true);
+  
   const onCheckout = async () => {
     try {
       //create payment intent
@@ -53,9 +57,21 @@ const ToPremium = () => {
  
   return (
     <ScrollView>
-    <View style={{justifyContent:"center", alignItems:"center"}}>
+    <View style={{justifyContent:"center", alignItems:"center", backgroundColor: '#1C1F3B'}}>
       <Image style={{width: '100%'}} source={require("./assets/premium.png")}/>
-      <Image style={{width: '100%'}} source={require("./assets/premium2.png")}/>
+
+      <View style={{width: '80%', height: 900}}>
+          <View style={{height: '100%'}}>
+          {showLoader && <LoaderGoals />}
+          
+          
+          
+          {showLoader && <LoaderShared />}
+
+          </View>
+          
+      </View>
+
       <TouchableOpacity style={style.botonOferta} onPress={()=>{
         onCheckout()
       }}>
