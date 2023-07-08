@@ -29,7 +29,6 @@ import LoaderChart from '../Loader/LoaderChart';
 export interface AccountData {
   label: string;
   value: string;
-  
 }
 
 interface Props {}
@@ -41,12 +40,11 @@ const AllMovements: React.FC<Props> = () => {
   const allMovements = useAppSelector(state => state.allMovements.allMovements);
   const filter = useAppSelector(state => state.allMovements.filtered);
   const balance = useAppSelector(state => state.allMovements.balance);
-  const incomes = useAppSelector((state) => state.allMovements.incomes)
-  const expenses = useAppSelector((state) => state.allMovements.expenses)
+  const incomes = useAppSelector(state => state.allMovements.incomes);
+  const expenses = useAppSelector(state => state.allMovements.expenses);
 
   const [showLoader, setShowLoader] = useState(false);
-  console.log('FILTER',filter);
-  console.log("allmovements",allMovements)
+  console.log('allmovements', allMovements);
 
   console.log('Balance from redux', balance);
 
@@ -56,6 +54,7 @@ const AllMovements: React.FC<Props> = () => {
   const show: any[] = filter.filter(
     e => e.deletedExpense === false || e.deletedIncome === false,
   );
+
   const [openModal, setOpenModal] = useState(false);
   console.log('show', show);
 
@@ -67,15 +66,13 @@ const AllMovements: React.FC<Props> = () => {
     dispatch(getExpense(ide[ide.length - 1]));
   }, [dispatch]);
 
-  
   useEffect(() => {
     if (showLoader) {
       setTimeout(() => {
         setShowLoader(false);
-      }, 4000); // Duración de 3 segundos
+      }, 4000);
     }
   }, [showLoader]);
-
 
   const data: AccountData[] = [];
 
@@ -267,14 +264,15 @@ const AllMovements: React.FC<Props> = () => {
             </TouchableOpacity>
           </View>
 
+          {incomes.length === 0 && expenses.length === 0 ? (
+            <Image
+              style={{ marginTop: 50 }}
+              source={require('./assets/noMovements.png')}
+            />
+          ) : (
+            <Text style={styles.text}>${balance}</Text>
+          )}
 
-
-                { incomes.length === 0 && expenses.length === 0 ?
-                  <Image style={{marginTop: 50}} source={require('./assets/noMovements.png')}/>
-                  :
-                  <Text style={styles.text}>${balance}</Text>
-                }
-                
           <VictoryPie
             style={{
               labels: {
