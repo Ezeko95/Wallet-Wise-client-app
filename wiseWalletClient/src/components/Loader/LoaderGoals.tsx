@@ -9,7 +9,7 @@ const LoaderGoals = () => {
     return(
       
         <View style={[StyleSheet.absoluteFillObject, styles.container]}>
-            <Text style={{marginTop:-30, color: 'white', fontSize: 25, textAlign: 'center'}}>You can unlock the option to create shared expenses</Text>
+            <Text style={{marginTop:-30, color: 'white', fontSize: 25, textAlign: 'center'}}>And also the section to create goals</Text>
             <LottieView source={require('./assets/goals.json')} autoPlay={true} loop={true}/>
         </View>
     )

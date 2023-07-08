@@ -182,8 +182,8 @@ const Slider = () => {
           </View>
 
           {accounts.length === 0 ? (
-            <Text style={{ color: 'white', fontSize: 25, textAlign: 'center' }}>
-              You need to create an account
+            <Text style={{ color: 'white', fontSize: 16, textAlign: 'center', top: '25%', fontWeight: '300', margin: 10 }}>
+              You need to create an account to be able to create income and expenses
             </Text>
           ) : (
             <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
