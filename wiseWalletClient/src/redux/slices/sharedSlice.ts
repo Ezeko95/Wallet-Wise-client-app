@@ -75,8 +75,10 @@ export const getDetail=(id: number): AppThunk=>{
 
 export const getAllRooms=(id: number): AppThunk=>{
     return async (dispatch)=>{
-        console.log(id, "ide del slice de shared")
         const response= await axios.get(`${base_URL}/shared/all/${id}`)
+        console.log(id, "ide del slice de shared")
+        console.log(response.data, 'DATA SHAREDSILCE');
+        
         dispatch(setShared(response.data))
     }
 }

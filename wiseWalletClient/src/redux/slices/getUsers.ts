@@ -4,7 +4,8 @@ import { ThunkAction } from 'redux-thunk';
 import { AnyAction } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode, {JwtPayload} from "jwt-decode";
-import { RootState } from '../store';
+import { AppThunk, RootState } from '../store';
+import { getAccounts } from './allMovementsSlice';
 
 export interface Users{
     payload:{
@@ -54,7 +55,7 @@ return async dispatch => {
       const decodedToken = await jwtDecode(accesTokken);
       dispatch(getUserTokken({payload: decodedToken}))
       console.log("usuario registado REDUX", decodedToken)
-      dispatch(getAccounts(decodedToken.user.user.id3))
+      dispatch(getAccounts(decodedToken.user.user?.id))
     }
   } catch (error) {
     console.log(error);

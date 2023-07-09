@@ -140,7 +140,10 @@ const Slider = () => {
       if (nameError || totalError) {
         return;
       }
-      dispatch(postAccount(ide[ide.length - 1], data));
+      console.log(
+        dispatch(postAccount(ide[ide.length - 1], data)),
+        'logSLIDER',
+      );
       dispatch(getAccounts(ide[ide.length - 1]));
       Alert.alert('Successfully created Account');
       setName('');
@@ -182,8 +185,17 @@ const Slider = () => {
           </View>
 
           {accounts.length === 0 ? (
-            <Text style={{ color: 'white', fontSize: 16, textAlign: 'center', top: '25%', fontWeight: '300', margin: 10 }}>
-              You need to create an account to be able to create income and expenses
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 16,
+                textAlign: 'center',
+                top: '25%',
+                fontWeight: '300',
+                margin: 10,
+              }}>
+              You need to create an account to be able to create income and
+              expenses
             </Text>
           ) : (
             <TouchableOpacity onPress={() => navigation.navigate('MyDrawer')}>
@@ -295,7 +307,7 @@ const styles = StyleSheet.create({
   selectedTextStyle: {
     fontSize: 14,
     marginLeft: 8,
-    color: 'black'
+    color: 'black',
   },
   iconStyle: {
     width: 20,
