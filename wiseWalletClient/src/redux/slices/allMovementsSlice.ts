@@ -175,6 +175,20 @@ const getMovementsSlicer = createSlice({
     filtered: results,
     };
     },
+    cleanAllMovements: (state)=>{
+      return{
+        ...state,
+        allMovements: [],
+        incomes: [],
+        expenses: [],
+        loading: false,
+        error: null,
+        accounts: [],
+        filtered: [],
+        balance: 0,
+        itemId: 0,
+      }
+    }
     },
   },
 );
@@ -192,7 +206,8 @@ export const {
   cleanItemId,
   orderByAmount,
   orderByAlpha,
-  orderByDate
+  orderByDate,
+  cleanAllMovements
 } = getMovementsSlicer.actions;
 
 export default getMovementsSlicer.reducer;
