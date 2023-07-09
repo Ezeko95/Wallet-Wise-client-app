@@ -29,11 +29,15 @@ const slide: Slide[] = [
   },
 ];
 const Premium = () => {
-  const [premium , setPremium] = useState()
+  const [premium, setPremium] = useState();
   const state = useAppSelector(state => state.user.user);
   console.log(state);
   const tp = state[state.length - 1];
-  const results = tp.payload.user.id;
+  let results: any;
+  if (tp && tp.payload) {
+    results = tp.payload.user.id;
+  }
+  // const results = tp.payload.user.id;
 
   const navigation: any = useNavigation();
 
@@ -59,11 +63,11 @@ const Premium = () => {
       slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
     }
   };
- 
-  useEffect(()=>{
+
+  useEffect(() => {
     axios.put(`${base_URL}/user/${results}`);
     console.log('ESTE ES EL ID QUE PASO POR PARAMS', results);
-},[])
+  }, []);
   return (
     <ImageBackground
       style={styles.img}

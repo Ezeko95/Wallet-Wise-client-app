@@ -8,6 +8,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { onBoardingSlice } from './slices/onBoarding';
 import goalSlice from './slices/goalSlice';
 import sharedSlice from './slices/sharedSlice';
+import postAccount from './slices/postAccount';
  
 const store = configureStore({
   reducer: {
@@ -16,7 +17,8 @@ const store = configureStore({
     user: usersSlice.reducer,
     onBoarding: onBoardingSlice.reducer,
     goal: goalSlice,
-    share: sharedSlice
+    share: sharedSlice,
+    account: postAccount
   },
   middleware: [thunk],
   devTools: true
