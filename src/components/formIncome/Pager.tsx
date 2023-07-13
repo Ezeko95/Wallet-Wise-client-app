@@ -190,19 +190,9 @@ const Pager = () => {
   const [category, setCategory] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
   const navigation:(any) = useNavigation();
-  //const idUser = useAppSelector((state) => state.user.user)
   const selector = useAppSelector((state) => state.user.user) // esto e user enterito
   const aidi = selector.map(selector => selector.payload.user.id)
-  //const ide = idUser.map((idUser) => idUser.payload.user.id)
   const accounts = useAppSelector(state => state.allMovements.accounts);
-
-  
-  
-  //const datac: AccountData[] = [];
-
-  // accounts.forEach((a: string) => {
-  //   datac.push({ label: a, value: a });
-  // });
 
   const [errorForm, setErrorForm] = useState<IncomeForm>({
     account: '',

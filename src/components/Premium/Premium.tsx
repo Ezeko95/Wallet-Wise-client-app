@@ -37,7 +37,6 @@ const Premium = () => {
   if (tp && tp.payload) {
     results = tp.payload.user.id;
   }
-  // const results = tp.payload.user.id;
 
   const navigation: any = useNavigation();
 
@@ -51,8 +50,6 @@ const Premium = () => {
       navigation.navigate('Login');
     }
   }).current;
-
-  /* const viewConfig = useRef({viewAreaCoveragePercentThresHold: 50}).current; */
 
   const renderItem: ListRenderItem<Slide> = ({ item }) => {
     return <Image source={item.image} style={styles.slideImage} />;

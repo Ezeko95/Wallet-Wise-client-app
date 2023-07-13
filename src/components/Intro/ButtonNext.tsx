@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  Text,
   View,
   StyleSheet,
   TouchableOpacity,
@@ -9,7 +8,7 @@ import {
   Button,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Svg, { G, Circle, CircleProps } from 'react-native-svg';
+import { Circle, CircleProps } from 'react-native-svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ButtonNext = ({ percentage, scrollTo }: any) => {
@@ -74,6 +73,7 @@ const ButtonNext = ({ percentage, scrollTo }: any) => {
         <Image source={require('./assets/next3.png')} />
       </TouchableOpacity>
     </View>
+    
   );
 };
 

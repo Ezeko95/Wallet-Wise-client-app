@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   StyleSheet,
@@ -75,26 +75,9 @@ const Drawer = () => {
                 }}>
                 <Text style={styles.text}>New Account</Text>
               </TouchableOpacity>
-              {tp.payload.user.premium === false ? (
-                <>
-                  <TouchableOpacity
-                    onPress={() => {
-                      navigation.navigate('ToPremium');
-                      setModal(false);
-                    }}>
-                    <Text style={styles.text}>My Goals</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    onPress={() => {
-                      navigation.navigate('ToPremium');
-                      setModal(false);
-                    }}>
-                    <Text style={styles.text}>Shared</Text>
-                  </TouchableOpacity>
-                </>
-              ) : (
-                <>
+              
+               
+              
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate('GoalsList');
@@ -110,8 +93,8 @@ const Drawer = () => {
                     }}>
                     <Text style={styles.text}>Shared</Text>
                   </TouchableOpacity>
-                </>
-              )}
+               
+              
             </View>
           </Modal>
         </View>

@@ -83,7 +83,6 @@ export const getDetail = (id : number): AppThunk=>{
     return async (dispatch)=>{
         try {
             const response= await axios.get(`${base_URL}/goal/${id}`);
-            //goalSlice.actions.setDetail(response.data)
             console.log(response.data, 'RESPONSE');
             return dispatch(setDetail(response.data))
         } catch (error) {
